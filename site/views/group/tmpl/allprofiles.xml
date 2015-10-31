@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+
+	<layout title="COM_QUESTIONS_USER_PROFILES_ALL" hidden="true">
+		<message>COM_QUESTIONS_USER_PROFILES_ALL</message>
+	</layout>
+    <view title="UserProfiles">
+		<message>UserProfiles</message>
+	</view>
+		<fields name="request">
+                <fieldset name="request">
+                        <field
+                                name="usernumbers"
+                                type="list"
+                                label="COM_QUESTIONS_USER_PROFILES_ALL_LABEL"
+                                description="COM_QUESTIONS_USER_PROFILES_ALL_DESC"
+                                default="1"
+                        >
+                                <option value="1">10</option>
+                                <option value="2">20</option>
+								<option value="1">30</option>
+                                <option value="2">40</option>
+								<option value="1">50</option>
+                                <option value="2">60</option>
+								<option value="1">70</option>
+                                <option value="2">80</option>
+                        </field>
+                </fieldset>
+        </fields>
+		<!--
+		 <state>
+                <name>COM_QUESTIONS_USER_PROFILES_ALL_LAYOUT</name>
+                <description>COM_QUESTIONS_USER_PROFILES_ALL_LAYOUT_DESC</description>
+                <url>
+				
+                </url>
+                <params>
+                </params>
+                <advanced>
+                </advanced>
+        </state>-->
+</metadata>

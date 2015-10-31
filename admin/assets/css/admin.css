@@ -1,0 +1,447 @@
+﻿<style>
+@charset "UTF-8";
+
+/* -- CONTROL PANEL STYLES ----------------------------- */
+.cpanel div.icon, #cpanel div.icon {
+	text-align: center;
+	margin-right: 15px;
+	float: left;
+	margin-bottom: 15px;
+
+}
+.cpanel div.icon a, #cpanel div.icon a {
+	background-color: #fff;
+	background-position: -30px;
+	display: block;
+	float: left;
+	height: 97px;
+	width: 108px;
+	color: #565656;
+	vertical-align: middle;
+	text-decoration: none;
+	border: 1px solid #CCC;
+
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	-webkit-transition-property:
+		background-position,
+		-webkit-border-bottom-left-radius,
+		-webkit-box-shadow;
+	-moz-transition-property:
+		background-position,
+		-moz-border-radius-bottomleft,
+		-moz-box-shadow;
+	-webkit-transition-duration: 0.8s;
+	-moz-transition-duration: 0.8s;
+}
+
+#cpanel div.icon a:hover,
+#cpanel div.icon a:focus,
+#cpanel div.icon a:active,
+.cpanel div.icon a:hover,
+.cpanel div.icon a:focus,
+.cpanel div.icon a:active {
+	background-position: 0;
+	-webkit-border-bottom-left-radius: 50% 20px;
+	-moz-border-radius-bottomleft: 50% 20px;
+	border-bottom-left-radius: 50% 20px;
+	-webkit-box-shadow: -5px 10px 15px rgba(0, 0, 0, 0.25);
+	-moz-box-shadow: -5px 10px 15px rgba(0, 0, 0, 0.25);
+	box-shadow: -5px 10px 15px rgba(0, 0, 0, 0.25);
+	position: relative;
+	z-index: 10;
+}
+
+#cpanel img,
+.cpanel img {
+	padding: 10px 0;
+	margin: 0 auto;
+}
+
+#cpanel span,
+.cpanel span {
+	display: block;
+	text-align: center;
+}
+
+div.cpanel-left {
+	width: 54%;
+	float: left;
+}
+
+div.cpanel-right {
+	width: 45%;
+	float: right;
+}
+
+table.adminlist {
+	width: 100%;
+	border-spacing: 1px;
+	background-color: #f3f3f3;
+	color: #666;
+}
+
+table.adminlist td,
+table.adminlist th {
+	padding: 4px;
+}
+
+table.adminlist td {padding-left: 8px;}
+
+table.adminlist thead th {
+	text-align: center;
+	background: #f7f7f7;
+	color: #666;
+	border-bottom: 1px solid #CCC;
+	border-left: 1px solid #fff;
+}
+
+table.adminlist thead th.left {
+	text-align: left;
+}
+
+table.adminlist thead a:hover {
+	text-decoration: none;
+}
+
+table.adminlist thead th img {
+	vertical-align: middle;
+	padding-left: 3px;
+}
+
+table.adminlist tbody th {
+	font-weight: bold;
+}
+
+table.adminlist tbody tr {
+	background-color: #fff;
+	text-align: left;
+}
+
+table.adminlist tbody tr.row0:hover td,
+table.adminlist tbody tr.row1:hover td	{
+	background-color: #e8f6fe;
+}
+
+table.adminlist tbody tr td {
+	background: #fff;
+	border: 1px solid #fff;
+}
+
+table.adminlist tbody tr.row1 td {
+	background: #f0f0f0;
+	border-top: 1px solid #FFF;
+}
+
+table.adminlist tfoot tr {
+	text-align: center;
+	color: #333;
+}
+
+table.adminlist tfoot td,table.adminlist tfoot th {
+	background-color: #f7f7f7;
+	border-top: 1px solid #999;
+	text-align: center;
+}
+
+table.adminlist td.order {
+	text-align: center;
+	white-space: nowrap;
+	width: 200px;
+}
+
+table.adminlist td.order span {
+	float: left;
+	width: 20px;
+	text-align: center;
+	background-repeat: no-repeat;
+	height: 13px;
+}
+
+table.adminlist .pagination {
+	display: inline-block;
+	padding: 0;
+	margin: 0 auto;
+}
+
+/* Tree indentation & nesting - Up to 10 levels deep so don't go crazy :) */
+table.adminlist td.indent-4 	{	padding-left: 4px;		}
+table.adminlist td.indent-19 	{	padding-left: 19px;		}
+table.adminlist td.indent-34 	{	padding-left: 34px;		}
+table.adminlist td.indent-49 	{	padding-left: 49px;		}
+table.adminlist td.indent-64 	{	padding-left: 64px;		}
+table.adminlist td.indent-79 	{	padding-left: 79px;		}
+table.adminlist td.indent-94 	{	padding-left: 94px;		}
+table.adminlist td.indent-109 	{	padding-left: 109px;	}
+table.adminlist td.indent-124 	{	padding-left: 124px;	}
+table.adminlist td.indent-139 	{	padding-left: 139px;	}
+
+table.adminlist tr td.btns a {
+	text-decoration: underline;
+}
+
+table.admintable th,
+table.admintable td {
+	font-size: 1.091em;
+}
+body.contentpane{ margin: 0px; background-color: #f4f4f4; font-family:Arial,Tahoma,sans-serif;
+font-family:Tahoma,Arial,sans-serif;
+font-size:0.8em;
+font-size-adjust:none;
+font-style:normal;
+font-variant:normal;
+font-weight:normal;
+line-height:20px; }
+input{ padding:4px }
+div.adminMainbody div#cpanel{margin-top: 10px}
+div.adminMainbody div#cpanel div div.icon a{width: 107px;}
+ul{border:0;margin:0;padding:0; list-style: none;}
+.adminBodyHeading{color:#666; text-transform:uppercase}
+.clearFloat,.clearer , .clearfloat{clear:both}
+.global_message{background:#FBFAC4;border:1px solid #FBAA59;color:#f30;padding:10px}
+.jtable .jtheader{border-bottom:1px dotted #f00;font-weight:bold}
+.jtd{float:left;padding:4px}
+.menuTableHeader h3 span{background: #d8d8d9 none repeat-x scroll right center;color:#313131;
+display:block;
+float:left;
+height:30px;
+padding-left:9px;
+width:101%;}
+.adminHeaderRow{ border: 1px solid #f2f8f9; background-color: #f2f8f9;  border-bottom: 1px solid #ebebeb;}
+.menuTableHeader{color:#31313;font-weight:bold;height:30px; line-height: 30px; }
+.menuTable,.adminTable,.jtable{width:100%}
+.menuTableColumn,.adminRowColumn{float:left;padding:6px}
+.menuTableRowEven,.jtreven{background:transparent}
+.menuTableRowOdd,.jtrodd{background:#F3F3F3}
+..menuTableRow:hover{ background-color: #f4f4f4 }
+div.activity{display:none;float:right;left: 420px;padding:4px;position:fixed;top:10px}
+div.adminFooter{font-size:10px;padding:5px}
+div.errorMessage{color:#F63}
+div.errorTitle{border-bottom:1px solid #FFB68A;height:24px;margin-bottom:8px}
+div.mainbodyLeft{background-color:#F2F2F2;
+border:2px solid #E2E2E2;
+color:#666666;
+float:left;
+margin:8px 0;
+padding:0 10px;
+width:23%;}
+
+#system-message{display: none; } /*Dont Want system messages showing at the top*/
+div.mainbodyRight #system-message{display: block; }
+/* System Messages */
+div.mainbodyRight #system-message    { margin-bottom: 10px; padding: 0;}
+div.mainbodyRight #system-message dt { font-weight: bold; }
+div.mainbodyRight #system-message dd { margin: 0; font-weight: bold; text-indent: 30px; }
+div.mainbodyRight #system-message dd ul { color: #0055BB; margin-bottom: 10px; list-style: none; padding: 10px; border-top: 3px solid #84A7DB; border-bottom: 3px solid #84A7DB;}
+
+/* System Standard Messages */
+div.mainbodyRight #system-message dt.message { display: none; }
+div.mainbodyRight #system-message dd.message {  }
+
+/* System Error Messages */
+div.mainbodyRight #system-message dt.error { display: none; }
+div.mainbodyRight #system-message dd.error ul { color: #c00; background-color: #E6C0C0; border-top: 3px solid #DE7A7B; border-bottom: 3px solid #DE7A7B;}
+
+/* System Notice Messages */
+div.mainbodyRight #system-message dt.notice { display: none; }
+div.mainbodyRight #system-message dd.notice ul { color: #c00; background: #EFE7B8; border-top: 3px solid #F0DC7E; border-bottom: 3px solid #F0DC7E;}
+
+/* Debug */
+div.mainbodyRight #system-debug     { color: #ccc; background-color: #fff; padding: 10px; margin: 10px; }
+div.mainbodyRight #system-debug div { font-size: 11px;}
+
+
+/*div.mainbodyLeft a{color: #fff;}*/
+div.mainbodyRight{float:left;margin:0px;min-height:450px; padding:0 11px; width:72%;}
+div.successMessage{color:#0C3}
+div.successTitle{border-bottom:1px solid #009900;height:24px;margin-bottom:8px}
+/*#pagination a{border:solid 1px #9aafe5;margin-right:2px}
+#pagination li{border:0;font-size:9px;list-style:none;margin:0;margin-right:2px;padding:0}
+#pagination.active{background:#2f87e7;color:#FFF;display:block;float:left;font-weight:bold;padding:4px 6px}
+#pagination.next a,#pagination.previous a{font-weight:bold}
+#pagination.previous-off,#pagination.next-off{border:solid 1px #DEDEDE;color:#888;display:block;float:left;font-weight:bold;margin-right:2px;padding:4px 5px}*/
+div#adminBody{color:#666; margin: 10px auto; border:1px solid #ccc; padding: 10px; background-color: #fff }
+div#systemErrorMessage{background:#FDE4E3;border:1px solid #FFB68A;color:#f30;padding:10px}
+div#systemSuccessMessage{background:#CEFDC8;border:1px solid #33CC33;color:#090;padding:10px}
+div#systemSuccessMessage span.script_text,div#systemErrorMessage span.script_text{font-family:"Courier New",Courier,monospace}
+#pagination a:hover{border:solid 1px #0e509e}
+#pagination a:link,#pagination a:visited{color:#0e509e;display:block;float:left;padding:3px 6px;text-decoration:none}
+.jtr:hover,.jtrodd:hover,.jtreven:hover{}
+.menuTableRow,.menuTableRowOdd:hover,.menuTableRowEven:hover,.adminRow,.adminRowOdd:hover,.adminRowEven:hover{margin-left:3px;margin-right:10px}
+/*Header*/
+div.socHeader{ background-color: #000000; min-height: 45px; padding: 5px; border-bottom:1px solid #49533A; color: #fff;}
+div.socMenu{ background-color: #4A5154; min-height: 24px; border-bottom: 1px solid #1A5189; padding: 2px;}
+div.menu-items, div.headerTable{max-width: 1130px; margin: auto;}
+#nav {
+	margin: 0;
+	padding: 0;
+	height: 24px;
+	list-style: none;
+	display: inline;
+	color: #fff;
+/*	overflow: hidden;*/
+	}
+
+#nav li {
+	margin: 0; 
+	padding: 0;
+    list-style: none;
+	display: inline;
+	}
+
+#nav a {
+	float: left;
+	font-size:13px;
+	font-weight:bold;
+	padding: 3px;
+	min-width: 100px;
+	color: #666666;
+	text-decoration: none;
+	line-height: 161%;
+}
+
+#nav a:hover{ color: #356AA0;}
+#nav a.selected {
+	background-position: 0 -40px;
+	background-color: #f4f4f4;
+	border: 1px solid #1A5189;
+	border-bottom: none;
+	-moz-border-radius-topleft:5px;
+	-webkit-border-top-left-radius: 5px;
+	-moz-border-radius-topright:5px;
+	-webkit-border-top-right-radius: 5px;
+}
+/* form */
+form input, form textarea, form button, form select {
+color: #333333;
+font-family:verdana;
+font-size:12px;
+line-height:20px;
+padding:5px;
+}
+
+input, select {
+border:1px solid silver;
+font-size:12px;
+padding: 5px;
+}
+
+/* FORM */
+/* CSS Document */
+form fieldset{margin:0; padding:10px; border:1px solid #ccc; background-color:#F0F1F2}
+form fieldset legend{margin-top:0px; padding:5px; border:1px solid #ebebeb; border-bottom:1px solid #ccc;  font-size:11px}
+form .ctrlHolder{overflow:hidden; margin:0; padding:0; clear:both}
+
+/*.soc_button, 
+form button{ display:block;  float:left;  margin:0 7px 0 0;  background-color:#f5f5f5;  border:1px solid #dedede;  border-top:1px solid #eee;  border-left:1px solid #eee; border-right:1px solid #ccc; border-bottom:1px solid #ccc;  font-family:"Lucida Sans Unicode",Tahoma,Arial,Verdana,sans-serif;  font-size:100%;  line-height:130%;  text-decoration:none;  font-weight:bold;  color:#565656;  cursor:pointer;  padding:5px 10px 6px 7px}*/
+
+form .inlineLabel, form .inlineLabels .inlineLabel, form .blockLabels .inlineLabel{width:auto; float:none; margin:0 1em 0 0; display:inline}
+form .inlineLabel input{}
+form .focused{}
+
+form .inlineLabels .ctrlHolder{}
+form .inlineLabels label, form .inlineLabels .label{float:left; margin:.3em 2% 0 0; padding-top:3px; line-height:100%; position:relative}
+form .inlineLabels .textInput, .DatePicker, form .inlineLabels .fileUpload{float:left}
+form .inlineLabels input.fileUpload{height:25px; padding:7px}
+form .inlineLabels .selectInput{float:left}
+form .inlineLabels textarea{float:left}
+form .inlineLabels .formHint{clear:both}
+
+form .inlineLabels .formHint strong{}
+
+form .blockLabels .ctrlHolder{}
+
+form .ctrlHolder:hover{ }
+
+form .blockLabels label, form .blockLabels .label{display:block; float:none; margin:.3em 0; padding:0; line-height:100%; width:auto}
+
+form .blockInfo, 
+.blockInfo{background-color:#f8f8e4; border:1px solid #FBDFCA; padding:8px 8px 8px 8px; margin-bottom:8px}
+form .blockLabels .label{float:left; margin-right:3em}
+form .blockLabels .inlineLabel{position:relative; top:.15em}
+
+form input, form textarea, form select, input.fileUpload{border:1px solid #ccc; padding: 6px}
+
+form input:hover, form textarea:hover, form select:hover, input.fileUpload:hover { border: 1px solid #88C4FF; }
+form input:focus, form textarea:focus, form select:focus, input.fileUpload:focus{ background-color: #E7FEFD; border: 1px solid #88C4FF; }
+
+form .blockLabels .textInput, .DatePicker, form .blockLabels .fileUpload{float:left}
+form .blockLabels .fileUpload{}
+form .blockLabels .selectInput{display:block}
+form .blockLabels textarea{float:left; display:block}
+form .blockLabels .formHint{float:right; margin:0; clear:none}
+
+form .blockLabels .ctrlHolder{}
+form .blockLabels .focused{}
+
+form .ctrlHolder .textInput:focus, .DatePicker:focus{background-color:#FEFEF5}
+form div.focused .textInput:focus, .DatePicker:focus{}
+form div.focused .formHint{}
+
+form label em, form .label em{display:block; position:absolute; left:100%; font-style:normal; font-weight:bold}
+form .blockLabels label em, form .blockLabels .label em{position:static; display:inline}
+
+form #errorMsg, form .error{}
+form #errorMsg dt, form #errorMsg h3{}
+form #errorMsg dd{}
+form #errorMsg ol{}
+form #errorMsg ol li{}
+form .errorField{}
+
+form .col{float:left}
+form .columnLeft{float:left}
+form .columnRight{float:right}
+
+form fieldset{margin:1em 0}
+form fieldset legend{color:#666; font-family:Verdana,Arial,Helvetica,sans-serif; font-weight:bold; font-size:120%}
+form .ctrlHolder{}
+form .buttonHolder{text-align:left}
+form .focused{background:#FFFCDF}
+
+form .inlineLabels label, form .inlineLabels .label{width:35%}
+form .inlineLabels .textInput, .DatePicker, form .inlineLabels .fileUpload{width:60%; height:19px}
+form .inlineLabels .selectInput{width:35%}
+form .inlineLabels textarea{width:60%; height:12em}
+form .inlineLabels .formHint{margin-top:0; margin-left:37%}
+
+.formHint{color:#999; font-size:80%}
+
+form .blockLabels .textInput, .DatePicker, form .blockLabels .fileUpload{width:53%}
+form .blockLabels .selectInput{display:block; width:53.5%}
+form .blockLabels textarea{width:53%; height:12em}
+form .blockLabels .formHint{width:45%}
+
+form .col{width:47.9%; margin:0 2% 0 0}
+form .columnLeft{width:49%}
+form .columnRight{width:49%}
+
+form #errorMsg{background:#ffdfdf; border:1px solid #df7d7d; border-width:1px 0; margin:0 0 1em 0; padding:1em}
+form .error{background:#ffdfdf; border:1px solid #df7d7d; border-width:1px 0}
+form #errorMsg dt, form #errorMsg h3{margin:0 0 .5em 0; font-size:110%; line-height:100%; font-weight:bold}
+form #errorMsg dd{margin:0; padding:0}
+form #errorMsg ol{margin:0; padding:0}
+form #errorMsg ol li{margin:0; padding:2px; list-style-position:inside; border-bottom:1px dotted #df7d7d; position:relative}
+form .errorField{color:#af4c4c; margin:0 0 6px 0; padding:4px; background:#ffbfbf}
+
+/*@FORM END */
+
+
+
+ul{border:0; margin:0; padding:0;}
+
+#pagination li{border:0;font-size:11px;list-style:none;margin:0;padding:0}
+#pagination li,#pagination a{border:solid 1px #DEDEDE margin-right:2px}
+#pagination li.active{color:#00000 font-weight:bold;display:block;float:left;padding:3px 5px}
+#pagination.next a,#pagination li.previous a{border:solid 1px #FFFFFF;font-weight:bold}
+#pagination li.previous-off,#pagination li.next-off{color:#888888 display:block;float:left;font-weight:bold;padding:3px 4px}
+#pagination a:hover{text-decoration:none}
+#pagination a:link,#pagination a:visited{color:#0033CC display:block;float:left;padding:3px 5px;text-decoration:none}
+
+/*custom*/
+#plugin_list_page .adminTableRow, #userListsTable .adminRow{ border-bottom: 1px solid #ebebeb }
+#plugin_list_page .adminTableRow:hover, #userListsTable .adminRow:hover{ background-color: #ebebeb}
+form .example{
+background-color: red;
+}
+</style>

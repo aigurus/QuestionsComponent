@@ -1,0 +1,33 @@
+/** unique styles for jQuery comments **/
+#comments { margin-left: 70px; font-family: Arial, Tahoma, sans-serif; font-size: 100%; }
+
+h1 { font-family: Georgia, Helvetica, sans-serif; font-size: 18px; letter-spacing: -0.04em; color: #85a0b5; font-weight: normal; line-height: 1.7em; margin-bottom: 6px; }
+a { color: #105Cb6; text-decoration: none; cursor: pointer; }
+a:hover { text-decoration: underline; }
+p { display: block; }
+
+.comment-thread { width: 600px; margin-bottom: 20px; } /** note the fixed width is for tutorial purposes. this can expand fully for any template **/
+.thread-replies .comment-thread {width: auto; }
+.comment-block { min-height: 1%; margin-bottom: 50px; }
+
+.thread-replies { display: block; margin-left: 45px; }
+
+.author-avatar { display: block; float: left; height: 24px; margin-left: -5px; width: 24px; }
+.author-avatar img { display: block; width: 16px height: 16px; padding: 1px; border: 1px solid #98a0ae; position: relative; top: 2px; }
+
+.comment-top-meta { display: block; height: 25px; background: #e4edf4; margin-bottom: 6px; padding-left: 18px; font-size: 12px; line-height: 13px; }
+.comment-top-meta strong { color: #474747; line-height: 25px; margin-right: 8px; }
+.comment-top-meta span { font-size: 11px; color: #818181; line-height: 25px; }
+
+.comment-content { display: block; line-height: 14px; margin-bottom: 10px; }
+.comment-content .the-comment-post { display: block; color: #333; font-size: 12px; margin-bottom: 3px; }
+
+.comment-reply-options { display: block; margin-bottom: 10px; }
+.showhidecommform { display: block; }
+
+a.option-reply { float: left; margin-right: 10px; font-weight: bold; font-size: 12px; line-height: 18px; padding-left: 22px; background: url('images/commadd.png') 0 -1px no-repeat; }
+
+#commsubform { display: block; padding-top: 12px; margin-bottom: 3px; clear: both; }
+#commsubform label { display: block; margin-top: 8px; font-size: 11px; font-weight: bold; margin-bottom: 2px; color: #666; }
+.commtxtfield { width: 350px; height: 144px; padding: 4px 7px; font-family: Arial, Tahoma, sans-serif; font-size: 14px; line-height: 18px; color: #575a60; }
+#commsubform .savecommbtn { font-size: 12px; font-weight: bold; padding: 3px 7px; color: #fff; background: #426b9b; }

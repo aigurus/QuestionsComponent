@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+        <layout title="COM_QUESTIONS_MENU_QUESTIONS">
+                <message>COM_QUESTIONS_MENU_QUESTIONS</message>
+        </layout>
+        <fields name="request">
+			<fieldset name="request">
+
+				<!-- CATEGORY VIEW -->
+				<field name="catid" 
+					type="category"
+					extension="com_questions"
+					label="COM_QUESTIONS_CATEGORY"
+					class="inputbox"
+				>
+			 		<option value="0">COM_QUESTIONS_JOPTION_SELECT_CATEGORY</option>
+				</field>
+				
+				<!-- TAG VIEW -->
+				<field name="tag" 
+					type="text"
+					extension="com_questions"
+					label="COM_QUESTIONS_TAG"
+					class="inputbox"
+				/>
+				
+				<!-- FILTERS -->
+				<field name="filter" 
+					type="list"
+					label="COM_QUESTIONS_FILTER"
+					class="inputbox"
+				>
+			 		<option value="0">COM_QUESTIONS_FILTER_NONE</option>
+			 		<option value="answered">COM_QUESTIONS_FILTER_ANSWERED</option>
+			 		<option value="notanswered">COM_QUESTIONS_FILTER_NOTANSWERED</option>
+			 		<option value="resolved">COM_QUESTIONS_FILTER_RESOLVED</option>
+			 		<option value="unresolved">COM_QUESTIONS_FILTER_UNRESOLVED</option>
+			 		<option value="myquestions">COM_QUESTIONS_FILTER_MYQUESTIONS</option>
+				</field>
+				
+			</fieldset>
+		</fields>
+</metadata>

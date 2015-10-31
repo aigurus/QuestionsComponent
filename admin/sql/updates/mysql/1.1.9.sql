@@ -1,0 +1,1 @@
+ALTER TABLE `#__questions_core` CHANGE `tags` `qtags` text;

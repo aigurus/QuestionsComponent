@@ -1,0 +1,553 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+
+	<fieldset name="permissions" label="COM_QUESTIONS_PERMISSIONS_LABEL" description="COM_QUESTIONS_PERMISSIONS_DESC">
+	
+		<!-- ACL PERMISSIONS -->
+		<field
+			name="rules"
+			type="rules"
+			label="Permissions"
+			class="inputbox"
+			validate="rules"
+			filter="rules"
+			component="com_questions"
+			section="component" 
+		/>
+		
+	</fieldset>
+	
+	<!-- Configuration -->
+	<fieldset name="COM_QUESTIONS_CONFIGURATION" label="COM_QUESTIONS_CONFIGURATION_LABEL" description="COM_QUESTIONS_CONFIGURATION_OPTIONS">
+		
+		<!--ORDERING -->
+		<field name="list_ordering" 
+			type="list"
+			label="COM_QUESTIONS_ORDER_BY"
+			class="inputbox"
+			default="submitted"
+		>
+			<option value="submitted">COM_QUESTIONS_ORDER_SUBMITTED</option>
+			<option value="votes">COM_QUESTIONS_ORDER_VOTES</option>
+			<option value="score">COM_QUESTIONS_ORDER_SCORE</option>
+			<option value="impressions">COM_QUESTIONS_ORDER_VIEWS</option>
+			<option value="answerscount">COM_QUESTIONS_ORDER_ANSWERS</option>
+		</field>
+		<field name="recaptcha"
+			type="list"
+			label="COM_QUESTIONS_USE_RECAPTCHA"
+			description="COM_QUESTIONS_USE_RECAPTCHA_DESC"
+			class="inputbox"
+			default="0"
+		>
+			<option value="1">COM_QUESTIONS_OPT_YES</option>
+			<option value="0">COM_QUESTIONS_OPT_NO</option>
+		</field>
+		<field name="votingreq"
+			type="list"
+			label="COM_QUESTIONS_VOTING_LEVEL_REQUIRED"
+			class="inputbox"
+			default="0"
+		>
+			<option value="1">COM_QUESTIONS_OPT_YES</option>
+			<option value="0">COM_QUESTIONS_OPT_NO</option>
+		</field>
+		<field 
+			name="votinglevel" 
+			type="sql" 
+			default="0" 
+			class="articleselectbox" 
+			label="COM_QUESTIONS_SELECT_LEVEL_FOR_VOTING"
+			description="COM_QUESTIONS_SELECT_LEVEL_FOR_VOTING_DESC"
+			query="SELECT id,rank,pointsreq  FROM #__questions_ranks" 
+			key_field="pointsreq" 
+			value_field="rank" 
+		/>
+		
+		<field name="mainpagetitle" 
+			type="text" 
+			default="Questions" 
+			label="Main page Title" 
+			description="Enter the main Page Title" 
+			size="50"
+		>
+		</field>
+		
+		<field name="use_mail_system"
+			type="list"
+			label="COM_QUESTIONS_USE_EMAIL_SYSTEM"
+			class="inputbox"
+			default="1"
+		>
+			<option value="1">COM_QUESTIONS_OPT_YES</option>
+			<option value="0">COM_QUESTIONS_OPT_NO</option>
+		</field>
+		
+		<field name="minpointsreq"
+			type="list"
+			label="COM_QUESTIONS_MIN_POINTS_REQ"
+			class="inputbox"
+			default="0"
+		>
+			<option value="1">COM_QUESTIONS_OPT_YES</option>
+			<option value="0">COM_QUESTIONS_OPT_NO</option>
+		</field>
+		<field name="reqpoints" 
+			type="text" 
+			default="0" 
+			label="COM_QUESTIONS_MIN_REQUIRED_POINTS" 
+			description="COM_QUESTIONS_MIN_REQUIRED_POINTS_DESC" 
+			size="5"
+		>
+		</field>
+		
+		<field name="sorting_backend"
+			type="list"
+			label="COM_QUESTIONS_SORTING_OPTION"
+			class="inputbox"
+			default="0"
+		>
+			<option value="1">COM_QUESTIONS_BACKEND_SORTING</option>
+			<option value="0">COM_QUESTIONS_FRONTEND_SORTING</option>
+		</field>
+				
+		<!-- ORDERING DIRECTION -->
+		<field name="list_direction" 
+			type="list"
+			label="COM_QUESTIONS_ORDER_DIRECTION"
+			class="inputbox"
+			default="DESC"
+		>
+			<option value="DESC">COM_QUESTIONS_ORDER_DESC</option>
+			<option value="ASC">COM_QUESTIONS_ORDER_ASC</option>
+		</field>
+				
+		<!-- DISPLAY STATS -->
+		<field name="display_stats"
+			type="list"
+			label="COM_QUESTIONS_DISPLAY_STATS"
+			class="inputbox"
+			default="1"
+		>
+			<option value="1">COM_QUESTIONS_OPT_YES</option>
+			<option value="0">COM_QUESTIONS_OPT_NO</option>
+		</field>
+		
+		<field name="show_report"
+			type="list"
+			label="COM_QUESTIONS_SHOW_REPORT"
+			class="inputbox"
+			default="1"
+		>
+			<option value="1">COM_QUESTIONS_OPT_YES</option>
+			<option value="0">COM_QUESTIONS_OPT_NO</option>
+		</field>
+		
+		<field name="joiningpoints" type="text" default="25" label="COM_QUESTIONS_POINTS_JOINING_LABEL" description="COM_QUESTIONS_POINTS_JOINING_DESC" size="3">
+		</field>
+		<field name="loggingpoints" type="text" default="1" label="COM_QUESTIONS_POINTS_JOINING_LOG_ONCE_LABEL" description="COM_QUESTIONS_POINTS_JOINING_LOG_ONCE_DESC" size="3">
+		</field>
+		<field name="askingpoints" type="text" default="-1" label="COM_QUESTIONS_POINTS_ASK_LABEL" description="COM_QUESTIONS_POINTS_ASK_DESC" size="3">
+		</field>
+		<field name="answeringpoints" type="text" default="2" label="COM_QUESTIONS_POINTS_ANS_LABEL" description="COM_QUESTIONS_POINTS_ANS_DESC" size="3">
+		</field>
+
+		<field name="bestchosenpoints" type="text" default="10" label="COM_QUESTIONS_POINTS_ANS_BEST_LABEL" description="COM_QUESTIONS_POINTS_ANS_BEST_DESC" size="3">
+		</field>
+		<field name="bestchooserpoints" type="text" default="4" label="COM_QUESTIONS_POINTS_ANS_BEST_CHOSE_LABEL" description="COM_QUESTIONS_POINTS_ANS_BEST_CHOSE_DESC" size="3">
+		</field>
+		
+		<field name="jomsocial_acivity"
+			type="list"
+			label="COM_QUESTIONS_ADD_TO_JOMSOCIAL_ACIVITY"
+			class="inputbox"
+			default="0"
+		>
+			<option value="1">COM_QUESTIONS_OPT_YES</option>
+			<option value="0">COM_QUESTIONS_OPT_NO</option>
+		</field>
+
+				
+		<!-- MOVE :: DISPLAY FILTERS -->
+		<field name="display_filters"
+			type="list"
+			label="COM_QUESTIONS_DISPLAY_FILTERS"
+			class="inputbox"
+			default="1"
+		>
+			<option value="1">COM_QUESTIONS_OPT_YES</option>
+			<option value="0">COM_QUESTIONS_OPT_NO</option>
+		</field>
+		
+		<field name="display_sorting"
+			type="list"
+			label="COM_QUESTIONS_DISPLAY_SORTING"
+			class="inputbox"
+			default="1"
+		>
+			<option value="1">COM_QUESTIONS_OPT_YES</option>
+			<option value="0">COM_QUESTIONS_OPT_NO</option>
+		</field>
+				
+
+		<field name="display_gravatars"
+			type="list"
+			label="COM_QUESTIONS_DISPLAY_AVATARS"
+			class="inputbox"
+			default="1"
+		>
+			<option value="1">Gravatar</option>
+			<option value="2">Jomsocial</option>
+			<option value="3">COM_QUESTIONS_JOOMLA_PROFILE_PICTURE</option>
+			<option value="0">COM_QUESTIONS_NONE</option>
+		</field>
+		
+		<field name="display_help"
+			type="list"
+			label="Display Help"
+			class="inputbox"
+			default="0"
+		>
+			<option value="1">COM_QUESTIONS_DISPLAY_HELP</option>
+			<option value="0">COM_QUESTIONS_HIDE_HELP</option>
+		</field>
+		<field name="helparticleid" 
+			type="text" 
+			default="1" 
+			label="COM_QUESTIONS_ARTID_LABEL" 
+			description="COM_QUESTIONS_ARTID_DESC" 
+			size="2"
+		>
+		</field>
+		
+		<field name="javatarsize"
+			type="list"
+			label="COM_QUESTIONS_JAVATAR_SIZE"
+			class="inputbox"
+			default="50"
+			description="COM_QUESTIONS_AVATAR_SIZE_DESC"
+		>
+			<option value="50">50</option>
+			<option value="200">200</option>
+			<option value="original">COM_QUESTIONS_ORIGINAL</option>
+			<option value="filler">COM_QUESTIONS_FILLER</option>
+		</field>
+
+
+	
+		<!-- DEFAULT QUESTION STATE -->
+		<field
+			name="defaultQuestionState"
+			label="COM_QUESTIONS_CONFIG_DEFAULTQUESTIONSTATE"
+			type="list"
+			class="inputbox"
+			default="1"
+		>
+			<option value="1">COM_QUESTIONS_OPT_PUBLISHED</option>
+			<option value="0">COM_QUESTIONS_OPT_UNPUBLISHED</option>
+		</field>
+		
+		<!-- DEFAULT ANSWER STATE -->
+		<field
+			name="defaultAnswerState"
+			label="COM_QUESTIONS_CONFIG_DEFAULTANSWERSTATE"
+			type="list"
+			class="inputbox"
+			default="1"
+		>
+			<option value="1">COM_QUESTIONS_OPT_PUBLISHED</option>
+			<option value="0">COM_QUESTIONS_OPT_UNPUBLISHED</option>
+		</field>
+		<field
+			name="loglevel"
+			label="COM_QUESTIONS_CONFIG_LOGLEVEL"
+			type="list"
+			class="inputbox"
+			default="1"
+		>
+			<option value="0">COM_QUESTIONS_LOG_NOLOG</option>
+			<option value="1">COM_QUESTIONS_LOG_SEVERE</option>
+			<option value="5">COM_QUESTIONS_LOG_ERROR</option>
+			<option value="7">COM_QUESTIONS_LOG_WARNING</option>
+			<option value="9">COM_QUESTIONS_LOG_INFO</option>			
+		</field>
+		
+		<field
+			name="show_category_list"
+			label="COM_QUESTIONS_SHOW_CAT_LIST"
+			type="list"
+			class="inputbox"
+			default="1"
+		>
+			<option value="0">COM_QUESTIONS_HIDE_CAT</option>
+			<option value="1">COM_QUESTIONS_SHOW_CAT</option>
+		</field>
+		
+		<field
+			name="show_subcategory_list"
+			label="COM_QUESTIONS_SHOW_SUBCAT_LIST"
+			type="list"
+			class="inputbox"
+			default="1"
+		>
+			<option value="0">COM_QUESTIONS_HIDE_SUBCAT</option>
+			<option value="1">COM_QUESTIONS_SHOW_SUBCAT</option>
+		</field>
+		
+		<field
+			name="show_page_heading"
+			label="COM_QUESTIONS_SHOW_PG_HEAD"
+			type="list"
+			class="inputbox"
+			default="1"
+		>
+			<option value="0">COM_QUESTIONS_HIDE_PAGE_HEADING</option>
+			<option value="1">COM_QUESTIONS_SHOW_PAGE_HEADING</option>
+		</field>
+		
+		<field
+			name="cat_limit"
+			label="COM_QUESTIONS_CAT_LIMIT"
+			type="text"
+			class="inputbox"
+			default="5"
+		>
+		</field>
+		
+		<field
+			name="cat_ordering"
+			label="COM_QUESTIONS_CAT_ORDER"
+			type="list"
+			class="inputbox"
+			default="c.id"
+		>
+			<option value="c.id">COM_QUESTIONS_ORDER_BY_ID</option>
+			<option value="c.title">COM_QUESTIONS_ORDER_BY_TITLE</option>
+		</field>
+		
+		<field
+			name="sub_cat_limit"
+			label="COM_QUESTIONS_SUB_CAT_LIMIT"
+			type="text"
+			class="inputbox"
+			default="5"
+		>
+		</field>
+		
+		<field
+			name="sub_cat_ordering"
+			label="COM_QUESTIONS_SUB_CAT_ORDER"
+			type="list"
+			class="inputbox"
+			default="c.id"
+		>
+			<option value="c.id">COM_QUESTIONS_SUB_ORDER_BY_ID</option>
+			<option value="c.title">COM_QUESTIONS_SUB_ORDER_BY_TITLE</option>
+		</field>
+		</fieldset>
+		<fieldset name="theming" label="Designing" description="Design Options">
+
+		<!-- USE OF COMPONENT'S DEFAULT CSS -->
+		<field
+			name="useDefaultCss"
+			label="COM_QUESTIONS_CONFIG_USEDEFAULTCSS"
+			type="list"
+			class="inputbox"
+			default="1"
+		>
+			<option value="1">COM_QUESTIONS_OPT_YES</option>
+			<option value="0">COM_QUESTIONS_OPT_NO</option>
+		</field>
+		
+		<field
+			name="stylesheet"
+			label="COM_QUESTIONS_CHOOSE_STYLESHEET"
+			type="list"
+			class="inputbox"
+			default="simple"
+		>
+			<option value="simple">Simple Style</option>
+			<option value="stylish">Rounded Style</option>
+		</field>
+
+		<!-- USE OF COMPONENT'S DEFAULT CSS -->
+		
+		
+		<field name="twitter_widget" type="list" default="hide" label="COM_QUESTIONS_SHOW_TWITTER_WIDGET_LABEL" description="COM_QUESTIONS_SHOW_TWITTER_WIDGET_DESC">
+			<option value="show">COM_QUESTIONS_SHOW</option>
+			<option value="hide">COM_QUESTIONS_HIDE</option>
+		</field>
+		<field name="twitter_login" type="text" default="joomla" label="COM_QUESTIONS_TWITTER_LOGIN_LABEL" description="COM_QUESTIONS_TWITTER_LOGIN_DESC" />
+		<field name="number_of_tweets" type="text" default="4" label="COM_QUESTIONS_NO_TWEETS_LABEL" description="COM_QUESTIONS_NO_TWEETS_DESC" />
+		<field name="show_avatars" type="list" default="false" label="COM_QUESTIONS_SHOW_AVATAR_LABEL" description="COM_QUESTIONS_SHOW_AVATAR_DESC">
+			<option value="show">COM_QUESTIONS_SHOW</option>
+			<option value="hide">COM_QUESTIONS_HIDE</option>
+		</field>    	
+		<field name="show_timestamps" type="list" default="false" label="COM_QUESTIONS_SHOW_TS_LABEL" description="COM_QUESTIONS_SHOW_TS_DESC">
+			<option value="show">COM_QUESTIONS_SHOW</option>
+			<option value="hide">COM_QUESTIONS_HIDE</option>
+		</field>
+		<field name="show_hashtags" type="list" default="false" label="COM_QUESTIONS_SHOW_HT_LABEL" description="COM_QUESTIONS_SHOW_HT_DESC">
+			<option value="show">COM_QUESTIONS_SHOW</option>
+			<option value="hide">COM_QUESTIONS_HIDE</option>
+		</field>
+        	<field name="shell_background" type="text" default="#ffffff" label="COM_QUESTIONS_SHELL_BG_LABEL" description="COM_QUESTIONS_SHELL_BG_DESC" />
+	        <field name="shell_color" type="text" default="#000000" label="COM_QUESTIONS_SHELL_TEXT_LABEL" description="COM_QUESTIONS_SHELL_TEXT_DESC" />
+        	<field name="tweets_background" type="text" default="#ffffff" label="COM_QUESTIONS_TWEETS_BG_COLOR_LABEL" description="COM_QUESTIONS_TWEETS_BG_COLOR_DESC" />
+	        <field name="tweets_color" type="text" default="black" label="COM_QUESTIONS_TWEETS_TEXT_COLOR_LABEL" description="COM_QUESTIONS_TWEETS_TEXT_COLOR_DESC" />
+        	<field name="tweets_links" type="text" default="#4000ff" label="COM_QUESTIONS_TWEETS_LINK_COLOR_LABEL" description="COM_QUESTIONS_TWEETS_LINK_COLOR_DESC" />
+		<field name="@spacer" type="spacer" default="" label="" description="" />
+		<field name="icons_size" type="list" default="16" label="COM_QUESTIONS_ICON_SIZE_LABEL" description="COM_QUESTIONS_ICON_SIZE_DESC">
+			<option value="16">16</option>
+			<option value="32">32</option>
+			<option value="64">64</option>
+		</field>
+		<field name="@spacer" type="spacer" default="" label="" description="" />
+		<field name="facebook" type="list" default="show" label="COM_QUESTIONS_SHOW_FACEBOOK_LABEL" description="COM_QUESTIONS_SHOW_FACEBOOK_DESC">
+			<option value="show">COM_QUESTIONS_SHOW</option>
+			<option value="hide">COM_QUESTIONS_HIDE</option>
+		</field>
+		<field name="twitter" type="list" default="show" label="COM_QUESTIONS_SHOW_TWITTER_LABEL" description="COM_QUESTIONS_SHOW_TWITTER_DESC">
+			<option value="show">COM_QUESTIONS_SHOW</option>
+			<option value="hide">COM_QUESTIONS_HIDE</option>
+		</field>		
+		<field name="myspace" type="list" default="hide" label="COM_QUESTIONS_SHOW_MYSPACE_LABEL" description="COM_QUESTIONS_SHOW_MYSPACE_DESC">
+			<option value="show">COM_QUESTIONS_SHOW</option>
+			<option value="hide">COM_QUESTIONS_HIDE</option>
+		</field>
+		<field name="stumbleupon" type="list" default="show" label="COM_QUESTIONS_SHOW_STUMBLE_LABEL" description="COM_QUESTIONS_SHOW_STUMBLE_DESC">
+			<option value="show">COM_QUESTIONS_SHOW</option>
+			<option value="hide">COM_QUESTIONS_HIDE</option>
+		</field>		
+		<field name="reddit" type="list" default="show" label="COM_QUESTIONS_SHOW_REDDIT_LABEL" description="COM_QUESTIONS_SHOW_REDDIT_DESC">
+			<option value="show">COM_QUESTIONS_SHOW</option>
+			<option value="hide">COM_QUESTIONS_HIDE</option>
+		</field>
+		<field name="delicious" type="list" default="show" label="COM_QUESTIONS_SHOW_DELICIOUS_LABEL" description="COM_QUESTIONS_SHOW_DELICIOUS_DESC">
+			<option value="show">COM_QUESTIONS_SHOW</option>
+			<option value="hide">COM_QUESTIONS_HIDE</option>
+		</field>
+		<field name="google" type="list" default="hide" label="COM_QUESTIONS_SHOW_GOOGLE_LABEL" description="COM_QUESTIONS_SHOW_GOOGLE_DESC">
+			<option value="show">COM_QUESTIONS_SHOW</option>
+			<option value="hide">COM_QUESTIONS_HIDE</option>
+		</field>
+		<field name="mail" type="list" default="hide" label="COM_QUESTIONS_SHOW_MAIL_LABEL" description="COM_QUESTIONS_SHOW_MAIL_DESC">
+			<option value="show">COM_QUESTIONS_SHOW</option>
+			<option value="hide">COM_QUESTIONS_HIDE</option>
+		</field>
+		<field name="print" type="list" default="hide" label="COM_QUESTIONS_SHOW_PRINT_LABEL" description="COM_QUESTIONS_SHOW_PRINT_DESC">
+			<option value="show">COM_QUESTIONS_SHOW</option>
+			<option value="hide">COM_QUESTIONS_HIDE</option>
+		</field>		
+		<field name="@spacer" type="spacer" default="" label="" description="" />
+		<field name="big_twitter" type="list" default="hide" label="COM_QUESTIONS_SHOW_TWITTEROFF_LABEL" description="COM_QUESTIONS_SHOW_TWITTEROFF_DESC">
+			<option value="show">COM_QUESTIONS_SHOW</option>
+			<option value="hide">COM_QUESTIONS_HIDE</option>
+		</field>
+		<field name="big_facebook" type="list" default="hide" label="COM_QUESTIONS_SHOW_FACEBOOKLIKE_LABEL" description="COM_QUESTIONS_SHOW_FACEBOOKLIKE_DESC">
+			<option value="show">COM_QUESTIONS_SHOW</option>
+			<option value="hide">COM_QUESTIONS_HIDE</option>
+		</field>
+		<field name="big_share_facebook" type="list" default="hide" label="COM_QUESTIONS_SHOW_FACEBOOKSHARE_LABEL" description="COM_QUESTIONS_SHOW_FACEBOOKSHARE_DESC">
+			<option value="show">COM_QUESTIONS_SHOW</option>
+			<option value="hide">COM_QUESTIONS_HIDE</option>
+		</field>
+		<field name="@spacer" type="spacer" default="" label="" description="" />
+		<field name="small_facebook" type="list" default="hide" label="COM_QUESTIONS_SHOW_FACEBOOKSMALLLIKE_LABEL" description="COM_QUESTIONS_SHOW_FACEBOOKSMALLLIKE_DESC">
+			<option value="show">COM_QUESTIONS_SHOW</option>
+			<option value="hide">COM_QUESTIONS_HIDE</option>
+		</field>
+		<field name="small_twitter" type="list" default="hide" label="COM_QUESTIONS_SHOW_SMALLTWITTER_LABEL" description="COM_QUESTIONS_SHOW_SMALLTWITTER_DESC">
+			<option value="show">COM_QUESTIONS_SHOW</option>
+			<option value="hide">COM_QUESTIONS_HIDE</option>
+		</field>
+				
+		<field name="spacer" type="spacer" class="example" label="COM_QUESTIONS_CAT_MOD_LABEL" description="COM_QUESTIONS_CAT_MOD_DESC" />
+		<field name="box_width" type="text" default="180px" label="COM_QUESTIONS_CAT_BOX_WIDTH_LABEL" description="COM_QUESTIONS_CAT_BOX_WIDTH_DESC" size="6">
+		</field>
+		<field name="box_height" type="text" default="50px" label="COM_QUESTIONS_CAT_BOX_HEIGHT_LABEL" description="COM_QUESTIONS_CAT_BOX_HEIGHT_LABEL" size="6">
+		</field>
+		
+		<field name="box_width_tags" type="text" default="180px" label="COM_QUESTIONS_TAGS_BOX_WIDTH_LABEL" description="COM_QUESTIONS_TAGS_BOX_WIDTH_DESC" size="6">
+		</field>
+		<field name="box_height_tags" type="text" default="30px" label="COM_QUESTIONS_TAGS_BOX_HEIGHT_LABEL" description="COM_QUESTIONS_TAGS_BOX_HEIGHT_DESC" size="6">
+		</field>
+		
+		<field name="category_text_size_ul" type="text" default="12px" label="COM_QUESTIONS_CAT_TEXT_SIZE_MAIN_LABEL" description="COM_QUESTIONS_CAT_TEXT_SIZE_MAIN_DESC" size="4">
+		</field>
+		<field name="category_text_size_li" type="text" default="12px" label="COM_QUESTIONS_CAT_TEXT_SIZE_SUB_LABEL" description="COM_QUESTIONS_CAT_TEXT_SIZE_SUB_DESC" size="4">
+		</field>
+		<field name="category_color_ul" type="text" default="#371C1C" label="COM_QUESTIONS_CAT_TEXT_COLOR_MAIN_LABEL" description="COM_QUESTIONS_CAT_TEXT_COLOR_MAIN_DESC" size="10">
+		</field>
+		<field name="category_color_li" type="text" default="#371C1C" label="COM_QUESTIONS_CAT_TEXT_COLOR_SUB_LABEL" description="COM_QUESTIONS_CAT_TEXT_COLOR_SUB_DESC" size="10">
+		</field>
+		<field name="category_color_onhover" type="text" default="#FFF" label="COM_QUESTIONS_CAT_TEXT_COLOR_ONHOVER_LABEL" description="COM_QUESTIONS_CAT_TEXT_COLOR_ONHOVER_DESC" size="10">
+		</field>
+		<field name="sub_cat_text_indent" type="text" default="10px" label="COM_QUESTIONS_SUB_CAT_TEXT_INDENT_LABEL" description="COM_QUESTIONS_SUB_CAT_TEXT_INDENT_DESC" size="10">
+		</field>
+		<field name="profile_main" type="text" default="100%" label="COM_QUESTIONS_PROFILE_MAIN_WIDTH_LABEL" description="COM_QUESTIONS_PROFILE_MAIN_WIDTH_DESC" size="10">
+		</field>
+		<field name="qalimit" type="text" default="2" label="COM_QUESTIONS_PROFILE_NO_QUES_LABEL" description="COM_QUESTIONS_PROFILE_NO_QUES_DESC" size="2">
+		</field>
+		<field name="tagsCount" type="text" default="5" label="COM_QUESTIONS_PROFILE_NO_TAGS_LABEL" description="COM_QUESTIONS_PROFILE_NO_TAGS_DESC" size="2">
+		</field>
+		<field name="favlimit" type="text" default="2" label="COM_QUESTIONS_PROFILE_NO_FAVS_LABEL" description="COM_QUESTIONS_PROFILE_NO_FAVS_DESC" size="2">
+		</field>
+
+   </fieldset>
+   
+   <fieldset name="profiledisplay" label="COM_QUESTIONS_PROFILE_DISPLAY" description="COM_QUESTIONS_PROFILE_DISPLAY_OPTIONS">
+	
+		<!-- ACL PERMISSIONS -->
+		<field name="show_points" type="list" default="show" label="COM_QUESTIONS_SHOW_USER_POINTS" description="COM_QUESTIONS_SHOW_USER_POINTS_DESC">
+			<option value="1">COM_QUESTIONS_SHOW</option>
+			<option value="0">COM_QUESTIONS_HIDE</option>
+		</field>
+		
+		<field name="show_profilehits" type="list" default="show" label="COM_QUESTIONS_SHOW_USER_PROFILEHITS" description="COM_QUESTIONS_SHOW_USER_PROFILEHITS_DESC">
+			<option value="1">COM_QUESTIONS_SHOW</option>
+			<option value="0">COM_QUESTIONS_HIDE</option>
+		</field>
+		
+		<field name="show_username" type="list" default="show" label="COM_QUESTIONS_SHOW_USER_NAME" description="COM_QUESTIONS_SHOW_USER_NAME_DESC">
+			<option value="1">COM_QUESTIONS_SHOW</option>
+			<option value="0">COM_QUESTIONS_HIDE</option>
+		</field>
+		
+		<field name="show_registerdate" type="list" default="show" label="COM_QUESTIONS_SHOW_USER_REGISTERDATE" description="COM_QUESTIONS_SHOW_USER_REGISTERDATE_DESC">
+			<option value="1">COM_QUESTIONS_SHOW</option>
+			<option value="0">COM_QUESTIONS_HIDE</option>
+		</field>
+		
+		<field name="show_lastvisitdate" type="list" default="show" label="COM_QUESTIONS_SHOW_USER_LAST_VISIT_DATE" description="COM_QUESTIONS_SHOW_USER_LAST_VISIT_DATE_DESC">
+			<option value="1">COM_QUESTIONS_SHOW</option>
+			<option value="0">COM_QUESTIONS_HIDE</option>
+		</field>
+		
+		<field name="show_userwebsite" type="list" default="show" label="COM_QUESTIONS_SHOW_USER_WEBSITE" description="COM_QUESTIONS_SHOW_USER_WEBSITE_DESC">
+			<option value="1">COM_QUESTIONS_SHOW</option>
+			<option value="0">COM_QUESTIONS_HIDE</option>
+		</field>
+		
+		<field name="show_useremail" type="list" default="show" label="COM_QUESTIONS_SHOW_USER_EMAIL" description="COM_QUESTIONS_SHOW_USER_EMAIL_DESC">
+			<option value="1">COM_QUESTIONS_SHOW</option>
+			<option value="0">COM_QUESTIONS_HIDE</option>
+		</field>
+		
+		<field name="show_userrealname" type="list" default="show" label="COM_QUESTIONS_SHOW_USER_REALNAME" description="COM_QUESTIONS_SHOW_USER_REALNAME_DESC">
+			<option value="1">COM_QUESTIONS_SHOW</option>
+			<option value="0">COM_QUESTIONS_HIDE</option>
+		</field>
+		
+		<field name="show_usercountry" type="list" default="show" label="COM_QUESTIONS_SHOW_USER_COUNTRY" description="COM_QUESTIONS_SHOW_USER_COUNTRY_DESC">
+			<option value="1">COM_QUESTIONS_SHOW</option>
+			<option value="0">COM_QUESTIONS_HIDE</option>
+		</field>
+		
+		<field name="show_userdob" type="list" default="show" label="COM_QUESTIONS_SHOW_USER_DOB" description="COM_QUESTIONS_SHOW_USER_DOB_DESC">
+			<option value="1">COM_QUESTIONS_SHOW</option>
+			<option value="0">COM_QUESTIONS_HIDE</option>
+		</field>
+		
+	</fieldset>
+</config>

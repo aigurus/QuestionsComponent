@@ -1,0 +1,302 @@
+﻿@CHARSET "UTF-8";
+div.votebox{
+	background: none repeat scroll 0 0 #AAAAAA;
+    border-bottom: 1px solid #AAAAAA;
+    border-right: 1px solid #AFAFAF;
+    color: #254F6B;
+    float: left;
+    font-size: 14px;
+    margin-right: 5px;
+    padding: 3px;
+    text-align: center;
+    width: 45px;
+}
+div.answer_chosen_system_published{
+background: none repeat scroll 0 0 	#7CFC00;
+border: 1px solid #CCCCCC;
+float: left; 
+height: auto;
+margin: ; 
+padding: 1% 2%; 
+position:relative;
+width: 95%; 
+}
+
+div.answer__system_published{
+background: none repeat scroll 0 0 	#DCDCDC;
+border: 1px solid #CCCCCC;
+float: left; 
+height: auto;
+margin: ; 
+padding: 1% 2%; 
+position:relative;
+width: 95%; 
+}
+
+
+div.fb_buttons{
+
+}
+div.votebox span{
+	background: none repeat scroll 0 0 #fff;
+    color: #000;
+    float: left;
+    font-size: 25px;
+    margin-right: 5px;
+    padding: 3px;
+    text-align: center;
+    width: 30px;
+	height: 30px; 
+	border-radius: 50%;
+}
+
+div.votebox a img {
+	border: 0px !important;
+}
+
+div.question_options {
+	background: none repeat scroll 0 0 #FFFFFF;
+	float: left;
+	width: 100%;
+	margin: ;
+    padding: 1% 2%;	
+	border: 1px solid #CCCCCC;
+	position: relative;
+    width: 95%;
+	height: auto;
+}
+
+/*div.pagination_new{
+	background: none repeat scroll 0 0 #FFFFFF;
+	float: left;
+	width: 100%;
+	margin: ;
+    padding: 1% 2%;	
+	border: 1px solid #CCCCCC;
+	position: relative;
+    width: 95%;
+	height: auto;
+}*/
+
+/* -------------------
+   General Pagination
+--------------------- */
+div.pagination_new {
+    clear: both;
+    text-align: center;
+    margin: 15px 0 0 0;
+}
+ 
+div.pagination_new p.counter {
+    font-style: italic;
+}
+ 
+div.pagination_new ul li {
+    list-style: none;
+    display: inline;
+    padding: 0 5px 0 5px;
+}
+
+div.question {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #CCCCCC;
+    float: left;
+    height: auto;
+    margin: ;
+    padding: 1% 2%;
+    position: relative;
+    width: 95%;
+}
+
+div.boxes {
+    margin: 5px;
+    padding: 8px;
+	float:right;
+}
+
+div.boxes span.votes{
+	background: none repeat scroll 0 0 #33ECFF;
+    border-bottom: 1px solid #AAAAAA;
+    border-right: 1px solid #AFAFAF;
+    color: #254F6B;
+    float: left;
+    font-size: 14px;
+    height: 30px;
+    margin-right: 5px;
+    padding: 10px 0;
+    text-align: center;
+    width: 45px;
+}
+div.boxes span.answers{
+	background: none repeat scroll 0 0 #11CCFF;
+    border-bottom: 1px solid #AAAAAA;
+    border-right: 1px solid #AFAFAF;
+    color: #254F6B;
+    float: left;
+    font-size: 14px;
+    height: 30px;
+    margin-right: 5px;
+    padding: 10px 0;
+    text-align: center;
+    width: 45px;
+}
+div.boxes span.impressions {
+	background: none repeat scroll 0 0 #D0ECFF;
+    border-bottom: 1px solid #AAAAAA;
+    border-right: 1px solid #AFAFAF;
+    color: #254F6B;
+    float: left;
+    font-size: 14px;
+    height: 30px;
+    margin-right: 5px;
+    padding: 10px 0;
+    text-align: center;
+    width: 45px;
+}
+
+div.boxes span span.label {
+	font-size: 12px;
+}
+
+div.question_data {
+	float: left;
+	max-width: 55%;
+}
+
+div.boxes a:link,
+div.boxes a:active,
+div.boxes a:visited,
+div.boxes a:hover {
+	text-decoration: none;
+	color: #000000 !important;
+}
+
+div.answer{
+	padding: 5px;
+	margin-top: 10px;
+	min-height: 130px;
+}
+div.questionbox{
+	background: none repeat scroll 0 0 #ccc;
+    border-bottom: 1px solid #AAAAAA;
+    border-right: 1px solid #AFAFAF;
+    border: 1px solid #CCCCCC;
+    float: left;
+    height: auto;
+    margin: ;
+    padding: 1% 2%;
+    position: relative;
+    width: 95%;
+}
+div.questions_filters {
+	float: left;
+	clear: both;
+	width: 95%;
+	border: 1px solid #ccc;
+	margin: ;
+	background: #eeeeee;
+	padding:1% 2%;
+}
+
+div.questions_filters ul
+{
+list-style: none;
+padding: 0;
+margin: 0;
+}
+
+div.questions_filters ul li{
+	list-style: none;	
+	display: inline-block;
+}
+
+div.questions_filters ul li a {
+	background: url(background.gif) #fff bottom left repeat-x;
+	height: 2em;
+	line-height: 2em;
+	float: left;
+	width: 9em;
+	display: block;
+	border: 0.1em solid #dcdce9;
+	color: #0d2474;
+	text-decoration: none;
+	text-align: center;
+}
+
+div.questions_filters ul li a.active {
+	font-weight: bold;
+}
+/*************Tab Content**************/
+
+ul.tabs {
+float:left;
+list-style:none;
+height:32px;
+width:100%;
+border-radius:8px 0 -50px 0;
+margin:0;
+padding:0;
+}
+ 
+ul.tabs li {
+float:left;
+height:31px;
+line-height:31px;
+border:1px solid #999;
+overflow:hidden;
+position:relative;
+background:#e0e0e0;
+-webkit-border-top-left-radius:8px;
+-webkit-border-top-right-radius:8px;
+-moz-border-radius-topleft:8px;
+-moz-border-radius-topright:8px;
+border-top-left-radius:8px;
+border-top-right-radius:8px;
+margin:0 5px -1px 0;
+padding:0;
+}
+ 
+ul.tabs li a {
+text-decoration:none;
+color:#000;
+display:block;
+font-size:1.2em;
+border:1px solid #fff;
+outline:none;
+-webkit-border-top-left-radius:8px;
+-webkit-border-top-right-radius:8px;
+-moz-border-radius-topleft:8px;
+-moz-border-radius-topright:8px;
+border-top-left-radius:8px;
+border-top-right-radius:8px;
+padding:0 20px;
+}
+ 
+ul.tabs li a:hover {
+background:#ccc;
+}
+ 
+html ul.tabs li.active,html ul.tabs li.active a:hover {
+background:#fff;
+border-bottom:1px solid #fff;
+}
+ 
+.tabContainer {
+border:1px solid #999;
+overflow:hidden;
+clear:both;
+float:left;
+width:100%;
+background:#fff;
+-webkit-border-radius:8px;
+-webkit-border-top-left-radius:0;
+-moz-border-radius:8px;
+-moz-border-radius-topleft:0;
+border-radius:8px;
+border-top-left-radius:0;
+}
+ 
+.tabContent {
+font-size: 12px;
+padding:20px;
+}

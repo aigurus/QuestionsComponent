@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<access component="com_questions">
+	<section name="component">
+		<action name="question.unpublished" title="COM_QUESTIONS_UNPUBLISHED" description="" />
+		<action name="question.answer" title="COM_QUESTIONS_ANSWER" description="" />
+		<action name="question.edit" title="COM_QUESTIONS_EDIT" description="" />
+		<action name="core.create" title="COM_QUESTIONS_CORE_CREATE" description="" />
+		<action name="core.edit" title="COM_QUESTIONS_CORE_EDIT" description="" />
+		<action name="core.edit_any" title="COM_QUESTIONS_EDIT_ANY" description="" />
+		<action name="question.delete" title="COM_QUESTIONS_DELETE" description="" />
+		<action name="question.publish" title="COM_QUESTIONS_PUBLISH" description="" />
+		<action name="question.viewanswers" title="COM_QUESTIONS_VIEWANSWERS" description="" />
+		<action name="question.vote" title="COM_QUESTIONS_VOTE" description="" />
+		<action name="core.admin" title="COM_QUESTIONS_CORE_ADMIN" description="" />
+		<action name="report.edit" title="COM_QUESTIONS_REPORT_EDIT" description="" />
+		<action name="report.delete" title="COM_QUESTIONS_REPORT_DELETE" description="" />
+		<action name="block.user" title="COM_QUESTIONS_BLOCK_USER" description="" />
+		<action name="access.favourite" title="COM_QUESTIONS_ACCESS_FAVOURITE" description="" />
+		<action name="core.manage" title="JACTION_MANAGE" description="JACTION_MANAGE_COMPONENT_DESC" />
+		<action name="core.delete" title="JACTION_DELETE" description="JACTION_DELETE_COMPONENT_DESC" />
+		<action name="core.edit.state" title="JACTION_EDITSTATE" description="JACTION_EDITSTATE_COMPONENT_DESC" />
+		<action name="core.edit.own" title="JACTION_EDITOWN" description="JACTION_EDITOWN_COMPONENT_DESC" />
+	</section>
+	<section name="category">
+		<action name="core.create" title="JACTION_CREATE" description="COM_CATEGORIES_ACCESS_CREATE_DESC" />
+		<action name="core.delete" title="JACTION_DELETE" description="COM_CATEGORIES_ACCESS_DELETE_DESC" />
+		<action name="core.edit" title="JACTION_EDIT" description="COM_CATEGORIES_ACCESS_EDIT_DESC" />
+		<action name="core.edit.state" title="JACTION_EDITSTATE" description="COM_CATEGORIES_ACCESS_EDITSTATE_DESC" />
+		<action name="core.edit.own" title="JACTION_EDITOWN" description="COM_CATEGORIES_ACCESS_EDITOWN_DESC" />
+	</section>
+</access>

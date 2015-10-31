@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form
+	addrulepath="/administrator/components/com_questions/models/rules"
+>
+	<fieldset>
+		<field name="id" type="hidden" />
+		<field
+			name="title"
+			type="text"
+			label="FRM_TITLE"
+			size="40"
+			class="inputbox"
+			validate="title"
+			required="true"
+			default=""
+		/>
+		<field
+			name="text"
+			type="textarea"
+			label="FRM_TEXT"
+			rows="10"
+			class="inputbox"
+			required="true"
+			default=""
+		/>
+		<field
+			name="submitted"
+			type="calendar"
+			label="FRM_SUBMISSIONDATE"
+			class="inputbox"
+			size="22"
+			format="%Y-%m-%d %H:%M:%S"
+		/>
+		<field name="userid_creator" 
+			type="user"
+			label="FRM_SUBMITTEDBY" 
+			description="Submitted By" 
+		/>
+		<field
+			name="modified"
+			type="calendar"
+			label="FRM_LASTMOD"
+			class="readonly"
+			readonly="true"
+			size="22"
+			format="%Y-%m-%d %H:%M:%S"
+		/>
+		<field name="userid_modifier" type="user"
+			label="JGLOBAL_FIELD_MODIFIED_BY_LABEL"
+			class="readonly"
+			readonly="true"
+			
+		 />
+		<field
+			name="question"
+			type="list"
+			label="FRM_TYPE"
+			description="Type"
+			class="readonly"
+			readonly="true"
+			filter="intval"
+			size="1"
+			default="1"
+		>
+			<option value="1">
+				Question</option>
+			<option value="0">
+				Answer</option>
+		</field>
+		<field
+			name="votes_positive"
+			type="hidden"
+			default="0"
+		/>
+		<field
+			name="votes_negative"
+			type="hidden"
+			default="0"
+		/>
+		<field
+			name="parent"
+			label="FRM_PARENT"
+			class="readonly"
+			readonly="true"
+		/>
+		<field
+			name="impressions"
+			type="hidden"
+		/>
+		
+		<field
+			name="published"
+			type="list"
+			label="JGLOBAL_STATE"
+			description="JFIELD_PUBLISHED_DESC"
+			class="inputbox"
+			filter="intval"
+			size="1"
+			default="1"
+		>
+			<option value="1">
+				JPUBLISHED</option>
+			<option value="0">
+				JUNPUBLISHED</option>
+		</field>
+		
+		<field
+			name="chosen"
+			type="hidden"
+		/>
+		
+		<field
+			name="ip"
+			type="hidden"
+		/>
+		
+		<field
+			name="email"
+			type="text"
+			label="FRM_EMAIL"
+			class="inputbox"
+			required="true"
+			validate="email"
+			size="40"
+		/>
+		
+		<field
+			name="catid"
+			type="category"
+			extension="com_questions"
+			class="inputbox"
+			required="true"
+			validate="category"
+			default=""
+			label="FRM_CATID"
+		>
+			 <option value="0">JOPTION_SELECT_CATEGORY</option>
+		</field>
+		
+		<field
+			name="qtags"
+			type="text"
+			label="FRM_TAGS"
+			class="inputbox"
+			size="40"
+		/>
+			
+		
+	</fieldset>
+</form>

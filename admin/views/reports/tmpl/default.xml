@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+        <view title="UserProfile">
+		<message>UserProfile</message>
+	</view>
+		<config>
+		   <fields name="params">
+			<fieldset name="basic">
+				<field name="userCount" type="list" default="0" label="COM_QUESTIONS_USERCOUNT" description="COM_QUESTIONS_USERCOUNT_DESC">
+				  <option value="0">Alle</option>
+				  <option value="5">5</option>
+				  <option value="10">10</option>
+				  <option value="25">25</option>
+				  <option value="50">50</option>
+				</field>
+
+				<field name="showOnlyPublicPosts" type="radio" default="0" label="COM_QUESTIONS_ONLYPUBLIC" description="COM_QUESTIONS_ONLYPUBLIC_DESC">
+  					<option value="0">COM_QUESTIONS_YES</option>
+  					<option value="1">COM_QUESTIONS_NO</option>
+				</field>
+				<field name="showDetail" type="radio" default="0" label="COM_QUESTIONS_SHOWDETAIL" description="COM_QUESTIONS_SHOWDETAIL_DESC">
+  					<option value="0">COM_QUESTIONS_YES</option>
+  					<option value="1">COM_QUESTIONS_NO</option>
+				</field>
+				<field name="showHomepage" type="radio" default="0" label="COM_QUESTIONS_SHOWHOMEPAGE" description="COM_QUESTIONS_SHOWHOMEPAGE_DESC">
+  					<option value="0">COM_QUESTIONS_YES</option>
+  					<option value="1">COM_QUESTIONS_NO</option>
+				</field>
+				<field name="showAboutMe" type="radio" default="0" label="COM_QUESTIONS_SHOWABOUTME" description="COM_QUESTIONS_SHOWABOUTME_DESC">
+  					<option value="0">COM_QUESTIONS_YES</option>
+  					<option value="1">COM_QUESTIONS_NO</option>
+				</field>
+				<field name="hideHomepage" type="radio" default="0" label="COM_QUESTIONS_HIDEHOMEPAGE" description="COM_QUESTIONS_HIDEHOMEPAGE_DESC">
+  					<option value="0">COM_QUESTIONS_YES</option>
+  					<option value="1">COM_QUESTIONS_NO</option>
+				</field>
+				<field
+					name="usergroupids"
+					type="usergroup"
+					extension="com_content"
+					multiple="true"
+					size="10"
+					default=""
+					label="COM_QUESTIONS_SHOWUSERSFROMGROUPS"
+					description="" >
+					<option value="">JOPTION_ALL_USERGROUPS</option>
+				</field>
+				<field name="userMask" type="text" default="[USERNAME]" label="COM_QUESTIONS_USERMASK" description="COM_QUESTIONS_USERMASK_DESC" />
+
+			</fieldset>
+		   </fields>
+		</config>
+</metadata>

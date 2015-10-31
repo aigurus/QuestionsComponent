@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form
+	addrulepath="/administrator/components/com_questions/models/rules"
+>
+	<fieldset>
+		<field name="id" type="hidden" />
+		<field
+			name="pointsreq"
+			type="text"
+			label="COM_QUESTIONS_FRM_POINTS"
+			description="Points Required"
+			required="true"
+			size="5"
+			default=""
+			class="inputbox"
+		/>
+		
+		
+		<field
+			name="rank"
+			type="text"
+			class="inputbox"
+			required="true"
+			size="5"
+        	default=""
+			label="COM_QUESTIONS_FRM_RANK"
+			description="Rank"
+		/>
+		
+	</fieldset>
+</form>

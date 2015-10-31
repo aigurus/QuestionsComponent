@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form
+	addrulepath="/administrator/components/com_questions/models/rules"
+>
+
+	<fieldset addfieldpath="/administrator/components/com_questions/models/fields">
+		<field name="id" type="hidden" />
+		<field
+			name="title"
+			type="text"
+			label="COM_QUESTIONS_FRM_Q_TITLE"
+			description="COM_QUESTIONS_FRM_Q_TITLE"
+			size="40"
+			maxlength="40"
+			required="true"
+			validate="title"
+			class="inputbox"
+			default=""
+		/>
+		<field
+			name="text"
+			type="editor"
+			label="COM_QUESTIONS_FRM_Q_TEXT"
+			width="100%"
+			height="250px"
+			cols=""
+			rows=""
+			buttons=""
+			hide="article,image,pagebreak,readmore"
+			description="COM_QUESTIONS_FRM_Q_TEXT"
+			required="true"
+			class="form_field"
+			default=""
+			filter="QuestionsHelper::questionsfilterText"
+		/>
+		<field
+			name="name"
+			type="text"
+			label="COM_QUESTIONS_FRM_Q_NAME"
+			description="COM_QUESTIONS_FRM_Q_NAME"
+			size="40"
+			required="true"
+			validate="title"
+			class="inputbox"
+			default=""
+		/>
+		
+		
+		<field
+			name="submitted"
+			type="hidden"
+			format="%Y-%m-%d %H:%M:%S"
+		/>
+		
+		<field name="userid_creator" 
+			type="hidden"
+		/>
+		
+		<field
+			name="modified"
+			type="hidden"
+			format="%Y-%m-%d %H:%M:%S"
+		/>
+		
+		<field
+			name="userid_modifier" 
+			type="hidden"
+		/> 
+		<field
+			name="question"
+			type="hidden"
+			default="1"
+		/>
+		<field
+			name="votes_positive"
+			type="hidden"
+			default="0"
+		/>
+		<field
+			name="votes_negative"
+			type="hidden"
+			default="0"
+		/>
+		<field
+			name="parent"
+			type="hidden"
+			default="0"
+		/>
+		<field
+			name="impressions"
+			type="hidden"
+			default="0"
+		/>
+		
+		<field
+			name="published"
+			type="hidden"
+			default="1"
+		/>
+		
+		<field
+			name="chosen"
+			type="hidden"
+			default="0"
+		/>
+		
+		<field
+			name="ip"
+			type="hidden"
+		/>
+		
+		<field
+			name="email"
+			type="text"
+			label="COM_QUESTIONS_FRM_Q_EMAIL"
+			size="40"
+			required="true"
+			validate="email"
+			class="inputbox"
+		/>
+		
+		<field
+			name="catid"
+			type="category"
+			extension="com_questions"
+			description="COM_QUESTIONS_SELECT_A_CATEGORY_FORM"
+			class="inputbox"
+			default=""
+			validate="category"
+			label="COM_QUESTIONS_FRM_Q_CATID"
+			required="true"
+		>
+		<option value="0">JOPTION_SELECT_CATEGORY</option>
+		</field>
+		
+		<field
+			name="qtags"
+			type="text"
+			label="COM_QUESTIONS_FRM_Q_TAGS"
+			description="COM_QUESTIONS_ENTER_TAGS"
+			size="40"
+			default=""
+			maxlength="50"
+			filter="safehtml"
+			class="inputbox"
+		/>
+		
+		<field
+			name="qtags"
+			type="text"
+			label="COM_QUESTIONS_FRM_Q_TAGS"
+			size="40"
+			default=""
+			maxlength="50"
+			filter="safehtml"
+			class="inputbox"
+		/>
+						
+	</fieldset>
+</form>

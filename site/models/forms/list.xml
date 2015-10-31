@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form
+	addrulepath="/administrator/components/com_questions/models/rules"
+>
+	<fieldset>
+		<field name="list_ordering" type="list" label="COM_QUESTIONS_ORDER_BY" class="inputbox" default="submitted"
+>
+	<option value="submitted">COM_QUESTIONS_ORDER_SUBMITTED</option>
+	<option value="votes">COM_QUESTIONS_ORDER_VOTES</option>
+	<option value="score">COM_QUESTIONS_ORDER_SCORE</option>
+	<option value="impressions">COM_QUESTIONS_ORDER_VIEWS</option>
+	<option value="answerscount">COM_QUESTIONS_ORDER_ANSWERS</option>
+	</field>
+	
+	</fieldset>
+</form>

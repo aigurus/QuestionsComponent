@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form
+	addrulepath="/administrator/components/com_questions/models/rules"
+>
+	<fieldset>
+		<field name="id" type="hidden" />
+		<field
+			name="title"
+			type="text"
+			label="COM_QUESTIONS_FRM_Q_TITLE"
+			description="COM_QUESTIONS_FRM_Q_TITLE"
+			size="40"
+			maxlength="40"
+			required="true"
+			validate="title"
+			class="inputbox"
+			default=""
+		/>
+		<field
+			name="qareport"
+			type="editor"
+			label="COM_QUESTIONS_ANSWER_REPORT"
+			width="100%"
+			height="250px"
+			cols=""
+			rows=""
+			buttons=""
+			hide="article,image,pagebreak,readmore"
+			description="COM_QUESTIONS_QAREPORT"
+			required="true"
+			class="form_field"
+			default=""
+			filter="safehtml"
+		/>
+
+		<field
+			name="bugreport"
+			type="hidden"
+    	/>
+
+				
+		<field
+			name="submitted"
+			type="hidden"
+			format="%Y-%m-%d %H:%M:%S"
+		/>
+		
+		<field name="userid" 
+			type="hidden"
+		/>
+		
+		<field
+			name="qid"
+			type="hidden"
+		/>
+		
+		<field
+			name="ip"
+			type="hidden"
+		/>
+		
+		<field
+			name="email"
+			type="text"
+			label="COM_QUESTIONS_FRM_Q_EMAIL"
+			size="40"
+			required="true"
+			validate="email"
+			class="inputbox"
+			readonly="true"
+		/>
+	
+	</fieldset>
+</form>
