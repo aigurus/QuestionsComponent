@@ -76,7 +76,7 @@
                 
        </administration>
        <updateservers>
-                <server type="extension" priority="1" name="Questions Update Site">http://phpseo.net/downloads/questions.xml</server>
+                <server type="extension" priority="1" name="Questions Update Site">https://extensiondeveloper.com/downloads/questions.xml</server>
        </updateservers>
  
 </extension>
