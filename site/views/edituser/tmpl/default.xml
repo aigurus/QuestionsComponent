@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="COM_QUESTIONS_MENU_DISPLAY_QUESTION">
+		<message>COM_QUESTIONS_MENU_DISPLAY_QUESTION</message>
+	</layout>
+
+	<fields name="request">
+		<fieldset name="request">
+			<!--addfieldpath="/administrator/components/com_content/models/fields">-->
+
+			<field name="id" type="text"
+				label="COM_QUESTIONS_MENU_PARAM_QID"
+				required="true"
+				description="COM_QUESTIONS_MENU_PARAM_QID_DESC"
+			/>
+			
+		</fieldset>
+	</fields>
+        
+</metadata>

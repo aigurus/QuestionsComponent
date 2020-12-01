@@ -4,12 +4,12 @@
         <name>com_questions</name>
         <creationDate>September 2012</creationDate>
         <author>Sweta Ray</author>
-        <authorEmail>swetapadma@live.in</authorEmail>
-        <authorUrl>http://phpseo.net</authorUrl>
-        <copyright>Copyright (c) 2012 SEO HOW TO</copyright>
+        <authorEmail>admin@extensiondeveloper.com</authorEmail>
+        <authorUrl>https://extensiondeveloper.com</authorUrl>
+        <copyright>Copyright (c) 2012-2019 Extension Developer</copyright>
         <license>GPLv3</license>
 
-        <version>1.3.6</version>
+        <version>1.4.4</version>
 
         <description>COM_QUESTIONS_DESCRIPTION</description>
  
@@ -76,7 +76,7 @@
                 
        </administration>
        <updateservers>
-                <server type="extension" priority="1" name="Questions Update Site">https://extensiondeveloper.com/downloads/questions.xml</server>
+                <server type="extension" priority="1" name="Questions Update Site">https://www.extensiondeveloper.com/downloads/questions.xml</server>
        </updateservers>
  
 </extension>

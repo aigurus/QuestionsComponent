@@ -27,120 +27,141 @@
 	Version 0.0.1
 	Created date: Sept 2012
 	Creator: Sweta Ray
-	Email: admin@phpseo.net
-	support: support@phpseo.net
-	Website: http://www.phpseo.net
+	Email: admin@extensiondeveloper.com
+	support: support@extensiondeveloper.com
+	Website: http://www.extensiondeveloper.com
 */
 
-// No direct access to this file
 defined('_JEXEC') or die('Restricted access');
- 
-// import Joomla modelitem library
-jimport('joomla.application.component.modelitem');
 
-class QuestionsModelGroup extends JModelItem {
-	
-	protected $id;
+use Joomla\Utilities\ArrayHelper;
+jimport('joomla.application.component.modeladmin');
+
+use Joomla\CMS\MVC\Model\FormModel;
+
+class QuestionsModelGroup extends FormModel
+{
+
+	/**
+	 * Method to get a table object, load it if necessary.
+	 *
+	 * @param   string  $type    The table name. Optional.
+	 * @param   string  $prefix  The class prefix. Optional.
+	 * @param   array   $config  Configuration array for model. Optional.
+	 *
+	 * @return  JTable  A JTable object
+	 *
+	 * @since   1.6
+	 */
 	protected $item;
-	
-	/*
-	function getUsers(){
-		$username = JRequest::getVar('queryString');
-		$db = $this->getDBO();
-        $query = "SELECT username FROM #__users WHERE username LIKE '%" . $username . "%' and block = 0 ORDER BY id LIMIT 5";
-        $db->setQuery($query);
-		$result = $db->loadObjectList();
-		//var_dump($result);
-		//exit;
-		return $result; 
-	
-	}*/
-	function getUsers(){
-		$username = JRequest::getVar('term');
-		$db = $this->getDBO();
-        $user = JFactory::getUser();
-        $userid = $user->id;
-        $query = "SELECT id,username,name FROM #__users WHERE username LIKE '%" . $username . "%' and block = 0 and id != ".$userid." ORDER BY id LIMIT 5";
-        $db->setQuery($query);
-		$result = $db->loadObjectList();
-		$result = $this->objectToArray($result);
-		$result = json_encode($result);
-		return $result; 
-	
+	public function getTable($type = 'Group', $prefix = 'QuestionsTable', $config = array())
+	{
+		return JTable::getInstance($type, $prefix, $config);
 	}
-	
-	function objectToArray($object)
+
+    /**
+	 * Method to get the record form.
+	 *
+	 * @param   array    $data      Data for the form.
+	 * @param   boolean  $loadData  True if the form is to load its own data (default case), false if not.
+	 *
+	 * @return  mixed    A JForm object on success, false on failure
+	 *
+	 * @since   1.6
+	 */
+	public function getForm($data = array(), $loadData = true)
+	{
+		// Get the form.
+		$form = $this->loadForm(
+			'com_questions.group',
+			'group',
+			array(
+				'control' => 'jform',
+				'load_data' => $loadData
+			)
+		);
+		//var_dump($form); exit;
+		if (empty($form))
 		{
-			if(!is_object($object) && !is_array($object))
-			return $object;
-		
-			$array=array();
-			foreach($object as $member=>$data)
-			{
-				$array[$member]=self::objectToArray($data);
-			}
-			return $array;
-	}
-	
-	function getUserdetails(){
-		$username = JRequest::getVar('queryString');
-		$db = $this->getDBO();
-        $user = JFactory::getUser();
-        $userid = $user->id;
-        $query = "SELECT s.id,s.username,c.points,c.rank FROM #__users s INNER JOIN #__questions_userprofile c ON s.id = c.userid WHERE s.username LIKE '%" . $username . "%' and s.block = 0 ORDER BY s.id LIMIT 8";
-        $db->setQuery($query);
-		$result = $db->loadObjectList();
-		//var_dump($result);
-		//exit;
-		return $result; 
-	
-	}
-	function addnewgroup($arr) {
-        $db = $this->getDBO();
-        $user = JFactory::getUser();
-        $userid = $user->id;
-        $date = JFactory::getDate();
-        $current_date = $date->format("Y-m-d H:i:s");
-        $group_name = $arr['group_name'];
-
-        if (strpos($group_name, '_')) {
-            $group_name = str_replace('_', ' & ', $group_name);
-        }
-
-        $query = "select id from #__questions_groups where group_name='$group_name' and (userid=$userid )";
-        $db->setQuery($query);
-        $pin_user_info = $db->loadObjectList();
-        if (empty($pin_user_info)) {
-            $query = 'INSERT INTO `#__questions_groups` (`id`, `userid`, `group_name`, `published`, `created`, `modified`) VALUES ("", "' . $userid . '", "' . addslashes($group_name) . '", "1",  now() , now())';
-            $db->setQuery($query);
-
-            if (!$db->query()) {
-                $this->setError($db->getErrorMsg());
-                return false;
-            }
-            $option = $db->insertid();
-
-            return $option;
-        } else {
-            return;
-        }
-    }
-	
-	function deletegroup($id){
-		$db = $this->getDBO();
-		$user = JFactory::getUser();
-		$query = "select userid from #__questions_groups where id=".$id;
-        $db->setQuery($query);
-		$ownerid = $db->loadResult();
-		if($ownerid == $user->id){
-		$query = "DELETE FROM #__questions_groups WHERE id=".$id;
-        $db->setQuery($query);
-		$db->query();
-		return true; 
-		}else{
-		return false;	
+			$errors = $this->getErrors();
+			throw new Exception(implode("\n", $errors), 500);
 		}
-	
+
+		return $form;
 	}
-		
+	
+	public function &getData($id = null)
+	{
+		if ($this->item === null)
+		{
+			$this->item = false;
+
+			if (empty($id))
+			{
+				$id = $this->getState('group.userid');
+			}
+
+			$table = $this->getTable();
+
+			// Attempt to load the row.
+			if ($table !== false && $table->load($id))
+			{
+				$user = JFactory::getUser();
+				$id   = $table->userid;
+				
+				// Convert the JTable to a clean JObject.
+				$properties  = $table->getProperties(1);
+				$this->item = ArrayHelper::toObject($properties, 'JObject');
+			}
+		}
+
+		return $this->item;
+	}
+
+	/**
+	 * Method to get the data that should be injected in the form.
+	 * As this form is for add, we're not prefilling the form with an existing record
+	 * But if the user has previously hit submit and the validation has found an error,
+	 *   then we inject what was previously entered.
+	 *
+	 * @return  mixed  The data for the form.
+	 *
+	 * @since   1.6
+	 */
+	protected function loadFormData()
+	{
+		// Check the session for previously entered form data.
+		$data = JFactory::getApplication()->getUserState(
+			'com_questions.group.group.userid',
+			array()
+		);
+
+		if (empty($data)){
+			$data = $this->getData();	
+		}
+
+		return $data;
+	}
+	
+	protected function populateState()
+	{
+		$app = JFactory::getApplication('com_questions');
+		$id = JFactory::getApplication()->input->get('id');
+		JFactory::getApplication()->setUserState('com_questions.group.userid', $id);
+
+		$this->setState('group.userid', $id);
+
+		// Load the parameters.
+		$params       = $app->getParams();
+		$params_array = $params->toArray();
+
+		if (isset($params_array['item_id']))
+		{
+			$this->setState('group.userid', $params_array['item_id']);
+		}
+
+		$this->setState('params', $params);
+	}
+    
+	
 }

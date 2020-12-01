@@ -27,9 +27,9 @@
 	Version 0.0.1
 	Created date: Sept 2012
 	Creator: Sweta Ray
-	Email: admin@phpseo.net
-	support: support@phpseo.net
-	Website: http://www.phpseo.net
+	Email: admin@extensiondeveloper.com
+	support: support@extensiondeveloper.com
+	Website: http://www.extensiondeveloper.com
 */
 
 // No direct access to this file
@@ -64,22 +64,17 @@ $dispatcher->trigger('onInit','dynamic_recaptcha_1');
 		<?php endif;?>
 		
 		<label for="email"><?php echo JText::_("COM_QUESTIONS_FRM_Q_EMAIL");?></label>
-		<input id="email" name="email" type="text" maxlength="40" value="<?php echo JRequest::getString("email" , JFactory::getUser()->email ); ?>" style="display:block;" />
+		<input id="email" class="refinput" name="email" type="text" maxlength="40" value="<?php echo JRequest::getString("email" , JFactory::getUser()->email ); ?>" style="display:block;" />
 		<br />
 		
 		<label for="title"><?php echo JText::_("COM_QUESTIONS_FRM_Q_TITLE");?></label>
-		<input id="title" name="title" type="text" maxlength="30" value="<?php echo "Re:".QuestionsHelper::getTitle($this->question->id)?>" style="display:block;" />
+		<input id="title" class="refinput" name="title" type="text" maxlength="30" value="<?php echo "Re:".QuestionsHelper::getTitle($this->question->id)?>" style="display:block;" />
 		<br />
 		<label for="text"><?php echo JText::_("COM_QUESTIONS_FRM_Q_RESPONSE");?></label> <br /><br />
 		 <?php
 				 $editor =JFactory::getEditor();
-					$params = array( 'smilies'=> '0' ,
-						 'style'  => '1' ,  
-						 'layer'  => '0' , 
-						 'table'  => '0' ,
-						 'clear_entities'=>'0'
-						 );
-				echo $editor->display( 'text', '', '100%', '400', '20', '20', false, $params );
+				 
+				 echo $editor->display('text', '', '100%', '400', '20', '20', false); 
 
           ?>
 		<br />
@@ -88,7 +83,13 @@ $dispatcher->trigger('onInit','dynamic_recaptcha_1');
               <TR>
               <label for="refurl1"><?php echo JText::_("COM_QUESTIONS_REFERENCE_URL");?></label>
               <TD>
-               <input type="text" name="refurl1" id="refurl1" value="" maxlength="300"></TD><TD><a href="javascript:void(0)" value="addButton" class="addButton">Add</a>&nbsp;<a href="javascript:void(0)" value="removeButton" class="removeButton">Remove</a></TD></TR>
+               <input type="text" name="refurl1" id="refurl1" value="" maxlength="300" class="refinput">
+               </TD>
+               <TD><a href="javascript:void(0)" value="addButton" class="addButton"><?php echo '<img src="components/com_questions/css/images/plus.png" alt="Add">'; ?>
+               </a>&nbsp;
+               <a href="javascript:void(0)" value="removeButton" class="removeButton"><?php echo '<img src="components/com_questions/css/images/minus.png" alt="Remove">'; ?>
+               </a></TD>
+               </TR>
              </div>
         </div>
         
@@ -106,8 +107,21 @@ $dispatcher->trigger('onInit','dynamic_recaptcha_1');
 		<div id="dynamic_recaptcha_1"></div>
         <?php }}?>
         <br />
-		<div class="buttons">
-			<input type="submit" value="<?php echo JText::_('COM_QUESTIONS_SUBMIT_ANSWER') ?>" />
+		
+        
+        <div class="col-auto">
+            <div class="checkbox-group">
+                <input type="checkbox" id="subscription" name="subs" checked="">
+                <label for="subscription">
+                    <span class="check"></span>
+                    <span class="box"></span>
+                    <span class="tt-text">Subscribe to this topic.</span>
+                </label>
+            </div>
+        </div>
+        <br />
+        <div class="buttons">
+			<input type="submit" class="btn" value="<?php echo JText::_('COM_QUESTIONS_SUBMIT_ANSWER') ?>" />
 		</div>
 		
         
@@ -138,8 +152,8 @@ jQuery(document).ready(function(){
       .attr("id", 'TextBoxDiv' + counter);
 
  newTextBoxDiv.html('<TABLE><TR><TD>' +
-'<input type="text" name="refurl' + counter + 
-'" id="refurl' + counter + '" value="" ></TD><TD><a href="javascript:void(0)" value="addButton" class="addButton">Add</a>&nbsp;<a href="javascript:void(0)" value="removeButton" class="removeButton">Remove</a></TD></TR></TABLE>');
+'<input type="text" class="refinput" name="refurl' + counter + 
+'" id="refurl' + counter + '" value="" ></TD><TD><a href="javascript:void(0)" value="addButton" class="addButton"><?php echo '<img src="components/com_questions/css/images/plus.png" alt="Add">'; ?></a>\xa0<a href="javascript:void(0)" value="removeButton" class="removeButton"><?php echo '<img src="components/com_questions/css/images/minus.png" alt="Remove">'; ?></a></TD></TR></TABLE>');
 
  newTextBoxDiv.appendTo("#TextBoxesGroup");
 

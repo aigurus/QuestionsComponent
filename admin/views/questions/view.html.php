@@ -62,14 +62,18 @@ class QuestionsViewQuestions extends QueView
 	
         function display($tpl = null) 
         {     
-			global $option;   	
+			//global $option; 
+			//$app = Factory::getApplication();
+			$option = JRequest::getCmd('option');  	
 			$user 		= JFactory::getUser();
 			$document	= JFactory::getDocument();
 			$db  		= JFactory::getDBO();
-        	$this->items = $this->get('Items');
-			$this->pagination = $this->get('Pagination');
-			$this->state = $this->get("State");
 			
+        	$this->items = $this->get('Items');
+		    $this->pagination = $this->get('Pagination');
+			
+			$this->state = $this->get("State");
+
 			$app =JFactory::getApplication();
 			
 			$filter_order		= $app->getUserStateFromRequest( $option.'.questions.filter_order', 'filter_order', 	'a.submitted', 'cmd' );

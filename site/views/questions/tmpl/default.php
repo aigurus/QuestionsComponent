@@ -26,9 +26,9 @@
 	Version 0.0.1
 	Created date: Sept 2012
 	Creator: Sweta Ray
-	Email: admin@phpseo.net
-	support: support@phpseo.net
-	Website: http://www.phpseo.net
+	Email: admin@extensiondeveloper.com
+	support: support@extensiondeveloper.com
+	Website: http://www.extensiondeveloper.com
 */
 
 // No direct access to this file
@@ -42,222 +42,104 @@ $document =JFactory::getDocument();
 $document->setTitle($mainpagetitle);
 $doc = JFactory::getDocument();
 $doc->addStyleSheet("components/com_questions/media/simple.css");
-require_once 'components/com_questions/helpers/cat.php';
+//require_once 'components/com_questions/helpers/cat.php';
 require_once 'components/com_questions/media/style.php';
+$doc->addStyleSheet("components/com_questions/css/style.css");
+use Joomla\CMS\Factory;
+//var_dump($this->questions); exit;
 ?>
 
-<div style="width:96%;padding:2%;">
-
-<div class="questionbox">
-<div style="float:left; width:90%;">
-<span style="float:left"><h2><?php echo JText::_("COM_QUESTIONS_CATEGORIES");?></h2></span>
-<?php /*
-<a style="float:right" href="<?php echo JRoute::_('index.php?option=com_questions&view=form&layout=edit') ?>"><img src="components/com_questions/media/ask.png" alt="Ask a Question"> </a> */ ?>
-
-<div id="qcontainer">
-    <img id="qimage" src="components/com_questions/media/ask.png" alt="<?php echo JText::_("COM_QUESTIONS_ASK_A_QUESTION"); ?>"/>
-    <p id="imgtext">
-       <a style="float:right" href="<?php echo JRoute::_('index.php?option=com_questions&view=form&layout=edit') ?>"><?php echo JText::_("COM_QUESTIONS_ASK_A_QUESTION"); ?></a>
-    </p>
-</div>
-<?php if ($this->params->get('display_help', 0)) : ?>
-<span style="float:right;margin-right:30px;"><h2><a class="modal" href="<?php echo JRoute::_('index.php?option=com_content&view=article&id='.$articleid) ?>"rel="{handler: 'iframe', size: {x: 640, y: 480}}"><img src="components/com_questions/media/help.png" alt="Help"></a></h2></span>
-<?php endif; ?>
-</div>
-<?php if ($this->params->get('show_category_list', 1)) :
-CatHelper::getcat();
-endif; 
-?>
-<div style="clear:both;"></div>
-<?php if ($this->params->get('show_page_heading')) : ?>
-<h1>
-	<?php echo $this->escape($this->params->get('page_heading')); ?>
-	<?php 
-	
-	//Display Category Name with the title
-	if ($this->categoryView):
-		echo JText::_("COM_QUESTIONS_LBL_HEAD_CATEGORY") . $this->questions[0]->CategoryName;
-	endif;
-		
-	//Display Tag with the title
-	if ($this->tag):
-		echo JText::_("COM_QUESTIONS_LBL_HEAD_TAG") . $this->tag;
-	endif;
-	
-	
-	?>
-</h1>
-<?php endif; ?>
-
-
-
-<?php
-
-if (isset($this->viewFilteringOptions)){
-	echo $this->filteringOptions;
-}
-?>
-
-<div class="questions<?php echo $this->pageclass_sfx; ?>">
-
-<div>
-<div style="width:250px;float:left;margin:5px;">
-<form action="<?php echo JRoute::_('index.php');?>" method="post">
-<?php
-$lang = JFactory::getLanguage();
-$upper_limit = $lang->getUpperLimitSearchWord();
-$mitemid = @$set_Itemid > 0 ? $set_Itemid : JRequest::getInt('Itemid');
-$width			= 37;
-$maxlength		= $upper_limit;
-$text			= htmlspecialchars($params->get('text', JText::_('COM_QUESTIONS_SEARCH')));
-
-			$output = '<input name="searchword" maxlength="'.$maxlength.'"  type="text" size="'.$width.'" value="'.$text.'"  onblur="if (this.value==\'\') this.value=\''.$text.'\';" onfocus="if (this.value==\''.$text.'\') this.value=\'\';" />';
-			echo $output;
-		?>
-	<input type="hidden" name="task" value="search" />
-	<input type="hidden" name="option" value="com_search" />
-	<input type="hidden" name="areas" value="questions" />
-	<input type="hidden" name="Itemid" value="<?php echo $mitemid; ?>" />
-</form>
-</div>
-<?php
-if($this->params->get('sorting_backend')==0 && $this->params->get('display_sorting')==1) {
-	 $this->getSortingOptions();
-}
-
-?>
-</div>
-
-	<?php foreach($this->questions as $question): ?>
-		<div class="question system-<?php echo ($question->published ? 'published' : 'unpublished');?>">
-			
-			<div class="topRow">
-			  <?php  SocialIcons::addsocial(); ?>
-			</div>
-				<div class='leftCol'>
-				<div>
-				<?php 
-				$appParams = json_decode(JFactory::getApplication()->getParams());
-				if (isset($appParams->display_gravatars) && $appParams->display_gravatars!=0) :{?>
-				<?php echo AvatarHelper::getAvatar($question->email,"questions_gravatar_small",34,0,$question->userid_creator); ?>
-				<?php } ?>
-				<?php endif; ?>
-				</div>
-                <div style="clear:both"></div>
-				<div class="user_rank">			
-				<?php echo $this->getRank($question->userid_creator); ?>
-                </div>
-                <div style="clear:both"></div>
-                <div class="questions_star rank<?php echo $this->getId($question->userid_creator); ?>"></div>
-				</div>
-                
-				<div class='question-content'>
-				<div class="question_data">			
-					<h2 class="question_title">
-						<a href="<?php echo $question->link; ?>"><?php echo $question->title; ?></a>
-					</h2>
-					
-					<?php /*<h4 class="data"><?php echo JText::_("COM_QUESTIONS_SUBMITTED_BY"); ?> <?php echo ($question->userid_creator ? JFactory::getUser($question->userid_creator)->name : $question->name ); ?> <?php echo JText::_("COM_QUESTIONS_ON_DATE")?> <?php echo JHtml::date($question->submitted); ?>.</h4> */ ?>
-					
-					<h4><?php echo JText::_("COM_QUESTIONS_SUBMITTED_BY"); ?> <?php /*echo ($this->question->userid_creator ? JFactory::getUser($this->question->userid_creator)->name : $this->question->name); */?>
-                   <?php if($question->userid_creator>0){ ?>
-	<a href= <?php echo JRoute::_("index.php?option=com_questions&view=profiles&id=".$question->userid_creator . "%3A" . JFactory::getUser($question->userid_creator)->name) ?> ><?php echo ($question->userid_creator ? JFactory::getUser($question->userid_creator)->name : $question->name) ?></a>
-    				<?php } else { echo JText::_("COM_QUESTIONS_GUEST"); } ?>
-	
-	 <?php echo JText::_("COM_QUESTIONS_ON_DATE");?> <?php echo JHtml::date($question->submitted); ?> 	
-					<h4 class="category">
-						<?php if ($question->catid): //if category?>
-							<?php echo JText::_("COM_QUESTIONS_CATEGORY"); ?>:
-							<a href="<?php echo JRoute::_("index.php?option=com_questions&view=questions&catid=" . $this->getAlias($question->catid)); ?>">
-								<?php echo $question->CategoryName; ?>
-							</a>
-						<?php endif; //endif category?>
-                        <?php
-                        //Get group details
-						if (!empty($question->groups)):
-							echo JText::_("COM_QUESTIONS_QUESTION_GROUP") .": ". $this->getGroupDetails($question->groups);
-						endif;
-						?>
-                        
-					</h4>
-					
-					<span class="tags">
-					<?php 
-					if ($question->qtags):
-						echo JText::_("COM_QUESTIONS_TAGS") . ": ";
-						foreach ($question->qtags as $tag):
-						$tag=$this->cleanString($tag);
-						?>
-						<span class="tagsitem">
-						<a href="<?php echo JRoute::_("index.php?option=com_questions&view=questions&tag=" . $tag); ?>"><?php echo $tag ?></a>
-						</span>
-					<?php 
-						endforeach;
-					endif;
-					?>
-					</span>
-					
-				</div>
-                </div>
-                
-                
-			<div class ="rightCol">
-			<?php if (isset($this->viewStats)): ?>		
-			<div class="boxes">
-				<a href="<?php echo $question->link; ?>">
-					<span class="votes"><?php echo $question->votes; ?><br /><span class="label"><?php echo JText::_("COM_QUESTIONS_VOTES")?></span></span>
-					<span class="answers"><?php echo $question->answerscount; ?><br /><span class="label"><?php echo JText::_("COM_QUESTIONS_ANSWERS_LOWERCASE")?></span></span>
-					<span class="impressions"><?php echo $question->impressions; ?><br /><span class="label"><?php echo JText::_("COM_QUESTIONS_VIEWS")?></span></span>
-				</a>
-           
-			</div>
-			
-            
-            <?php endif; ?>
+<main id="tt-pageContent" class="tt-offset-small">
+    <div class="qcontainer">
+        <div class="tt-topic-list">
+            <div class="tt-list-header">
+                <div class="tt-col-topic">Topic</div>
+                <div class="tt-col-category">Category</div>
+                <div class="tt-col-value hide-mobile">Likes</div>
+                <div class="tt-col-value hide-mobile">Replies</div>
+                <div class="tt-col-value hide-mobile">Views</div>
+                <div class="tt-col-value">Activity</div>
             </div>
-            <?php /*
-			<div class="bottomrow">
-            <?php $user = JFactory::getUser(); if ($this->params->get('show_report', 1) && $user->authorise ( "report.edit" , "com_questions" )) { ?>
-			<a href="<?php echo JRoute::_("index.php?option=com_questions&view=reports&layout=edit&qid=".$question->id); ?>"><IMG STYLE="border: none; float:right;" src="<?php echo $this->baseurl ?>/components/com_questions/media/reportit.png" ALT="Report It"></a>
-            <?php } ?>
-			<a href="<?php echo $question->link; ?>"><IMG STYLE="border: none; float:right;" src="<?php echo $this->baseurl ?>/components/com_questions/media/answerthis.png" ALT="Answer This"></a>
-			</div>
-			*/ ?>
-                <div class="bottomrow">
-                <?php $user = JFactory::getUser(); if ($this->params->get('show_report', 1) && $user->authorise ( "report.edit" , "com_questions" )) { ?>
-                <a href="<?php echo JRoute::_("index.php?option=com_questions&view=reports&layout=edit&qid=".$question->id); ?>">
-                <div class="imagecss" style="float:left;">
-                  <img alt="<?php echo JText::_("COM_QUESTIONS_REPORTIT")?>" src="<?php echo $this->baseurl ?>/components/com_questions/media/arrow.png" />
-                  <div class="texty">
-                    <span><?php echo JText::_("COM_QUESTIONS_REPORTIT")?></span>
-                  </div>
+            <div class="tt-topic-alert tt-alert-default" role="alert">
+              <a href="#" target="_blank">4 new posts</a> are added recently, click here to load them.
+            </div>
+            <?php $i=0; ?>
+            <?php foreach($this->questions as $question){ ?>
+            <?php
+            $user = Factory::getUser($question->userid_creator);
+            $name = substr($user->name,0,1);
+            $userFirstname = strtoupper($name);
+			?>
+            
+             <?php if($i > 21){$i = 0;} ?>
+            	<?php if($question->pinned ==1 ){ ?>
+                <div class="tt-item tt-itemselect">
+                <?php } else { ?>
+                <div class="tt-item">
+                 <?php } ?>
+                    <div class="tt-col-avatar">
+                          <div class="circle c<?php echo sprintf("%02d", $i+1); ?>"><?php echo $userFirstname; ?></div>
+                    </div>
+                    <div class="tt-col-description">
+                        <h6 class="tt-title"><a href="page-single-topic.html">
+                        	<?php 	if($question->pinned == 1){
+										echo '<img src="components/com_questions/css/images/pin.png" alt="Pinned">';
+									} elseif ($question->locked == 1) {
+										echo '<img src="components/com_questions/css/images/lock.png" alt="Locked">';
+									} elseif ($question->chosen == 1) {
+										echo '<img src="components/com_questions/css/images/tick.png" alt="Chosen">';
+									}
+                            ?>
+                            <a href="<?php echo $question->link; ?>"><?php echo $question->title; ?></a>
+                        </a></h6>
+                        <div class="row align-items-center no-gutters">
+                            <div class="col-11">
+                                <ul class="tt-list-badge">
+                                    <li class="show-mobile"><a href="#"><span class="tt-color<?php echo sprintf("%02d", $i+1); ?> tt-badge"><?php echo $question->CategoryName; ?></span></a></li>
+                                    
+                                    <?php 
+									if (!empty($question->qtags[0])):
+										//echo JText::_("COM_QUESTIONS_TAGS") . ": ";
+										foreach ($question->qtags as $tag):
+										$tag=$this->cleanString($tag);
+										?>
+                                        <li><a href="<?php echo JRoute::_("index.php?option=com_questions&view=questions&tag=" . $tag); ?>"><span class="tt-badge"><?php echo $tag ?></span></a></li>                                      
+									<?php 
+										endforeach;
+									endif;
+									?>
+                                </ul>
+                            </div>
+                            <div class="col-1 ml-auto show-mobile">
+                                <div class="tt-value">1h</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tt-col-category"><span class="tt-color<?php echo sprintf("%02d", $i+1); ?> tt-badge"><?php echo $question->CategoryName; ?></span></div>
+                    <div class="tt-col-value hide-mobile"><?php echo $question->likes; ?></div>
+                    <div class="tt-col-value tt-color-select hide-mobile"><?php echo $question->answerscount; ?></div>
+                    <div class="tt-col-value hide-mobile"><?php echo $question->impressions; ?></div>
+                    <div class="tt-col-value hide-mobile"><?php echo$this->getActiveDuration($question->modified) ;?></div>
                 </div>
-                </a>
-                <?php } ?>
-                 <a href="<?php echo $question->link; ?>">
-                <div class="imagecss" style="float:left;">
-                  <img alt="<?php echo JText::_("COM_QUESTIONS_ANSWERTHIS")?>" src="<?php echo $this->baseurl ?>/components/com_questions/media/arrow.png" />
-                  <div class="texty">
-                    <span><?php echo JText::_("COM_QUESTIONS_ANSWERTHIS")?></span>
-                  </div>
-                </div>
-                </a>
-                </div>
-		</div>
-	<?php endforeach; ?>
-    
-    
-	<div class="pagination_new">
-		<p class="counter">
-			<?php echo $this->pagination->getPagesCounter(); ?>
-		</p>
-		<?php echo $this->pagination->getPagesLinks(); ?>
-	</div>
-    <?php /**********Kindly dont remove this credit. For getting any support from us this link should be intact************/ 
-	CopyrightHelper::copyright();
-	?>
-    
-</div>	
-</div>
-</div>
-
+            <?php $i++; } ?>
+            
+            <div class="pagination_new">
+                <p class="counter">
+                    <?php echo $this->pagination->getPagesCounter(); ?>
+                </p>
+                <?php echo $this->pagination->getPagesLinks(); ?>
+            </div>
+            <?php /**********Kindly dont remove this credit. For getting any support from us this link should be intact************/ 
+            CopyrightHelper::copyright();
+            ?>
+            
+            <div class="tt-row-btn">
+                <button type="button" class="btn-icon js-topiclist-showmore">
+                    <svg class="tt-icon">
+                      <use xlink:href="#icon-load_lore_icon"></use>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</main>

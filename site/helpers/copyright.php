@@ -27,9 +27,9 @@
 	Version 0.0.1
 	Created date: Sept 2012
 	Creator: Sweta Ray
-	Email: admin@phpseo.net
-	support: support@phpseo.net
-	Website: http://www.phpseo.net
+	Email: admin@extensiondeveloper.com
+	support: support@extensiondeveloper.com
+	Website: http://www.extensiondeveloper.com
 */
 
 // No direct access to this file
@@ -39,7 +39,7 @@ abstract class CopyrightHelper{
 	
 		public static function copyright()
 		{
-		echo '<p style="text-align:right;"><small>Proudly Powered by </small><a target="_blank" href="http://phpseo.net/" rel="nofollow">PHP SEO</a></p>';
+		echo '<p style="text-align:right;"><small>Proudly Powered by </small><a target="_blank" href="http://extensiondeveloper.com/" rel="nofollow">Extension Developer</a></p>';
 		}
 	
 }

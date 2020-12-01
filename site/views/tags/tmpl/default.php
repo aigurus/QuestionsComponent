@@ -27,9 +27,9 @@
 	Version 0.0.1
 	Created date: Sept 2012
 	Creator: Sweta Ray
-	Email: admin@phpseo.net
-	support: support@phpseo.net
-	Website: http://www.phpseo.net
+	Email: admin@extensiondeveloper.com
+	support: support@extensiondeveloper.com
+	Website: http://www.extensiondeveloper.com
 */
 
 defined('_JEXEC') or die('Restricted access'); 
@@ -49,7 +49,7 @@ $doc->addStyleSheet("components/com_questions/css/simple-profile.css");
 
 //$doc->addScript("http://maps.google.com/maps/api/js?sensor=false");
 jimport('joomla.html.pagination');
-$app	= JFactory::getApplication();
+
 $total= 13;
 $mainframe =JFactory::getApplication();
 
@@ -72,38 +72,38 @@ $total=$this->counttotaltags();
 		//sort($row, SORT_NUMERIC); 
 		//print_r($row);
 		//var_dump($row);
-				if(is_array($row)):
-					/*var_dump($total);
-					var_dump($limitstart);
-					var_dump(intval($limit));*/
-					/*$limit = $app->getUserStateFromRequest('global.list.limit', 'limit', $app->getCfg('list_limit'));
-					$limitstart = JFactory::getApplication()->input->get('limitstart', 0, '', 'int');*/
-					
-					if(intval($limit+intval($limitstart))<$total){
-							$limit2=intval($limit)+intval($limitstart);
-					}else{
-					$limit2=$total;	
-					}
-					?>
-                   
-                    <?php
-					// $limitstart to $limistrat so 0 results
-					for($ti=intval($limitstart);$ti<($limit2);$ti++){	
-					
-					?>
-               		
-                    <div class="question-li-box">
-                        <li rel="tag" title="" >
-                        <a class="question-tag" href="<?php echo JRoute::_("index.php?option=com_questions&view=questions&tag=" . $row[$ti]); ?>"><?php echo $row[$ti]; ?></a>
-                        <span class="tag-multiples"><span class="x-factor">×</span>&nbsp;<span class="tag-count">
-                        <?php echo $this->countTags($row[$ti]); ?>
-                        </span>
-                        </span>
-                        </li>
-                        
-                    </div>
-                    <?php 
-					} ?>
+		if(is_array($row)):
+			/*var_dump($total);
+			var_dump($limitstart);
+			var_dump(intval($limit));*/
+			/*$limit = $app->getUserStateFromRequest('global.list.limit', 'limit', $app->getCfg('list_limit'));
+			$limitstart = JFactory::getApplication()->input->get('limitstart', 0, '', 'int');*/
+			
+			if(intval($limit+intval($limitstart))<$total){
+					$limit2=intval($limit)+intval($limitstart);
+			}else{
+			$limit2=$total;	
+			}
+			?>
+		   
+			<?php
+			// $limitstart to $limistrat so 0 results
+			for($ti=intval($limitstart);$ti<($limit2);$ti++){	
+			
+			?>
+			
+			<div class="question-li-box">
+				<li rel="tag" title="" >
+				<a class="question-tag" href="<?php echo JRoute::_("index.php?option=com_questions&view=questions&tag=" . $row[$ti]); ?>"><?php echo $row[$ti]; ?></a>
+				<span class="tag-multiples"><span class="x-factor">×</span>&nbsp;<span class="tag-count">
+				<?php echo $this->countTags($row[$ti]); ?>
+				</span>
+				</span>
+				</li>
+				
+			</div>
+			<?php 
+			} ?>
 					
 </ul>
 <div style="clear:both"></div>	

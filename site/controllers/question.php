@@ -27,9 +27,9 @@
 	Version 0.0.1
 	Created date: Sept 2012
 	Creator: Sweta Ray
-	Email: admin@phpseo.net
-	support: support@phpseo.net
-	Website: http://www.phpseo.net
+	Email: admin@extensiondeveloper.com
+	support: support@extensiondeveloper.com
+	Website: http://www.extensiondeveloper.com
 */
 
 // No direct access to this file
@@ -55,7 +55,6 @@ class QuestionsControllerQuestion extends QueController {
 	
 	private function vote( $positive = TRUE ){
 		$id = (int) JRequest::getInt("id");
-		
 		//get db instance
 		$db = JFactory::getDBO();
 		
@@ -208,7 +207,7 @@ class QuestionsControllerQuestion extends QueController {
 					return $result;
 					
 		   }
-   public function favtable($arrayData,$userid,$vardata,$inup){
+   public function favtable($arrayData,$userid,$vardata,$inup, $id, $method="add"){
    					
 		   			$serializedData3 = serialize($arrayData);
 					$data =new stdClass();
@@ -237,8 +236,20 @@ class QuestionsControllerQuestion extends QueController {
 					else{
 					$db->updateObject( '#__questions_favourite', $data, userid );
 					}
-					//$link  = JURI::current();
-					$id = (int) JRequest::getInt("id");
+					$db = JFactory::getDBO();
+					$query = $db->getQuery(true);
+					if($method=="add"){
+						$query = "UPDATE #__questions_core SET likes=likes+1 WHERE id=".$id;
+					} 
+					if($method=="del"){
+						$query = "UPDATE #__questions_core SET likes=likes-1 WHERE id=".$id;
+					}
+			
+					$db->setQuery($query);
+					
+					$db->execute();
+					
+					
 					$link  = JRoute::_("index.php?option=com_questions&view=question&id=" . $id);
 				    $msg   = 'Your favourites modified accordingly.';  
 				    $app = JFactory::getApplication();
@@ -247,57 +258,60 @@ class QuestionsControllerQuestion extends QueController {
 		   }
    public function addFavourite()
    {
-   					$reguser = JFactory::getUser();   
-   					if( !$reguser->authorise("access.favourite" , "com_questions")){
-					$msg = JText::_("COM_QUESTIONS_ERROR_UNAUTHORIZED");
-					$this->setRedirect(JRoute::_("index.php?option=com_users&view=login"),$msg );
-				    }
-					else{
-   					$addfav  =  JFactory::getApplication()->input->get("addfav");
-				    $vardata =  JFactory::getApplication()->input->get("vardata");
-				    $userid  =  JFactory::getApplication()->input->get("userid");
+		$reguser = JFactory::getUser();   
+		if( !$reguser->authorise("access.favourite" , "com_questions")){
+			$msg = JText::_("COM_QUESTIONS_ERROR_UNAUTHORIZED");
+			$this->setRedirect(JRoute::_("index.php?option=com_users&view=login"),$msg );
+		}
+		else{
+			$addfav  =  JFactory::getApplication()->input->get("addfav");
+			$vardata =  JFactory::getApplication()->input->get("vardata");
+			$userid  =  JFactory::getApplication()->input->get("userid");
 
-		   			$favarray = unserialize($this->getFavourite($vardata,$userid));
-					//var_dump($favarray);
-				    if ((empty($favarray)) && $this->getusercount($userid)==0){	
-					$arrayData =array($addfav);
-					//var_dump($arrayData);
-					$this->favtable($arrayData,$userid,$vardata,'in');
-					}
-					elseif (in_array($addfav, $favarray, true))	{
-					return false;
-					}
-					else
-					{
-					$arrayData = $favarray;
-					$arrayData[]=$addfav;
-					//var_dump($arrayData);
-					$this->favtable($arrayData,$userid,$vardata,'up');
-					}
-					}
-					return true;
-					exit;
+			$favarray = unserialize($this->getFavourite($vardata,$userid));
+			//var_dump($favarray);
+			if ((empty($favarray)) && $this->getusercount($userid)==0){	
+				$arrayData =array($addfav);
+				//var_dump($arrayData);
+				$this->favtable($arrayData,$userid,$vardata,'in',$addfav,$method="add");
+			}
+			elseif (in_array($addfav, $favarray, true))	{
+				return false;
+			}
+			else
+			{
+				$arrayData = $favarray;
+				$arrayData[]=$addfav;
+				$this->favtable($arrayData,$userid,$vardata,'up',$addfav,$method="add");
+			}
+		}
+
+			return true;
+			exit;
 	
-		   }
-     	public function delFavourite($vardata,$userid,$delfav){
-					$vardata = JFactory::getApplication()->input->get("vardata");
-					$userid = (int) JRequest::getInt("userid");
-					$delfav = (int) JRequest::getInt("delfav");
+		}
+     	public function delFavourite(){
+
 					$reguser = JFactory::getUser();   
    					if( !$reguser->authorise("access.favourite" , "com_questions")){
 					$msg = JText::_("COM_QUESTIONS_ERROR_UNAUTHORIZED");
 					$this->setRedirect(JRoute::_("index.php?option=com_users&view=login"),$msg );
 				    }
 					else{
+					$vardata = JFactory::getApplication()->input->get("vardata");
+					$delfav =  JFactory::getApplication()->input->get("delfav");
+					$userid  =  JFactory::getApplication()->input->get("userid");
+
 		   			$favarray = unserialize($this->getFavourite($vardata,$userid));
-					//var_dump($favarray);
+					//var_dump($favarray); exit;
 					$finalfav = array_search($delfav,$favarray);
 					if (false !== $finalfav) {
 						unset($favarray[$finalfav]);
 					}
 					//var_dump( $finalfav);
 					$arrayData = $favarray;
-					$this->favtable($arrayData,$userid,$vardata,'up');
+
+					$this->favtable($arrayData,$userid,$vardata,'up',$delfav,$method="del");
 					}
 					return true;
 					exit;

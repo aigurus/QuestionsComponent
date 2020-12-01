@@ -207,6 +207,7 @@ span.choose_answer {
 span.tags {
 	display: inline-block;
 	float: left;
+	margin-left:2%;
 	width:50%;
 }
 
@@ -225,13 +226,17 @@ span.tagsitem {
 div.question_body h2.question_title{
 	float: left;
 }
-
+div.question_box{
+	float: left;
+	width:70%;
+}
 div.question_text{
     background-color: #999;
+	float: left;
     color: white;
-    padding: 5px;
 	max-width:65%;
-	margin-left:10%;
+	margin-left:2%;
+	padding-right:2%;
 }
 
 div.question_body h4.category{
@@ -262,7 +267,7 @@ div.questionbox{
     border: 1px solid #CCCCCC;
     float: left;
     height: auto;
-    margin: ;
+    margin-bottom: 5px ;
     padding: 1% 2%;
     position: relative;
     width: 95%;
@@ -279,9 +284,10 @@ div.buttons{
 
 div.questions_filters ul
 {
-list-style: none;
-padding: 0;
-margin: 0;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	line-height:0 !important;
 }
 
 div.questions_filters ul li{
@@ -290,14 +296,21 @@ div.questions_filters ul li{
 }
 
 div.questions_filters ul li a {
-	background: url(background.gif) #fff bottom left repeat-x;
+	/*background: url(background.gif) #fff bottom left repeat-x;*/
+	background-color: #4CAF50;
 	height: 2em;
+	margin-right:4px;
 	line-height: 2em;
 	float: left;
-	width: 9em;
-	display: block;
+	width: auto;
+	padding:5px;
+	vertical-align: middle;
+    touch-action: manipulation;
+	display: inline-block;
 	border: 0.1em solid #dcdce9;
-	color: #0d2474;
+	border-radius: 5px;
+	/*color: #0d2474;*/
+	color:white;
 	text-decoration: none;
 	text-align: center;
 }
@@ -397,9 +410,10 @@ background-image:url('socimg/icons32.png');
 .myspace32 {background-position:-64px -64px;}
 
 .icon16 {
-height:16px;
-width:16px;
-background-image:url('socimg/icons16.png');
+	height:16px;
+	width:16px;
+	margin:2px;
+	background-image:url('socimg/icons16.png');
 }
 
 .stumbleupon16 {background-position:0px 0px;}

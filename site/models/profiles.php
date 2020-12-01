@@ -27,9 +27,9 @@
 	Version 0.0.1
 	Created date: Sept 2012
 	Creator: Sweta Ray
-	Email: admin@phpseo.net
-	support: support@phpseo.net
-	Website: http://www.phpseo.net
+	Email: admin@extensiondeveloper.com
+	support: support@extensiondeveloper.com
+	Website: http://www.extensiondeveloper.com
 */
 
 // No direct access
@@ -42,105 +42,137 @@ require_once 'components/com_questions/helpers/avatar.php';
 
 class QuestionsModelProfiles extends JModelList
 {
-	protected $i;
+		protected $i;
        function GetUserList()
-    {
-	 
-     $menu = JSite::getMenu()->getActive();
-     //$params = new JParameter($menu->params);
-     $mainframe = &JFactory::getApplication();
-     $pathway   =& $mainframe->getPathway();	
-     $app = JFactory::getApplication();
-	 $params = $app->getParams();
-    
-
-     $db =JFactory::getDBO();
- 		$query = " SELECT username, asked, answered, email, chosen, rank, userid FROM #__questions_userprofile";
-		$db->setQuery($query);
-		$rows = $db->loadObjectList();
-		//print_r($rows);
-
-     $html = '<table id="userprofiletable">';
-     $html .= '<tr><th>' . JText::_('COM_QUESTIONS_PROFILE_USER') . '</th>';
-     
-     $html .= '<th>' . JText::_('COM_QUESTIONS_PROFILE_ASKED') . '</th><th>' . JText::_('COM_QUESTIONS_PROFILE_ANSWERED') . '</th><th>' . JText::_('COM_QUESTIONS_PROFILE_CHOSEN') . '</th><th>' . JText::_('COM_QUESTIONS_PROFILE_RANK') . '</th></tr>';
-     foreach($rows as $row)
-     {
-       $html .= '<tr>';
-       $userNameToShow = str_replace("[NAME]",$row->username, str_replace("[USERNAME]", $row->username,$params->get('userMask','[USERNAME]')));
-       if($params->get('showDetail') == 0)
        {
-         $html .= '<td><a href="' . JRoute::_("index.php?option=com_questions&view=profiles&id=".$row->userid . "%3A" . $row->username). '">'.AvatarHelper::getAvatar($row->email,"questions_gravatar_big",64,0,$row->userid).'<br />'.$userNameToShow.'</a></td>';
-       }
-       else
-       {
-         $html .= '<td>'.$userNameToShow.'</td>';
-       }
-       $html .= '<td>'.$row->asked.'</td>';
-       $html .= '<td>'.$row->answered.'</td>';
-       $html .= '<td>'.$row->chosen.'</td>';
-	   $html .= '<td>'.$row->rank.'</td>';
-       $html .= '</tr>';
+			 $menus = JFactory::getApplication()->getMenu();
+			 $menu =$menus->getActive();
+			 
+			 //$params = new JParameter($menu->params);
+			 $mainframe = JFactory::getApplication();
+			 $pathway   = $mainframe->getPathway();	
+			 
+			 $app = JFactory::getApplication();
+			 $params = $app->getParams();
+			 
+		
+			 $db =JFactory::getDBO();
+				$query = " SELECT username, asked, answered, email, chosen, rank, userid FROM #__questions_userprofile";
+				$db->setQuery($query);
+				$rows = $db->loadObjectList();
+				//print_r($rows);
+			return $rows;
+			 /*$html = '<table id="userprofiletable">';
+			 $html .= '<tr><th>' . JText::_('COM_QUESTIONS_PROFILE_USER') . '</th>';
+			 
+			 $html .= '<th>' . JText::_('COM_QUESTIONS_PROFILE_ASKED') . '</th><th>' . JText::_('COM_QUESTIONS_PROFILE_ANSWERED') . '</th><th>' . JText::_('COM_QUESTIONS_PROFILE_CHOSEN') . '</th><th>' . JText::_('COM_QUESTIONS_PROFILE_RANK') . '</th></tr>';
+			 foreach($rows as $row)
+			 {
+				   $html .= '<tr>';
+				   $userNameToShow = str_replace("[NAME]",$row->username, str_replace("[USERNAME]", $row->username,$params->get('userMask','[USERNAME]')));
+				   if($params->get('showDetail') == 0)
+				   {
+					 $html .= '<td><a href="' . JRoute::_("index.php?option=com_questions&view=profiles&id=".$row->userid . "%3A" . $row->username). '">'.AvatarHelper::getAvatar($row->email,"questions_gravatar_big",64,0,$row->userid).'<br />'.$userNameToShow.'</a></td>';
+				   }
+				   else
+				   {
+					 $html .= '<td>'.$userNameToShow.'</td>';
+				   }
+				   $html .= '<td>'.$row->asked.'</td>';
+				   $html .= '<td>'.$row->answered.'</td>';
+				   $html .= '<td>'.$row->chosen.'</td>';
+				   $html .= '<td>'.$row->rank.'</td>';
+				   $html .= '</tr>';
 
-     }
+     		}
      $html .= '</table>';
 
      // region Pages
      
 	$html .= '<a href="'.JRoute::_("index.php?option=com_questions&view=profiles&page=".$this->i).'">'.($this->i+1).'</a>';
-    return $html;
+    return $html;*/
   }
+  
 
   function getUserActivities($id)
   {
- $menu = JSite::getMenu()->getActive();
-      //$params = new JParameter($menu->params);
-	  $app = JFactory::getApplication();
-	  $params = $app->getParams();
-      $mainframe = &JFactory::getApplication();
-      $pathway   =& $mainframe->getPathway();	
-
-      $doc = JFactory::getDocument();
-	  //$id =  &JRequest::getInt('id', 0);
-
-      $db = JFactory::getDBO();
+      	$db = JFactory::getDBO();
  
-      $query = "SELECT username, asked, answered, chosen, rank, userid, email FROM #__questions_userprofile where userid=" . $id;
-      $db->setQuery( $query );
-      $user = $db->loadObjectList();
-      $user = $user[0];
-      $userNameToShow = str_replace("[NAME]",$user->username, str_replace("[USERNAME]", $user->username,$params->get('userMask','[USERNAME]')));
-      $doc->setTitle(JText::_('COM_QUESTIONS_PROFILE_DETAILHEADER') . " " . $userNameToShow);
-      $pathway->addItem(JText::_('COM_QUESTIONS_PROFILE_DETAILHEADER') . " " . $userNameToShow, '');
-	  ?>
-      <table id="userprofiledetailtable">
-	  <tr><td>
-	  <?php 
-						$app = JFactory::getApplication();
-						$parameters = $app->getParams();
-						$appParams = json_decode(JFactory::getApplication()->getParams());
-						if (isset($appParams->display_gravatars) && $appParams->display_gravatars!=0){
-						?>
-	  <?php //AvatarHelper::getAvatar($user->email,"questions_gravatar_big",64,0,$user->userid); ?>
-	  <?php }?>
-	   </td>
-	   <td>
-	   <table id="userprofiledetailtable">
-      <tr class="rowstyle"><th class="userprofilekey"><?php echo JText::_('COM_QUESTIONS_PROFILE_USER'); ?></th><td><?php 
-	  AvatarHelper::getAvatar($user->email,"questions_gravatar_big",64,0,$user->userid).'<br />'; 
-	  echo $userNameToShow; ?></td></tr>
-      
-     <tr class="rowstyle"><th class="userprofilekey"><?php echo JText::_('COM_QUESTIONS_PROFILE_ASKED'); ?></th><td><?php echo $user->asked; ?></td></tr>
-   <tr class="rowstyle"><th class="userprofilekey"><?php echo JText::_('COM_QUESTIONS_PROFILE_ANSWERED'); ?></th><td><?php echo $user->answered; ?></td></tr>
-	<tr class="rowstyle"><th class="userprofilekey"><?php echo JText::_('COM_QUESTIONS_PROFILE_CHOSEN') ; ?></th><td><?php echo $user->chosen; ?></td></tr>
-	<tr class="rowstyle"><th class="userprofilekey"><?php echo JText::_('COM_QUESTIONS_PROFILE_RANK') ; ?></th><td><?php echo $user->rank; ?></td></tr>
-	</table>
-	</td>
-	</tr>
-    </table>
+	  	$query = $db->getQuery(true);
+		$query->select('*');
+		$query->from('#__questions_userprofile');
+		$query->where($db->quoteName('userid') . ' = ' .$id);
+		$db->setQuery($query);
+		//echo($query->__toString()); exit;
+		$user = $db->loadObjectList();
+		return $user;
+		
+  }
+	
+	
+  function getUserQuestions()
+  {
+      	$db = JFactory::getDBO();
+	    $jinput = JFactory::getApplication()->input;
+		$uid = $jinput->getInt('id');
+	  	$app = JFactory::getApplication();
+		$params = $app->getParams();
+		$limit =  $params->get('qlimit', 10);
 
-    <br />
-	<?php  
+ 		$user = JFactory::getUser();
+	    
+		  if(isset($uid)){
+			  $id = $uid;
+		  }else{
+			  $id = $user->id;
+		  }
+	  
+	  	$query = $db->getQuery(true);
+		$query->select(array('id','title','submitted','parent'));
+		$query->from('#__questions_core');
+
+	  	$query->where($db->quoteName('userid_creator') . " = " . $db->quote($id), 'AND');
+    	$query->where($db->quoteName('question') . " != " . 0);
+	    $query->setLimit($limit);
+		$db->setQuery($query);
+		//echo($query->__toString()); exit;
+		$questions = $db->loadObjectList();
+	    if($questions != null)
+			return $questions;
+		else
+	  		return null;
+  }
+	
+  function getUserAnswers()
+  {
+      	$db = JFactory::getDBO();
+	    $jinput = JFactory::getApplication()->input;
+		$uid = $jinput->getInt('id');
+	    $app = JFactory::getApplication();
+		$params = $app->getParams();
+		$limit =  $params->get('alimit', 10);
+ 		$user = JFactory::getUser();
+	    
+		  if(isset($uid)){
+			  $id = $uid;
+		  }else{
+			  $id = $user->id;
+		  }
+	  
+	  	$query = $db->getQuery(true);
+		$query->select(array('id','title','submitted','parent'));
+		$query->from('#__questions_core');
+		//$query->where(($db->quoteName('userid_creator') . ' = ' .$id) AND ($db->quoteName('question') . ' = 0'));
+	  	$query->where($db->quoteName('userid_creator') . " = " . $db->quote($id), 'AND');
+    	$query->where($db->quoteName('question') . " = " . 0);
+	    $query->setLimit($limit);
+		$db->setQuery($query);
+		//echo($query->__toString()); exit;
+		$questions = $db->loadObjectList();
+	    if($questions != null)
+			return $questions;
+		else
+	  		return null;
   }
   function getMyGroups(){
 	  $user = JFactory::getUser();
@@ -148,7 +180,11 @@ class QuestionsModelProfiles extends JModelList
 	  $query = "SELECT groups FROM #__questions_userprofile where userid=" . $user->id;
       $db->setQuery( $query );
       $groups = $db->loadResult();
-	  $groups= unserialize($groups);
+	  if(strlen($groups)>0){
+		$groups = unserialize($groups);
+	  } else {
+		$groups = NULL;
+	  }
 	  return $groups;
   }
   function getMyGroupDetails($gid){

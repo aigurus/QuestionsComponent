@@ -27,9 +27,9 @@
 	Version 0.0.1
 	Created date: Sept 2012
 	Creator: Sweta Ray
-	Email: admin@phpseo.net
-	support: support@phpseo.net
-	Website: http://www.phpseo.net
+	Email: admin@extensiondeveloper.com
+	support: support@extensiondeveloper.com
+	Website: http://www.extensiondeveloper.com
 */
 
 // No direct access to this file
@@ -145,11 +145,16 @@ class QuestionsModelQuestions extends JModelList {
 		if ( ! empty( $where ) )
 			$query->where( $where );
 		
-		$ordering = $this->getState( "list.ordering" , "submitted" );
+		$ordering = $this->getState( "list.ordering" , "pinned");
 		$direction = $this->getState( "list.direction" , "DESC" );
 		
-		$query->order("$ordering $direction");
-
+		$ordering1 = $this->getState( "list.ordering" , "modified");
+		$direction1 = $this->getState( "list.direction" , "DESC" );
+		
+		$query->order("$ordering $direction, $ordering1 $direction1");
+		
+		//$query->order("pinned DESC, modified DESC");
+		
     	return $query;
 	}
 
@@ -254,25 +259,26 @@ class QuestionsModelQuestions extends JModelList {
         $currentOptions = 
         	"&tag=" . JRequest::getString("tag") . 
         	"&catid=" . JRequest::getInt("catid");
-        
+        $home = 
+        	"<li><a " . (JRequest::getString("filter" , 0)=="home"?'class="active box-shadow"':'') . " href='" . JRoute::_("index.php?option=com_questions&view=questions" . $currentOptions)  . "'>" . JText::_("COM_QUESTIONS_HOME") . "</a></li>";
         $answered = 
-        	"<li><a " . (JRequest::getString("filter" , 0)=="answered"?'class=active':'') . " href='" . JRoute::_("index.php?option=com_questions&view=questions&filter=answered" . $currentOptions)  . "'>" . JText::_("COM_QUESTIONS_FILTER_ANSWERED") . "</a></li>";
+        	"<li><a " . (JRequest::getString("filter" , 0)=="answered"?'class="active box-shadow"':'') . " href='" . JRoute::_("index.php?option=com_questions&view=questions&filter=answered" . $currentOptions)  . "'>" . JText::_("COM_QUESTIONS_FILTER_ANSWERED") . "</a></li>";
         
         $notanswered = 
-        	"<li><a " . (JRequest::getString("filter" , 0)=="notanswered"?'class=active':'') . " href='" . JRoute::_("index.php?option=com_questions&view=questions&filter=notanswered" . $currentOptions)  . "'>" . JText::_("COM_QUESTIONS_FILTER_NOTANSWERED") . "</a></li>";
+        	"<li><a " . (JRequest::getString("filter" , 0)=="notanswered"?'class="active box-shadow"':'') . " href='" . JRoute::_("index.php?option=com_questions&view=questions&filter=notanswered" . $currentOptions)  . "'>" . JText::_("COM_QUESTIONS_FILTER_NOTANSWERED") . "</a></li>";
         
         $resolved = 
-        	"<li><a " . (JRequest::getString("filter" , 0)=="resolved"?'class=active':'') . " href='" . JRoute::_("index.php?option=com_questions&view=questions&filter=resolved" . $currentOptions)  . "'>" . JText::_("COM_QUESTIONS_FILTER_RESOLVED") . "</a></li>";
+        	"<li><a " . (JRequest::getString("filter" , 0)=="resolved"?'class="active box-shadow"':'') . " href='" . JRoute::_("index.php?option=com_questions&view=questions&filter=resolved" . $currentOptions)  . "'>" . JText::_("COM_QUESTIONS_FILTER_RESOLVED") . "</a></li>";
         
         $unresolved = 
-        	"<li><a " . (JRequest::getString("filter", 0)=="unresolved"?'class=active':'') . " href='" . JRoute::_("index.php?option=com_questions&view=questions&filter=unresolved" . $currentOptions)  . "'>" . JText::_("COM_QUESTIONS_FILTER_UNRESOLVED") . "</a></li>";
+        	"<li><a " . (JRequest::getString("filter", 0)=="unresolved"?'class="active box-shadow"':'') . " href='" . JRoute::_("index.php?option=com_questions&view=questions&filter=unresolved" . $currentOptions)  . "'>" . JText::_("COM_QUESTIONS_FILTER_UNRESOLVED") . "</a></li>";
         
         $myquestions = NULL;
         if ( JFactory::getUser()->id )
         $myquestions = 
-        	"<li><a " . (JRequest::getString("filter", 0)=="myquestions"?'class=active':'') . " href='" . JRoute::_("index.php?option=com_questions&view=questions&filter=myquestions" . $currentOptions)  . "'>" . JText::_("COM_QUESTIONS_FILTER_MYQUESTIONS") . "</a></li>";
+        	"<li><a " . (JRequest::getString("filter", 0)=="myquestions"?'class="active box-shadow"':'') . " href='" . JRoute::_("index.php?option=com_questions&view=questions&filter=myquestions" . $currentOptions)  . "'>" . JText::_("COM_QUESTIONS_FILTER_MYQUESTIONS") . "</a></li>";
                 
-        $options = "<div class='questions_filters'><ul>" . $answered . $notanswered . $resolved . $unresolved . $myquestions . "</ul></div>";
+        $options = "<div class='questions_filters'><ul>" . $home . $answered . $notanswered . $resolved . $unresolved . $myquestions . "</ul></div><div style='clear:both'></div>";
         
         return $options;
  	}

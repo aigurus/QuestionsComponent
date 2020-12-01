@@ -27,78 +27,109 @@
 	Version 0.0.1
 	Created date: Sept 2012
 	Creator: Sweta Ray
-	Email: admin@phpseo.net
-	support: support@phpseo.net
-	Website: http://www.phpseo.net
+	Email: admin@extensiondeveloper.com
+	support: support@extensiondeveloper.com
+	Website: http://www.extensiondeveloper.com
 */
 
 defined('_JEXEC') or die('Restricted access');
 $doc = JFactory::getDocument();
 $doc->addStyleSheet("components/com_questions/css/allprofiles.css");
+$doc->addStyleSheet("components/com_questions/css/style.css");
+$rows = $this->data;
+
+use Joomla\CMS\Factory;
+use Joomla\CMS\Router\Route;
 ?>
-<style>
-div.questionbox{
-	background: none repeat scroll 0 0 #ccc;
-    border-bottom: 1px solid #AAAAAA;
-    border-right: 1px solid #AFAFAF;
-    border: 1px solid #CCCCCC;
-    float: left;
-    margin: ;
-    padding: 1% 2%;
-    position: relative;
-    width: 95%;
-}
-div.questions_filters {
-	float: left;
-	clear: both;
-	width: 95%;
-	border: 1px solid #ccc;
-	margin: ;
-	background: #eeeeee;
-	padding:1% 2%;
-}
+<main id="tt-pageContent" class="tt-offset-small">
+    <div class="qcontainer">
+		  Forum 19 is a community of creatives who come together to share ideas and help each other succeed.
+				<h3 class="tt-title">
+					Admins
+				</h3>
+				<div class="tt-list-avatar">
+					<div class="row">
+					<hr>  
+					<?php foreach($rows as $row) { ?>
+						<div class="col-6 col-md-4 col-lg-3">
+							<a href="#" class="tt-avatar">
+								<div class="tt-col-icon">
+									<i class="tt-icon"><div class="circle c01"><?php 
 
-div.questions_filters ul
-{
-list-style: none;
-padding: 0;
-margin: 0;
-}
+									$user = Factory::getUser($row->userid);
+									$name = substr($user->name,0,1);
+									$userFirstname = strtoupper($name);
+									echo $userFirstname; ?></div></i>
+								</div>
+								<div class="tt-col-description">
+								<?php 
+									$url = Route::_("index.php?option=com_questions&view=profiles&id=".$user->id); ?>
+									<?php echo "<a href='".$url."' rel='nofollow'>$user->name</a>"; ?>
+									
+									<div class="tt-value"><?php echo $row->rank; ?></div>
+								</div>
+							</a>
+						</div>		
 
-div.questions_filters ul li{
-	list-style: none;	
-	display: inline-block;
-}
+				   <?php } ?>
 
-div.questions_filters ul li a {
-	background: url(background.gif) #fff bottom left repeat-x;
-	height: 2em;
-	line-height: 2em;
-	float: left;
-	width: 9em;
-	display: block;
-	border: 0.1em solid #dcdce9;
-	color: #0d2474;
-	text-decoration: none;
-	text-align: center;
-}
-
-div.questions_filters ul li a.active {
-	font-weight: bold;
-}
-img{
-border-radius: 20px 20px 20px 20px;
--moz-border-radius: 20px 20px 20px 20px;
--webkit-border-radius: 20px 20px 20px 20px;
-border: 5px inset #00000C;
-}
-</style>
-<div class="questionbox">
-<div class="questions_filters">
-<ul><li><a href="<?php echo JRoute::_("index.php?option=com_questions&view=questions"); ?>">Home</a></li><li><a href="<?php echo JRoute::_("index.php?option=com_questions&view=form&layout=edit"); ?>"><?php echo JText::_("COM_QUESTIONS_ASK_A_QUESTION"); ?></a></li>
-	</ul></div></div>
-    <div style="clear:both"></div>
+				<div style="clear:both"></div>    
+				<hr> 
+			</div>
+			<div class="table-responsive-sm tt-indent-top">
+				<table class="table-01">
+					<caption>Site Statistics</caption>
+					<thead>
+						<tr>
+							<th>Topic</th>
+							<th>All Time</th>
+							<th>Last 7</th>
+							<th>Last 30</th>
+						</tr>
+					</thead>
+					<tbody class="table-zebra">
+						<tr>
+							<td>Topics</td>
+							<td>51.8k</td>
+							<td>263</td>
+							<td>1.2k</td>
+						</tr>
+						<tr>
+							<td>Posts</td>
+							<td>624k</td>
+							<td>3.9k</td>
+							<td>15.4k</td>
+						</tr>
+						<tr>
+							<td>Users</td>
+							<td>123k</td>
+							<td>698</td>
+							<td>3.3k</td>
+						</tr>
+						<tr>
+							<td>Active Users</td>
+							<td>--</td>
+							<td>2.8k</td>
+							<td>7.2k</td>
+						</tr>
+						<tr>
+							<td>Likes</td>
+							<td>224k</td>
+							<td>2.5k</td>
+							<td>9.2k</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+	   </div>
+	</div>
+</main>
+    
+    
+    
+    
+    
 <?php
-echo $this->data;
+//echo $this->data;
 $this->escape(CopyrightHelper::copyright());
 ?>

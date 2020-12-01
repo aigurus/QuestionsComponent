@@ -27,9 +27,9 @@
 	Version 0.0.1
 	Created date: Sept 2012
 	Creator: Sweta Ray
-	Email: admin@phpseo.net
-	support: support@phpseo.net
-	Website: http://www.phpseo.net
+	Email: admin@extensiondeveloper.com
+	support: support@extensiondeveloper.com
+	Website: http://www.extensiondeveloper.com
 */
 
 // No direct access to this file
@@ -88,6 +88,7 @@ require_once 'components/com_questions/helpers/points.php';
 require_once 'components/com_questions/helpers/avatar.php';
 require_once 'components/com_questions/helpers/jomsocial.php';
 require_once 'components/com_questions/helpers/copyright.php';
+require_once 'components/com_questions/helpers/route.php';
 require_once 'components/com_questions/helpers/social.php';
 require_once 'administrator/components/com_questions/helpers/questions.php';
 
@@ -107,56 +108,58 @@ function dateDiff ($d1, $d2) {
 
 } 
 if(count($result)<1 && !JFactory::getUser()->guest){
-			$app = JFactory::getApplication();
-			$params = $app->getParams();
-			$joiningpoints =  $params->get('joiningpoints', 25);
-			$pdatauserrank = getPoints::setRank($user->id,$joiningpoints);
-			//var_dump($pdatauserrank);
-			$db = JFactory::getDbo();
-			
-			$pdata = new stdClass;
-			$pdata->id = NULL;
-			$pdata->userid = $user->id;
-			$pdata->username = $user->name;
-			$pdata->answered = NULL;
-			$pdata->asked = NULL;
-			$pdata->points = $joiningpoints;
-			$pdata->rank = $pdatauserrank;
-			$pdata->logdate = date("Y-m-d H:i:s"); 
-			$pdata->email = $user->email;
-			
-			$db->insertObject('#__questions_userprofile', $pdata);
-			$application =JFactory::getApplication();
-			$application->enqueueMessage(JText::_('COM_QUESTIONS_YOU_JUST_RECIEVED').$joiningpoints);
-			$application->enqueueMessage(JText::_('COM_QUESTIONS_POINTS_FOR_FIRSTTIME_LOGGING_INTO_QUESTIONS'));
-			//JFactory::getApplication()->enqueueMessage(JText::_('COM_QUESTIONS_SOME_ERROR_OCCURRED'), 'error');
+	$app = JFactory::getApplication();
+	$params = $app->getParams();
+	$joiningpoints =  $params->get('joiningpoints', 25);
+	$points = new getPoints();
+	$pdatauserrank = $points->setRank($user->id,$joiningpoints);
+	//var_dump($pdatauserrank);
+	$db = JFactory::getDbo();
+	
+	$pdata = new stdClass;
+	$pdata->id = NULL;
+	$pdata->userid = $user->id;
+	$pdata->username = $user->name;
+	$pdata->answered = NULL;
+	$pdata->asked = NULL;
+	$pdata->points = $joiningpoints;
+	$pdata->rank = $pdatauserrank;
+	$pdata->logdate = date("Y-m-d H:i:s"); 
+	$pdata->email = $user->email;
+	
+	$db->insertObject('#__questions_userprofile', $pdata);
+	$application =JFactory::getApplication();
+	$application->enqueueMessage(JText::_('COM_QUESTIONS_YOU_JUST_RECIEVED').$joiningpoints);
+	$application->enqueueMessage(JText::_('COM_QUESTIONS_POINTS_FOR_FIRSTTIME_LOGGING_INTO_QUESTIONS'));
+	//JFactory::getApplication()->enqueueMessage(JText::_('COM_QUESTIONS_SOME_ERROR_OCCURRED'), 'error');
 
 	} elseif(count($result)>=1 && !JFactory::getUser()->guest) {
 		
-			$db = JFactory::getDBO();
-			$query = "
-				  SELECT logdate
-					FROM #__questions_userprofile
-					WHERE userid='".$user->id."';
-				  ";
-			$db->setQuery($query);
-			$date1 = $db->loadResult(); 
-			$d2 = date("Y-m-d H:i:s"); 
-			$difference = dateDiff($date1, $d2);
-			if($difference >1){
-			$app = JFactory::getApplication();
-			$params = $app->getParams();
-			$loggingpoints =  $params->get('loggingpoints', 1);
-			$pdatauserrank = getPoints::setRank($user->id,$loggingpoints);
-			
-			$q2="UPDATE #__questions_userprofile SET points = points+'".$loggingpoints."', rank ='".$pdatauserrank."', logdate='".date("Y-m-d H:i:s")."' where userid=".$user->id;
-			$db->setQuery($q2);
-			$db->execute();
-			$application =JFactory::getApplication();
-			$application->enqueueMessage(JText::_('COM_QUESTIONS_YOU_JUST_RECIEVED').$loggingpoints);
-			$application->enqueueMessage(JText::_('COM_QUESTIONS_POINTS_FOR_LOGGING_INTO_QUESTIONS'));
-			//JFactory::getApplication()->enqueueMessage(JText::_('COM_QUESTIONS_SOME_ERROR_OCCURRED'), 'error');
-			}
+	$db = JFactory::getDBO();
+	$query = "
+		  SELECT logdate
+			FROM #__questions_userprofile
+			WHERE userid='".$user->id."';
+		  ";
+	$db->setQuery($query);
+	$date1 = $db->loadResult(); 
+	$d2 = date("Y-m-d H:i:s"); 
+	$difference = dateDiff($date1, $d2);
+	if($difference >1){
+	$app = JFactory::getApplication();
+	$params = $app->getParams();
+	$loggingpoints =  $params->get('loggingpoints', 1);
+	$points = new getPoints();
+	$pdatauserrank = $points->setRank($user->id,$loggingpoints);
+	
+	$q2="UPDATE #__questions_userprofile SET points = points+'".$loggingpoints."', rank ='".$pdatauserrank."', logdate='".date("Y-m-d H:i:s")."' where userid=".$user->id;
+	$db->setQuery($q2);
+	$db->execute();
+	$application =JFactory::getApplication();
+	$application->enqueueMessage(JText::_('COM_QUESTIONS_YOU_JUST_RECIEVED').$loggingpoints);
+	$application->enqueueMessage(JText::_('COM_QUESTIONS_POINTS_FOR_LOGGING_INTO_QUESTIONS'));
+	//JFactory::getApplication()->enqueueMessage(JText::_('COM_QUESTIONS_SOME_ERROR_OCCURRED'), 'error');
+	}
 			
 	}
 

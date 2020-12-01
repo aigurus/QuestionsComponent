@@ -27,9 +27,9 @@
 	Version 0.0.1
 	Created date: Sept 2012
 	Creator: Sweta Ray
-	Email: admin@phpseo.net
-	support: support@phpseo.net
-	Website: http://www.phpseo.net
+	Email: admin@extensiondeveloper.com
+	support: support@extensiondeveloper.com
+	Website: http://www.extensiondeveloper.com
 */
 
 // No direct access to this file
@@ -44,14 +44,16 @@ abstract class AvatarHelper{
 				$params = $app->getParams();
 				$method = $params->get('display_gravatars', 1);
 				$javatarsize = $params->get('javatarsize', "50");
+				$d = "mp";
+				$r ="g";
 				if($method==1){
 						if(!$profile==1){
 							
-							return '<img class="'.$class.'" src="http://www.gravatar.com/avatar/'.md5(strtolower(trim($email))).'?s='.$size.' style="float:right; border:2px solid #333;" />';
+							return '<img class="'.$class.'" src="http://www.gravatar.com/avatar/'.md5(strtolower(trim($email))).'?s='.$size.'&d='.$d.'&r='.$r.' style="float:right; border:2px solid #333;" />';
 							
 							 } else {
 						
-							return '<img width="'.$size.'" height="'.$size.'" class="'.$class.'" alt="Profile Picture" src="http://www.gravatar.com/avatar/'.md5(strtolower(trim($email))).'?s='.$size.'&amp;d=identicon&amp;r=PG"/>';
+							return '<img width="'.$size.'" height="'.$size.'" class="'.$class.'" alt="Profile Picture" src="http://www.gravatar.com/avatar/'.md5(strtolower(trim($email))).'?s='.$size.'&d='.$d.'&r='.$r.'&amp;d=identicon&amp;r=PG"/>';
 							
 							
 						}

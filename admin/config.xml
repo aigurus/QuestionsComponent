@@ -358,7 +358,7 @@
 			<option value="1">COM_QUESTIONS_OPT_YES</option>
 			<option value="0">COM_QUESTIONS_OPT_NO</option>
 		</field>
-		
+		<!--
 		<field
 			name="stylesheet"
 			label="COM_QUESTIONS_CHOOSE_STYLESHEET"
@@ -369,10 +369,10 @@
 			<option value="simple">Simple Style</option>
 			<option value="stylish">Rounded Style</option>
 		</field>
-
+		-->
 		<!-- USE OF COMPONENT'S DEFAULT CSS -->
 		
-		
+		<!--
 		<field name="twitter_widget" type="list" default="hide" label="COM_QUESTIONS_SHOW_TWITTER_WIDGET_LABEL" description="COM_QUESTIONS_SHOW_TWITTER_WIDGET_DESC">
 			<option value="show">COM_QUESTIONS_SHOW</option>
 			<option value="hide">COM_QUESTIONS_HIDE</option>
@@ -493,11 +493,15 @@
 		</field>
 		<field name="favlimit" type="text" default="2" label="COM_QUESTIONS_PROFILE_NO_FAVS_LABEL" description="COM_QUESTIONS_PROFILE_NO_FAVS_DESC" size="2">
 		</field>
+		-->
 
    </fieldset>
    
    <fieldset name="profiledisplay" label="COM_QUESTIONS_PROFILE_DISPLAY" description="COM_QUESTIONS_PROFILE_DISPLAY_OPTIONS">
-	
+		<field name="qlimit" type="text" default="10" label="COM_QUESTIONS_PROFILE_QUESTIONS_LIMIT_LABEL" description="COM_QUESTIONS_PROFILE_QUESTIONS_LIMIT_DESC" size="2">
+		</field>
+		<field name="alimit" type="text" default="10" label="COM_QUESTIONS_PROFILE_ANSWERS_LIMIT_LABEL" description="COM_QUESTIONS_PROFILE_ANSWERS_LIMIT_DESC" size="2">
+		</field>
 		<!-- ACL PERMISSIONS -->
 		<field name="show_points" type="list" default="show" label="COM_QUESTIONS_SHOW_USER_POINTS" description="COM_QUESTIONS_SHOW_USER_POINTS_DESC">
 			<option value="1">COM_QUESTIONS_SHOW</option>

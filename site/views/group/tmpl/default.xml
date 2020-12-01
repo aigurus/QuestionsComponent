@@ -1,58 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-
-	<layout title="COM_QUESTIONS_USER_PROFILES"  hidden="true">
-		<message>COM_QUESTIONS_USER_PROFILES</message>
+	<layout title="COM_QUESTIONS_USER_PROFILES_GROUP">
+		<message>COM_QUESTIONS_USER_PROFILES_GROUP</message>
 	</layout>
-	<!--
-    <view title="UserProfile">
-		<message>UserProfile</message>
-	</view>
-		<config>
-		   <fields name="params">
-			<fieldset name="basic">
-				<field name="userCount" type="list" default="0" label="USERCOUNT" description="USERCOUNT_DESC">
-				  <option value="0">Alle</option>
-				  <option value="5">5</option>
-				  <option value="10">10</option>
-				  <option value="25">25</option>
-				  <option value="50">50</option>
-				</field>
-
-				<field name="showOnlyPublicPosts" type="radio" default="0" label="ONLYPUBLIC" description="ONLYPUBLIC_DESC">
-  					<option value="0">YES</option>
-  					<option value="1">NO</option>
-				</field>
-				<field name="showDetail" type="radio" default="0" label="SHOWDETAIL" description="SHOWDETAIL_DESC">
-  					<option value="0">YES</option>
-  					<option value="1">NO</option>
-				</field>
-				<field name="showHomepage" type="radio" default="0" label="SHOWHOMEPAGE" description="SHOWHOMEPAGE_DESC">
-  					<option value="0">YES</option>
-  					<option value="1">NO</option>
-				</field>
-				<field name="showAboutMe" type="radio" default="0" label="SHOWABOUTME" description="SHOWABOUTME_DESC">
-  					<option value="0">YES</option>
-  					<option value="1">NO</option>
-				</field>
-				<field name="hideHomepage" type="radio" default="0" label="HIDEHOMEPAGE" description="HIDEHOMEPAGE_DESC">
-  					<option value="0">YES</option>
-  					<option value="1">NO</option>
-				</field>
-				<field
-					name="usergroupids"
-					type="usergroup"
-					extension="com_content"
-					multiple="true"
-					size="10"
-					default=""
-					label="SHOWUSERSFROMGROUPS"
-					description="" >
-					<option value="">JOPTION_ALL_USERGROUPS</option>
-				</field>
-				<field name="userMask" type="text" default="[USERNAME]" label="USERMASK" description="USERMASK_DESC" />
-
-			</fieldset>
-		   </fields>
-		</config> -->
 </metadata>

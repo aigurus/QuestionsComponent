@@ -27,9 +27,9 @@
 	Version 0.0.1
 	Created date: Sept 2012
 	Creator: Sweta Ray
-	Email: admin@phpseo.net
-	support: support@phpseo.net
-	Website: http://www.phpseo.net
+	Email: admin@extensiondeveloper.com
+	support: support@extensiondeveloper.com
+	Website: http://www.extensiondeveloper.com
 */
 
 // No direct access to this file
@@ -48,9 +48,11 @@ class QuestionsControllerquazax extends QueController {
     }
 
     function addnewgroup() {
-
-        $pin['userid'] = JRequest::getVar('userid');
-        $pin['group_name'] = JRequest::getVar('group_name');
+		$jinput = JFactory::getApplication()->input;
+		$pin['userid'] = $jinput->get('userid');
+		$pin['group_name'] = $jinput->get('group_name');
+        //$pin['userid'] = JRequest::getVar('userid');
+        //$pin['group_name'] = JRequest::getVar('group_name');
         $model = $this->getModel('group');
         $arr = $model->addnewgroup($pin);
         echo $arr;

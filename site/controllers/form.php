@@ -27,9 +27,9 @@
 	Version 0.0.1
 	Created date: Sept 2012
 	Creator: Sweta Ray
-	Email: admin@phpseo.net
-	support: support@phpseo.net
-	Website: http://www.phpseo.net
+	Email: admin@extensiondeveloper.com
+	support: support@extensiondeveloper.com
+	Website: http://www.extensiondeveloper.com
 */
 
 // No direct access to this file
@@ -67,6 +67,7 @@ class QuestionsControllerForm extends JControllerForm {
 		$params = JFactory::getApplication()->getParams();
 		//parse config options
 		$config = JFactory::getConfig();
+		$points = new getPoints();
 	
 		if ($config->get('captcha') != '0') {
 		$recaptcha = (int) $params->get('recaptcha');
@@ -200,7 +201,7 @@ class QuestionsControllerForm extends JControllerForm {
 		$ndata->id = $lastids;
 		$db->updateObject( '#__questions_core', $ndata, id );*/
 		//exit;
-		$pdatauserrank = getPoints::setRank($user->id,$askingpoints);
+		$pdatauserrank = $points->setRank($user->id,$askingpoints);
 		
 		$pdata = new stdClass;
         $pdata->id = NULL;
@@ -251,9 +252,9 @@ class QuestionsControllerForm extends JControllerForm {
 		$user = JFactory::getUser();
 		$guest = $user->guest;
 		if(!$guest){
-		$recipient = JFactory::getUser()->email;
+			$recipient = JFactory::getUser()->email;
 		}else{
-		$recipient = $data["email"];
+			$recipient = $data["email"];
 		}
 		
 		//$recipient = $user->email;

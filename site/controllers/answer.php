@@ -27,9 +27,9 @@
 	Version 0.0.1
 	Created date: Sept 2012
 	Creator: Sweta Ray
-	Email: admin@phpseo.net
-	support: support@phpseo.net
-	Website: http://www.phpseo.net
+	Email: admin@extensiondeveloper.com
+	support: support@extensiondeveloper.com
+	Website: http://www.extensiondeveloper.com
 */
 
 // No direct access to this file
@@ -58,6 +58,7 @@ class QuestionsControllerAnswer extends QueController
 		if ($config->get('captcha') != '0') {
 		if($recaptcha){
 		$post = JFactory::getApplication()->input->post;
+		
 		$responsefield = $post->get('recaptcha_response_field','', 'RAW');
 		
 		if (empty($responsefield) || (strlen($responsefield)== 0) ){
@@ -66,7 +67,10 @@ class QuestionsControllerAnswer extends QueController
 			$this->setRedirect($link, $msg, 'error');
 			return;
 		} else {
-		$post = JRequest::get('post');      
+		$post = JRequest::get('post');    
+		
+		
+		  
 		JPluginHelper::importPlugin('captcha');
 		$dispatcher = JDispatcher::getInstance();
 		$res = $dispatcher->trigger('onCheckAnswer',$post['recaptcha_response_field']);
@@ -99,6 +103,10 @@ class QuestionsControllerAnswer extends QueController
         
         $text=JRequest::getVar( 'text', '', 'post', 'string', JREQUEST_ALLOWHTML );
 		
+		$post = JFactory::getApplication()->input->post;
+		
+		$subs = $post->get('subs',0);
+
 		$refurl1=JRequest::getVar( 'refurl1', '', 'post', 'string', JREQUEST_ALLOWHTML );
 		$refurl2=JRequest::getVar( 'refurl2', '', 'post', 'string', JREQUEST_ALLOWHTML );
 		$refurl3=JRequest::getVar( 'refurl3', '', 'post', 'string', JREQUEST_ALLOWHTML );
@@ -116,7 +124,7 @@ class QuestionsControllerAnswer extends QueController
 		
 		$url = JRoute::_('index.php?option=com_questions&view=question&id='.$parent);
 		$title2 = JText::_('COM_QUESTIONS_A_NEW_ANSWER_HAS_BEEN_SUBMITTED').'<BR />'.JText::_('COM_QUESTIONS_TITLE').' <a href="'.$url.'">'.$title.'</a>';
-		$app = &JFactory::getApplication();
+		$app = JFactory::getApplication();
 		$params = $app->getParams();
 		$jomsocial_activity = $params->get('jomsocial_acivity', 0);
 		if($jomsocial_activity == 1){
@@ -163,11 +171,11 @@ class QuestionsControllerAnswer extends QueController
             $msg.="<br />" . JText::_("COM_QUESTIONS_ERR_ANSWER_NOTITLE");
         }
         
-        $mailregex = '/^([\w-\.]+)@((?:[\w]+\.)+)([a-zA-Z]{2,4})$/';
-		if (! preg_match($mailregex, $email) ) {
-            $valid = FALSE;
+       
+		if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+			$valid = FALSE;
             $msg.="<br />" . JText::_("COM_QUESTIONS_ERR_ANSWER_INCORRECTMAIL");
-        }
+		}
 		if(! preg_match("/^$regex$/", trim($refurl1)) && $refurl1 != "")
         {
         	$valid = FALSE;
@@ -188,8 +196,8 @@ class QuestionsControllerAnswer extends QueController
             parent::setRedirect($return, JText::_("COM_QUESTIONS_ERR_FILL_ALL_REQ_FIELDS") . $msg, "ERROR");
             return;
         }
-
-        $db = JFactory::getDBO();
+		
+		$db = JFactory::getDBO();
 
         $data = new stdClass;
 
@@ -197,7 +205,7 @@ class QuestionsControllerAnswer extends QueController
         $data->title = $title;
         $data->text = $text;
         $data->submitted = $submitted;
-        $data->modified = NULL;
+        $data->modified = $submitted;
         $data->userid_creator = $userid_creator;
         $data->userid_modifier = NULL;
         $data->question = 0;
@@ -214,7 +222,9 @@ class QuestionsControllerAnswer extends QueController
         $data->ip = $ip;
         $data->email = $email;
         $data->catId = $catid;
-        
+		
+		
+       
         if ($db->insertObject('#__questions_core', $data)) {
             $message = JText::_("COM_QUESTIONS_MSG_ANSW_SAVED");
             $type = NULL;
@@ -222,8 +232,8 @@ class QuestionsControllerAnswer extends QueController
             $message = JText::_("COM_QUESTIONS_MSG_ANSW_NOSAVE");
             $type = "ERROR";
         }
-		
-		$pdatauserrank = getPoints::setRank($userid_creator,$answeringpoints);
+		$points = new getPoints();
+		$pdatauserrank = $points->setRank($userid_creator,$answeringpoints);
 				
 		$pdata = new stdClass;
         $pdata->id = NULL;
@@ -239,7 +249,7 @@ class QuestionsControllerAnswer extends QueController
 		
 		$db->setQuery("SELECT COUNT(*) FROM `#__questions_userprofile` WHERE userid = '".$userid_creator."'" );
 		$count = $db->loadResult();
-
+		
 		if($count>0){
 		$query = "UPDATE `#__questions_userprofile` SET answered = answered+1, rank = '".$pdata->rank."' , points = points+'".$answeringpoints."' WHERE userid = '".$userid_creator."'" ;
 		$db->setQuery($query);
@@ -252,7 +262,21 @@ class QuestionsControllerAnswer extends QueController
 		{
             $type = "ERROR";
         }
-
+		
+		/*Saving Subscription data*/
+		$subscriptions = array();
+		$subscriptions = unserialize($this->getSubs());
+		if(!in_array($parent,$subscriptions)){
+			//$subs1 = array_push($subscriptions,$parent);
+			$subscriptions[count($subscriptions)] = $parent;
+			$subsc = serialize($subscriptions);
+			
+			$query = "UPDATE `#__questions_userprofile` SET subs = ".$db->quote($subsc)." WHERE userid = ".$user->id;
+			$db->setQuery($query);
+			$db->execute();
+		}
+		/*Subs ends*/
+		
         $return = JRequest::getString("returnTo");
         parent::setRedirect($return, $message, $type);
 		
@@ -281,6 +305,22 @@ class QuestionsControllerAnswer extends QueController
 		$body=JText::_('COM_QUESTIONS_FORM_SUBMIT_ANSWER_ASKING_PERSON')."<br />"."<br />".JText::_('COM_QUESTIONS_SUBMIT_ANSWER_VIEW_LINK_MESSAGE')."<br />"."<a href=".$return.">".JText::_('COM_QUESTIONS_SUBMIT_ANSWER_VIEW_LINK')."</a>";
 		MailHelper::sendemail($body,$subject,$recipient,$message);
 		
+	}
+	
+	public function getSubs(){
+		$user = JFactory::getUser();
+		$db = JFactory::getDbo();
+		$query = $db
+			->getQuery(true)
+			->select('subs')
+			->from($db->quoteName('#__questions_userprofile'))
+			->where($db->quoteName('userid') . " = " . $db->quote($user->id));
+		
+		$db->setQuery($query);
+		$result = $db->loadResult();
+		$t = unserialize($result);
+	
+		return $result;
 	}
 	
 	public function choose(){
@@ -312,6 +352,11 @@ class QuestionsControllerAnswer extends QueController
 			$db->setQuery($q);
 						
 			if ($db->execute()){
+				
+			$q3="UPDATE #__questions_core SET chosen=1 WHERE id=$qid";
+			$db->setQuery($q3);
+			$db->execute();
+				
 			/********************For one who has answered the Question*************************/	
 			$pdatauserrank2 = getPoints::setRank2($aid,$bestchosenpoints);		
 				
@@ -379,11 +424,16 @@ class QuestionsControllerAnswer extends QueController
 		$user = JFactory::getUser();
 		$userid_creator = JFactory::getUser()->id;
 		
-		$q = "UPDATE #__questions_core SET chosen=0 WHERE parent=$qid";
 		$db = JFactory::getDbo();
+		$q = "UPDATE #__questions_core SET chosen=0 WHERE parent=$qid";
+		
 		$db->setQuery($q);
 		
 		if ($db->execute()){
+			
+			$q5 = "UPDATE #__questions_core SET chosen=0 WHERE id=$qid";
+			$db->setQuery($q5);
+			$db->execute();
 		
 	
 		$pdatauserrank4 = getPoints::setRank2($aid,-$bestchosenpoints);	
@@ -434,6 +484,115 @@ class QuestionsControllerAnswer extends QueController
 		}
 		else {
 			$msg = JText::_("COM_QUESTIONS_ANSWER_CHOOSERESET_NOK") . $err;
+		}
+		$this->setRedirect( JRoute::_("index.php?option=com_questions&view=question&id=$qid") , $msg);
+	}
+	
+	/*Pinned Question*/
+	public function pinned(){
+		
+		$params = json_decode(JFactory::getApplication()->getParams());
+		$user = JFactory::getUser();
+		$userid_creator =$user->id;
+		
+		$ok = FALSE;
+		
+		//IDs..
+		$qid = JRequest::getInt("questionid");
+		
+		$q = "UPDATE #__questions_core SET pinned=0 WHERE id=$qid";
+		$db = JFactory::getDbo();
+		$db->setQuery($q);
+		
+		if ($db->execute())
+			$ok = TRUE;
+		else 
+			$err = " - " . $db->getErrorMsg();
+					
+		if ($ok){
+						
+			$q="UPDATE #__questions_core SET pinned=1 WHERE id=$qid";
+						
+			$db->setQuery($q);
+			
+			$db->execute();
+			
+			$msg = JText::_("COM_QUESTIONS_QUESTION_PINNED_OK");
+						
+			$q = "SELECT email FROM #__questions_core WHERE id=$qid";
+			$db = JFactory::getDbo();
+			
+			$recipient1 = $user->email;
+			$subject = $data->title;
+			$message="Problem sending email. Check SMTP, sendmail settings";
+			$body=JText::_('COM_QUESTIONS_SUBMIT_ANSWER_CHOSING_BEST')."<br />"."<span><small>".$data->text."</small></span>";
+			MailHelper::sendemail($body,$subject,$recipient1,$message);
+		
+			$subject = $data->title;
+			$message="Problem sending email. Check SMTP, sendmail settings";
+			$return = JURI::base().("index.php?option=com_questions&view=question&id=" . $qid);
+			$body=JText::_('COM_QUESTIONS_PINNED')."<br />"."<br />".JText::_('COM_QUESTIONS_SUBMIT_PINNED_MESSAGE')."<br />"."<a href=".$return.">".JText::_('COM_QUESTIONS_PINNED_LINK')."</a>";
+			MailHelper::sendemail($body,$subject,$recipient2,$message);
+			
+		}
+		else {
+			$msg = JText::_("COM_QUESTIONS_NOT_ABLE_TO_PINNED") . $err;
+		}
+		$this->setRedirect( JRoute::_("index.php?option=com_questions&view=question&id=$qid") , $msg);
+	}
+	
+	public function pinnedReset(){
+		$ok = FALSE;
+		$qid = JRequest::getInt("questionid");
+		
+		$params = json_decode(JFactory::getApplication()->getParams());
+
+		$user = JFactory::getUser();
+		$userid_creator = JFactory::getUser()->id;
+		
+		$db = JFactory::getDbo();
+		$q = "UPDATE #__questions_core SET pinned=0 WHERE id=$qid";
+		
+		$db->setQuery($q);
+		
+		if ($db->execute()){
+			
+			$q5 = "UPDATE #__questions_core SET pinned=0 WHERE id=$qid";
+			$db->setQuery($q5);
+			$db->execute();
+		
+			$ok = TRUE;
+		}
+		else {
+			$err = " - " . $db->getErrorMsg();
+		}
+			
+		if ($ok) {
+			$msg = JText::_("COM_QUESTIONS_QUESTION_PINNEDRESET_OK");
+			
+			
+			$q = "SELECT email FROM #__questions_core WHERE id=$qid";
+			$db = JFactory::getDbo();
+			$db->setQuery($q);
+			$userchosen = $db->loadResult();	
+			
+			$recipient3 = $user->email;
+			$subject = $data->title;
+			$message="Problem sending email. Check SMTP, sendmail settings";
+			$body=JText::_('COM_QUESTIONS_SUBMIT_ANSWER_CHOSING_BEST_RESET')."<br />"."<span><small>".$data->text."</small></span>";
+			MailHelper::sendemail($body,$subject,$recipient3,$message);
+
+		
+			$recipient4 = $userchosen;
+			$subject = $data->title;
+			$message="Problem sending email. Check SMTP, sendmail settings";
+			$return = JURI::base().("index.php?option=com_questions&view=question&id=" . $qid);
+			$body=JText::_('COM_QUESTIONS_PINNEDRESET')."<br />"."<br />".JText::_('COM_QUESTIONS_PINNEDRESET_MESSAGE')."<br />"."<a href=".$return.">".JText::_('COM_QUESTIONS_PINNEDRESET_LINK')."</a>";
+			MailHelper::sendemail($body,$subject,$recipient4,$message);
+
+		}
+		else {
+			$msg = JText::_("COM_QUESTIONS_PINNEDRESET_NOK") . $err;
 		}
 		$this->setRedirect( JRoute::_("index.php?option=com_questions&view=question&id=$qid") , $msg);
 	}

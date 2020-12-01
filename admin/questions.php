@@ -59,7 +59,7 @@ if(!class_exists('QueController')) {
    }
 }
 
-if (!JFactory::getUser()->authorise('core.manage', 'com_questions')) 
+if (!JFactory::getUser()->authorise('core.create', 'com_questions')) 
 {
 	return JError::raiseWarning(404, JText::_('COM_QUESTIONS_JERROR_ALERTNOAUTHOR'));
 }

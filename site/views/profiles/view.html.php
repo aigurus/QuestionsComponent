@@ -28,9 +28,9 @@
 	Version 0.0.1
 	Created date: Sept 2012
 	Creator: Sweta Ray
-	Email: admin@phpseo.net
-	support: support@phpseo.net
-	Website: http://www.phpseo.net
+	Email: admin@extensiondeveloper.com
+	support: support@extensiondeveloper.com
+	Website: http://www.extensiondeveloper.com
 */
 
 defined( '_JEXEC' ) or die( 'Restricted access' );
@@ -47,32 +47,58 @@ class QuestionsViewProfiles extends QueView
     public function display($tpl = null)
     {
 			  $groupsmodel = JModelLegacy::getInstance('Groups', 'QuestionsModel');
-			  $groupdetails = $groupsmodel->getUserGroups();
-			  $this->assignRef('groupdetails',$groupdetails );
-			  			  
-         	  $model = $this->getModel('profiles');
+			  //$groupdetails = $groupsmodel->getUserGroups();
+		
+			  $userquestions = $this->get('UserQuestions');
+		
+			  $this->userquestions = $userquestions;
+		
+			  $useranswers = $this->get('UserAnswers');
+			
+			  $this->useranswers = $useranswers;
+		
+			  //$this->assignRef('groupdetails',$groupdetails );
+			  /*JLoader::import('profiles', JPATH_ROOT.'/components/com_questions/models');
+			  $model = JModelLegacy::getInstance('Profiles', 'QuestionsModel');*/
+			  $model = JModelLegacy::getInstance('Profiles', 'QuestionsModel');	
+		  
 			  $data  = $model->GetUserList();
-			  $mygroups  = $model->getMyGroups();
-			  $this->assignRef('mygroups',$mygroups);
 			  
-			  $modelg = JModelLegacy::getInstance('Group', 'QuestionsModel');
-			  $userdetails = $modelg->getUsers();
-			  $this->assignRef('userdetails',$userdetails );
+			  $mygroups  = $model->getMyGroups();
+			   
+			  $this->assignRef('mygroups',$mygroups);
+			  	
+			  $user = JFactory::getUser();
+			  $ownedit = $user->authorise("profile.edit.own" , "com_questions");
+			  $alledit = $user->authorise("profile.edit.all" , "com_questions");
+
+        	  $this->assignRef("ownedit", $ownedit);
+        	  $this->assignRef("alledit", $alledit);
+		
+			  //$modelg = JModelLegacy::getInstance('Group', 'QuestionsModel');
+			  //$userdetails = $modelg->getUsers();
+			  	
+			  //$this->assignRef('userdetails',$userdetails );
+			
+			  
 
 			  $this->data = $data;
+			  
 			  // Check for errors.
                 if (count($errors = $this->get('Errors'))) 
                 {
+					
                         JLog::add(implode('<br />', $errors), JLog::WARNING, 'jerror');
                         return false;
                 }
+				//
                 // Display the view
     		  parent::display($tpl);
     }
-	function useractivity($id){
-			$this->assignRef( 'html',$html );
-			$model  =& $this->getModel('profiles');
-			$model->getUserActivities($id);
+	public function useractivity($id){
+			$model = JModelLegacy::getInstance('Profiles', 'QuestionsModel');	
+			$activities = $model->getUserActivities($id);
+			return $activities;
 	}
 	
 	public function getQAList($prouser,$varlist){
@@ -109,6 +135,7 @@ class QuestionsViewProfiles extends QueView
       $query = "SELECT * FROM #__users where id=" . $id;
       $db->setQuery( $query );
       $user = $db->loadObjectList();
+	  
 	  return $user;
   	}
   	public function GetProfileDetails($id)
@@ -118,6 +145,7 @@ class QuestionsViewProfiles extends QueView
       $query = "SELECT * FROM #__questions_userprofile where userid=" . $id;
       $db->setQuery( $query );
       $prouser = $db->loadObjectList();
+	  
 	  return $prouser;
   	}
 	
@@ -135,10 +163,11 @@ class QuestionsViewProfiles extends QueView
 	public function GetProfileHits($id)
     {
       $db =JFactory::getDBO();
- 
+
       $query = "SELECT impressions FROM #__questions_userprofile where userid=" . $id;
       $db->setQuery( $query );
       $prouser = $db->loadResult();
+	  
 	  return $prouser;
   	}
 	public function profilehits( $id=NULL ){
@@ -156,7 +185,7 @@ class QuestionsViewProfiles extends QueView
 			if (!$db->execute()){
 				return FALSE;
 			}
-			
+			 
 			return TRUE;
 		}
 		else {
@@ -165,6 +194,7 @@ class QuestionsViewProfiles extends QueView
 	}
 	
 		function getTags($id){
+			
 					$db = JFactory::getDBO();
 					$query = $db->getQuery(true);
 					$query->select('qtags');
@@ -215,6 +245,7 @@ class QuestionsViewProfiles extends QueView
 					return $rows;*/
 		}
 		function cleanString($string) {
+			
 		  	$clear = strip_tags($string);
 			// Clean up things like &amp;
 			$clear = html_entity_decode($clear);
@@ -248,6 +279,7 @@ class QuestionsViewProfiles extends QueView
 		} 
 		
 			function getRP($userid){
+				
 					$db = JFactory::getDBO();
 					$query = $db->getQuery(true);
 					$query->select('rank,points');
@@ -255,6 +287,7 @@ class QuestionsViewProfiles extends QueView
 					$query->where('userid='.$userid);
 					$db->setQuery($query);
 					$rank = $db->loadAssoc();
+					
 					return $rank;
 					
 		   }
@@ -273,8 +306,14 @@ class QuestionsViewProfiles extends QueView
 		   }
 	   public function gettemplate($prouser1,$varlist1){
 				   $vararray = $this->getQAList($prouser1,$varlist1);
-				   ?>
+				   
+                   if(isset($this->pageclass_sfx)){ ?>
 				   <div class="questions<?php echo $this->pageclass_sfx; ?>">
+                   <?php
+                   } else { ?>
+                   <div class="questions">
+                   <?php
+                   } ?>
 							<div>
 							<div>	
 							<div>

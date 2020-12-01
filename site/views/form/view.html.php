@@ -27,9 +27,9 @@
 	Version 0.0.1
 	Created date: Sept 2012
 	Creator: Sweta Ray
-	Email: admin@phpseo.net
-	support: support@phpseo.net
-	Website: http://www.phpseo.net
+	Email: admin@extensiondeveloper.com
+	support: support@extensiondeveloper.com
+	Website: http://www.extensiondeveloper.com
 */
 
 // No direct access to this file
@@ -92,7 +92,8 @@ class QuestionsViewForm extends QueView
 		//params
 				
 		//Page class suffix
-		$this->assignRef("pageclass_sfx", htmlspecialchars($params->get('pageclass_sfx')));
+		$psfx = htmlspecialchars($params->get('pageclass_sfx'));
+		$this->assignRef("pageclass_sfx",$psfx);
 		
 		$this->assignRef("user", $user);
 

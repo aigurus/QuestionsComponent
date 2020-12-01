@@ -27,9 +27,9 @@
 	Version 0.0.1
 	Created date: Sept 2012
 	Creator: Sweta Ray
-	Email: admin@phpseo.net
-	support: support@phpseo.net
-	Website: http://www.phpseo.net
+	Email: admin@extensiondeveloper.com
+	support: support@extensiondeveloper.com
+	Website: http://www.extensiondeveloper.com
 */
 
 // No direct access to this file
@@ -41,25 +41,37 @@ jimport('joomla.application.component.modellist');
 class QuestionsModelGroups extends JModelList {
 
 	function getUserGroups() {
-		$uid = JRequest::getInt( 'id' );
+		//$uid = JRequest::getInt( 'id' );
+		
+		$jinput = JFactory::getApplication()->input;
+		
+		
         $db = $this->getDBO();
+		$uid = $db->escape($jinput->getInt('id'));
         //$user = JFactory::getUser();
         //$userid = $user->id;
 		$query = $db->getQuery(true);
-		$query->select($db->quoteName(array('id','group_name','friendsid','published','created')));
+		
+		$query->select($db->quoteName(array('id','group_name','published','created')));
 		$query->from($db->quoteName('#__questions_groups'));
-		$query->where($db->quoteName('published') . ' =1 AND userid='.$uid);
+		if($uid>0){
+			$query->where($db->quoteName('published') . ' =1 AND userid='.$uid);
+		} else {
+			$query->where($db->quoteName('published').' =1');
+		}
 		$query->order('created DESC');
 		$db->setQuery($query);
 		$groups = $db->loadObjectList();
         return $groups;
     }
 
-	function getGroups() {
+	function getGroups($userid,$gid) {
         $db = $this->getDBO();
         $user = JFactory::getUser();
-		$gid = JRequest::getVar("term");
-        $userid = $user->id;
+		//$jinput = JFactory::getApplication()->input;
+		//$gid = $db->escape($jinput->getString('term'));
+		//$gid = JRequest::getVar("term");
+        //$userid = $user->id;
         $query = "select id,group_name from #__questions_groups WHERE published = 1 and userid=$userid and group_name LIKE '%" . $gid . "%'";
         $db->setQuery($query);
         $groups = $db->loadObjectList();
@@ -81,8 +93,10 @@ class QuestionsModelGroups extends JModelList {
 	
 	function sendNotification ($usergroups) {
 		
-        $user = $usergroups['userid'];
-		$users = $usergroups['users'];
+		$db = $this->getDBO();
+		
+        $user = $db->escape($usergroups['userid']);
+		$users = $db->escape($usergroups['users']);
 		
 		$sepusers = explode(",",$users);
 		/*To do remaining*/
@@ -91,7 +105,7 @@ class QuestionsModelGroups extends JModelList {
 			$uresult[]=$sep;
 		}
 
-		$groups = $usergroups['groups'];
+		$groups = $db->escape($usergroups['groups']);
 		$sepgroups = explode(",",$groups);
 		foreach($sepgroups as $sepgroup){
 			$sep = str_replace("group","",$sepgroup);
@@ -105,7 +119,7 @@ class QuestionsModelGroups extends JModelList {
 		if(count($gresult)>0){
 		foreach($gresult as $groupid){
 			
-		$db = $this->getDBO();
+		
 		$query = $db->getQuery(true);
 		
 		$fields = array(

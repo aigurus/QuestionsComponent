@@ -27,9 +27,9 @@
 	Version 0.0.1
 	Created date: Sept 2012
 	Creator: Sweta Ray
-	Email: admin@phpseo.net
-	support: support@phpseo.net
-	Website: http://www.phpseo.net
+	Email: admin@extensiondeveloper.com
+	support: support@extensiondeveloper.com
+	Website: http://www.extensiondeveloper.com
 */
 
 // No direct access to this file
@@ -214,5 +214,41 @@ class QuestionsViewQuestions extends QueView
 			return $row[0]->slug;	
 		 	
 	}	
-		   			
+	
+	
+	function getActiveDuration($modified){
+		
+			$date1 = strtotime(JHtml::date('now', 'Y-m-d H:i:s'));  
+			$date2 = strtotime($modified);  
+			
+			
+			$diff = abs($date2 - $date1);  
+			$years = floor($diff / (365*60*60*24));  
+			$months = floor(($diff - $years * 365*60*60*24) 
+										   / (30*60*60*24));  
+			$days = floor(($diff - $years * 365*60*60*24 -  
+						 $months*30*60*60*24)/ (60*60*24)); 
+			$hours = floor(($diff - $years * 365*60*60*24  
+				   - $months*30*60*60*24 - $days*60*60*24) 
+											   / (60*60));  
+			$minutes = floor(($diff - $years * 365*60*60*24  
+					 - $months*30*60*60*24 - $days*60*60*24  
+									  - $hours*60*60)/ 60);  
+			$seconds = floor(($diff - $years * 365*60*60*24  
+					 - $months*30*60*60*24 - $days*60*60*24 
+							- $hours*60*60 - $minutes*60)); 
+			if($years>0 && $months>0 && $days>0 && $hours>0 && $minutes>0 && $seconds>0){
+			 	return $years."Y-".$months."M";}
+			elseif($years==0 && $months>0 && $days>0 && $hours>0 && $minutes>0 && $seconds>0){
+				return $months."M-".$days."D"; }
+			elseif($years==0 && $months==0 && $days>0 && $hours>0 && $minutes>0 && $seconds>0){
+				return $days."D-".$hours."h";}
+			elseif($years==0 && $months==0 && $days==0 && $hours>0 && $minutes>0 && $seconds>0){
+				return $hours."h-".$minutes."m";}
+			elseif($years==0 && $months==0 && $days==0 && $hours==0 && $minutes>0 && $seconds>0){
+				return $minutes."m-".$seconds."s";}
+			elseif($years==0 && $months==0 && $days==0 && $hours==0 && $minutes==0 && $seconds>0){
+				return $seconds."s";}
+			else {return false;};
+	}
 } 

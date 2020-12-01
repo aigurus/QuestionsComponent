@@ -27,9 +27,9 @@
 	Version 0.0.1
 	Created date: Sept 2012
 	Creator: Sweta Ray
-	Email: admin@phpseo.net
-	support: support@phpseo.net
-	Website: http://www.phpseo.net
+	Email: admin@extensiondeveloper.com
+	support: support@extensiondeveloper.com
+	Website: http://www.extensiondeveloper.com
 */
 
 // No direct access to this file
@@ -42,7 +42,7 @@ jimport( 'joomla.application.component.view' );
 require_once ("administrator/components/com_questions/helpers/questions.php");
 $doc = JFactory::getDocument();
 $doc->addStyleSheet("components/com_questions/media/simple-question.css");
-require_once 'components/com_questions/helpers/cat.php';
+//require_once 'components/com_questions/helpers/cat.php';
 require_once 'components/com_questions/media/style.php';
 
 $app = JFactory::getApplication();
@@ -56,25 +56,37 @@ $chosenanswer=$this->getChosen($this->question->id);
 $document =JFactory::getDocument();
 $document->setTitle($this->question->title);
 $document->setDescription(strip_tags($this->question->text));
+$document->addStyleSheet("components/com_questions/css/style.css");
+
 if(is_array($this->question->qtags)){
 $keytags = implode(",", $this->question->qtags);
 }
 //var_dump($this->question->qtags);
 $document->setMetaData('keywords', @$keytags);
+use Joomla\CMS\Factory;
+$user = Factory::getUser($this->question->userid_creator);
+$name = substr($user->name,0,1);
+$userFirstname = strtoupper($name);
+//var_dump($this->question); exit;
+/*Date*/
+function dtformat($dt){
+	$dt = DateTime::createFromFormat('Y-m-d H:i:s', $dt);
+	$subdate = $dt->format('M d, Y'); //'M d, Y' ---- 'j M Y'
+	return $subdate;
+}
 ?>
-
 <script type="text/javascript">
 
 jQuery(document).ready(function($){
 
-$('.addfav').click(function()  {
+$('#addfav').click(function()  {
 	var qid = this.id;
 	var idvalue = qid.split('-');
 	var id = idvalue[idvalue.length - 1];
 	var userid = <?php echo JFactory::getUser()->id; ?>; 
     req = $.ajax({
         type: "POST",
-        url: "index.php?option=com_questions&task=question.addFavourite&vardata=quesfav&userid="+userid+"&addfav="+id,
+        url: "index.php?option=com_questions&task=question.addFavourite&vardata=quesfav&userid="+userid+"&addfav="+<?php echo $this->question->id ?>,
 		cache: false,
         success: function(){
 			var oldSrc = 'components/com_questions/media/add.png';
@@ -85,7 +97,7 @@ $('.addfav').click(function()  {
         }
     });
 })
-$('.delfav').click(function() {
+$('#delfav').click(function() {
 	var qid = this.id;
 	var idvalue = qid.split('-');
 	var id = idvalue[idvalue.length - 1];
@@ -93,7 +105,7 @@ $('.delfav').click(function() {
     req = $.ajax({
         type: "POST",
 		cache: false,
-        url: "index.php?option=com_questions&task=question.delFavourite&&vardata=quesfav&userid="+userid+"&delfav="+id,
+        url: "index.php?option=com_questions&task=question.delFavourite&vardata=quesfav&userid="+userid+"&delfav="+<?php echo $this->question->id ?>,
         success: function(){
             var oldSrc = 'components/com_questions/media/rem.png';
 			var newSrc = 'components/com_questions/media/add.png';
@@ -159,412 +171,252 @@ $('.ansnegative').click(function() {
     });
 })
 })
+
 </script>
-<?php
 
-if ($this->escape($this->params->get('show_category_list', 1))) : ?>
-<div class="questionbox">
-<div style="width:250px;float:right;">
-<form action="<?php echo JRoute::_('index.php');?>" method="post">
-<?php
-$lang = JFactory::getLanguage();
-$upper_limit = $lang->getUpperLimitSearchWord();
-$mitemid = @$set_Itemid > 0 ? $set_Itemid : JRequest::getInt('Itemid');
-$width			= 30;
-$maxlength		= $upper_limit;
-$text			= htmlspecialchars($parameters->get('text', JText::_('COM_QUESTIONS_SEARCH')));
 
-			$output = '<input name="searchword" maxlength="'.$maxlength.'"  type="text" size="'.$width.'" value="'.$text.'"  onblur="if (this.value==\'\') this.value=\''.$text.'\';" onfocus="if (this.value==\''.$text.'\') this.value=\'\';" />';
-			echo $output;
-		?>
-	<input type="hidden" name="task" value="search" />
-	<input type="hidden" name="option" value="com_search" />
-	<input type="hidden" name="areas" value="questions" />
-	<input type="hidden" name="Itemid" value="<?php echo $mitemid; ?>" />
-</form>
-</div>
-<div class="questions_filters">
-<?php if ($this->escape($this->params->get('display_help', 0))) { ?>
-<span style="float:right"><h2><a class="modal" href="<?php echo JRoute::_('index.php?option=com_content&view=article&id='.$articleid.'&tmpl=component') ?>"rel="{handler: 'iframe', size: {x: 640, y: 480}}"><img src="components/com_questions/media/help.png" alt="Help"></a></h2></span>
-<?php } ?>
-<ul><li><a href="<?php echo JRoute::_("index.php?option=com_questions&view=questions"); ?>">Home</a></li><li><a href="<?php echo JRoute::_("index.php?option=com_questions&view=form&layout=edit"); ?>"><?php echo JText::_("COM_QUESTIONS_ASK_A_QUESTION"); ?></a></li>
-	</ul>
-	</div>
-   <?php endif; ?>
-   
-<?php if ($this->escape($this->params->get('show_category_list', 1))) :
-CatHelper::getcat();
-endif; 
-?>
-</div>
-<?php if ($this->escape($this->params->get('show_page_heading', 1))) : ?>
-<h1>
-	<?php echo $this->escape($this->params->get('page_heading')); ?>
-</h1>
-<?php endif; ?>
-<div class="questionbox">
-<div class="questions<?php echo $this->pageclass_sfx; ?>">
-	<div class="votebox">
-<?php if (!$this->isOwner ) :?>
-		<a class="positive" id="positive" href="javascript:void(0)"><img src="components/com_questions/media/thumbs_up.png" /></a><br/>
-<?php endif; ?>
-		<span class="score"><?php echo $this->question->score2; ?></span><br />
-<?php if (!$this->isOwner ) :?>
-		<a class="negative" id="negative" href="javascript:void(0)" ><img src="components/com_questions/media/thumbs_down.png" /></a>
-<?php endif; ?>
-	</div>
-    <div id="user_profile">
-    <?php
-    if (isset($appParams->display_gravatars) && $appParams->display_gravatars!=0):{
-   	?>
-	<div style="float:middle";>
-	 <?php echo AvatarHelper::getAvatar($this->question->email,"questions_gravatar_big",64,0,$this->question->userid_creator); ?>
-	</div>
-    <?php } ?>
-    <?php endif;?>
-	<div style="clear:both"></div>
-	<br />
-	<div style="font-size:20px;	font-style:italic;font-family:Courier New,Courier, monospace;font:bold;text-align:center;color:blue;position: relative;text-transform:capitalize;">			
-				<?php echo $this->getRank($this->question->userid_creator); ?>
-                </div><br />
-                <div style="float:left"; class="questions_star rank<?php echo $this->getId($this->question->userid_creator); ?>">    </div>
-	</div>
-	</div>
-    <div>
-	<h2>
-        <div style="float:left;color:green; ">
-    	<?php if ($chosenanswer==1){
-		echo JText::_("COM_QUESTIONS_RESOLVED");
-		}?>
-        </div>
-        <div style="float:left;min-width:300px;">
-		<?php echo $this->question->title; ?>
-        </div>
-		<div style="float:right">
-        <?php 
-		SocialIcons::addsocial();
-		?>
-		</div>
-		<?php if ($this->question->editable):?>
-		<?php //if(JFactory::getConfig()->getValue('config.sef', false); ?>
+<main id="tt-pageContent">
+    <div class="qcontainer">
+        <div class="tt-single-topic-list">
+            <div class="tt-item">
+                 <div class="tt-single-topic">
+                    <div class="tt-item-header">
+                        <div class="tt-item-info info-top">
+                            <div class="tt-avatar-icon">
+                      			<i class="tt-icon"><div class="circle c01"><?php echo $userFirstname; ?></div></i>
+                    		</div>
+                            <div class="tt-avatar-title">
+                             <a href="<?php echo JRoute::_("index.php?option=com_questions&view=profiles&id=".$user->id); ?>"><?php echo $user->name; ?></a>
+                             <?php if ($this->question->editable):?>
+                  
+                             <a href="<?php echo JRoute::_("index.php?option=com_questions&task=question.edit&id=" . QuestionsHelper::getAlias($this->question->id)); ?>">
+                                    <img src="media/system/images/edit.png" />
+                                </a>
+                                <?php endif; ?>
+                            </div>
+                            <a href="#" class="tt-info-time">
+                                <i class="tt-icon"><svg><use xlink:href="#icon-time"></use></svg></i><?php echo dtformat($this->question->submitted); ?>
+                            </a>
+                        </div>
+                        <h3 class="tt-item-title">
+                            <a href="#"><b><?php echo $this->question->title; ?></b></a>
+                        </h3>
+                        <div class="tt-item-tag">
+                        <?php 
+						$i=0;
+						if ($this->question->qtags && count($this->question->qtags)>0):
+							echo '<ul class="tt-list-badge">';
+							foreach ($this->question->qtags as $tag):
+								$tag = $this->cleanString($tag);
+								if(strlen($tag)>0):
+								?>
+								<li>
+								<a href="<?php echo JRoute::_("index.php?option=com_questions&view=questions&tag=" . $tag); ?>">
+								<span class="tt-color<?php echo sprintf("%02d", $i+1); ?> tt-badge"><?php echo $tag ?></span></a>
+								</li>
+							<?php 
+							endif;
+							$i++;
+							endforeach;
+							echo '</ul>';
+						endif;
+						?>
+                        </div>
+                    </div>
+                    <div class="tt-item-description">
+                        <?php echo $this->question->text; ?>
+                    </div>
+                    <div class="tt-item-info info-bottom">
+                        <a href="javascript:void(0)" class="tt-icon-btn">
+                            <div class="tt-icon" id="positive"><?php echo '<img src="components/com_questions/css/images/thumbs-up.png" alt="Thumbs Up">'; ?></div>
+                            <span class="tt-text"><?php echo $this->question->votes_positive; ?></span>
+                        </a>
+                        <a href="javascript:void(0)" class="tt-icon-btn">
+                             <div class="tt-icon" id="negative"><?php echo '<img src="components/com_questions/css/images/thumbs-down.png" alt="Thumbs Down">'; ?></div>
+                            <span class="tt-text"><?php echo $this->question->votes_negative; ?></span>
+                        </a>
+                        <?php
+                        if ($this->addfavorites):
+						$reguser = JFactory::getUser();
+						$favarray2 = unserialize($this->getFavourite2('quesfav',$reguser->id));
+						if(is_array($favarray2)){
+						if(!in_array($this->question->id,$favarray2))
+						{
+						?>
+                        <a href="javascript:void(0)"  class="tt-icon-btn">
+                             <i class="tt-icon" id="addfav"><?php echo '<img src="components/com_questions/css/images/unlike.png" alt="Unlike">'; ?></i>
+                            <span class="tt-text"><?php echo $this->question->likes; ?></span>
+                        </a>
+                
+						<?php } else { ?>
+                        
+                        <a href="javascript:void(0)"  class="tt-icon-btn">
+                             <i class="tt-icon" id="delfav"><?php echo '<img src="components/com_questions/css/images/like.png" alt="Like">'; ?></i>
+                            <span class="tt-text"><?php echo $this->question->likes; ?></span>
+                        </a>
+            			<?php }}else{ ?>
+						<a href="javascript:void(0)"  id="addfav" class="tt-icon-btn">
+                             <i class="tt-icon" id="addfav"><?php echo '<img src="components/com_questions/css/images/unlike.png" alt="Unlike">'; ?></i>
+                            <span class="tt-text"><?php echo $this->question->likes; ?></span>
+                        </a>
+						<?php } ?>
+						<?php endif;?>
 
-		<a href="<?php echo JRoute::_("index.php?option=com_questions&task=question.edit&id=" . QuestionsHelper::getAlias($this->question->id)); ?>">
-			<img src="media/system/images/edit.png" />
-		</a>
-		
-		<?php endif; ?>
-		
-	</h2>
-    </div>
-	 <br>
-	<h4><?php echo JText::_("COM_QUESTIONS_SUBMITTED_BY"); ?> <?php /*echo ($this->question->userid_creator ? JFactory::getUser($this->question->userid_creator)->name : $this->question->name); */?>
-	 <?php if($this->question->userid_creator>0){ ?>
-    
-	<a href= <?php echo JRoute::_("index.php?option=com_questions&view=profiles&id=".$this->question->userid_creator . "%3A" . JFactory::getUser($this->question->userid_creator)->name) ?> ><?php echo ($this->question->userid_creator ? JFactory::getUser($this->question->userid_creator)->name : $this->question->name) ?></a>
-    <?php } else { echo JText::_("COM_QUESTIONS_GUEST"); } ?>
-	
-	 <?php echo " On "?> <?php echo JHtml::date($this->question->submitted); ?>. 
-     <br><br> 	
-	 <?php echo JText::_("COM_QUESTIONS_CATEGORY"); ?>: <a href="<?php echo JRoute::_("index.php?option=com_questions&view=questions&catid=" . $this->getAlias($this->question->catid)); ?>"><?php echo $this->question->CategoryName; ?></a>
-     
-     <?php
-		//Get group details
-		if (!empty($this->question->groups)):
-			echo JText::_("COM_QUESTIONS_QUESTION_GROUP").": ". $this->getGroupDetails($this->question->groups).'</h4>' ;
-		endif;
-	?>
-	<span class="tags">
-	Tags:
-		<?php 
-		if ($this->question->qtags):
-			foreach ($this->question->qtags as $tag):
-				$tag = $this->cleanString($tag);
-				?>
-				<span class="tagsitem">
-				<a href="<?php echo JRoute::_("index.php?option=com_questions&view=questions&tag=" . $tag); ?>"><?php echo $tag ?></a>
-				</span>
-			<?php 
-			endforeach;
-		endif;
-		?>
-	</span><br /><br /><br />
-	<div style="float:left;">
-	<?php echo JText::_("COM_QUESTIONS_QUESTION"); ?>
-	</div>
-	<br />
-	<div class="question_text">
-	<?php echo $this->question->text; ?>
-	</div>
-    <div style="clear:both"></div>
-<?php 
-		if ($this->addfavorites):
-		$reguser = JFactory::getUser();
-		$favarray2 = unserialize($this->getFavourite2('quesfav',$reguser->id));
-		if(is_array($favarray2)){
-		if(!in_array($this->question->id,$favarray2))
-		{
-		?>
-        <a href="javascript:void(0)"  class="addfav" id="addfav-<?php echo $this->question->id; ?>">
-			<img src="components/com_questions/media/add.png" />
-		</a>
-		<?php } else { ?>
-		<a href="javascript:void(0)"  class="delfav" id="delfav-<?php echo $this->question->id; ?>">
-			<img src="components/com_questions/media/rem.png" />
-		</a>
-		<?php }}else{ ?>
-			<a href="javascript:void(0)"  class="addfav" id="addfav-<?php echo $this->question->id; ?>">
-			<img src="components/com_questions/media/add.png" />
-		</a>
-		<?php } ?>
-        <?php endif;?>
-<div STYLE="border: none; float:right;">
+                        <div class="col-separator"></div>
 
-<?php
-$reguser = JFactory::getUser();   
-if( !$reguser->authorise("question.answer" , "com_questions")){
-?>
-<?php if ($params->get('show_report', 1) && $reguser->authorise ( "report.edit" , "com_questions" )) { ?>
-<a href="<?php echo JRoute::_("index.php?option=com_questions&view=reports&layout=edit&qid=".$this->question->id); ?>">
-<div class="imagecss" style="float:left;">
-  <img alt="<?php echo JText::_("COM_QUESTIONS_REPORTIT")?>" src="<?php echo $this->baseurl ?>/components/com_questions/media/arrow.png" />
-  <div class="texty">
-	<span><?php echo JText::_("COM_QUESTIONS_REPORTIT")?></span>
-  </div>
-</div>
-</a>
-<?php } ?>
-<?php if ($params->get('display_help', 0)) { ?>
-<a href="<?php echo JRoute::_('index.php?option=com_content&view=article&id='.$articleid); ?>">
-<div class="imagecss" style="float:left;">
-  <img alt="<?php echo JText::_("COM_QUESTIONS_ANSWERTHIS")?>" src="<?php echo $this->baseurl ?>/components/com_questions/media/arrow.png" />
-  <div class="texty">
-	<span><?php echo JText::_("COM_QUESTIONS_ANSWERTHIS")?></span>
-  </div>
-</div>
-</a>
-<?php } ?>
-<?php } 
-else { ?>
-<?php $user = JFactory::getUser(); if ($params->get('show_report', 1) && $user->authorise ( "report.edit" , "com_questions" )) { ?>
-<a href="<?php echo JRoute::_("index.php?option=com_questions&view=reports&layout=edit&qid=".$this->question->id); ?>">
-<div class="imagecss" style="float:left;">
-  <img alt="<?php echo JText::_("COM_QUESTIONS_REPORTIT")?>" src="<?php echo $this->baseurl ?>/components/com_questions/media/arrow.png" />
-  <div class="texty">
-	<span><?php echo JText::_("COM_QUESTIONS_REPORTIT")?></span>
-  </div>
-</div>
-</a>
-<?php } ?>
-<?php if ($params->get('display_help', 0)) { ?>
-<a href="<?php echo $this->question->link; ?>">
-<div class="imagecss" style="float:left;">
-  <img alt="<?php echo JText::_("COM_QUESTIONS_ANSWERTHIS")?>" src="<?php echo $this->baseurl ?>/components/com_questions/media/arrow.png" />
-  <div class="texty">
-	<span><?php echo JText::_("COM_QUESTIONS_ANSWERTHIS")?></span>
-  </div>
-</div>
-</a>
-<?php } ?>
-<?php	
-}
-?>
-
-<div style="clear:both"></div>
-	</div>
-	</div>
-	
-    <div>
-    <div>
-	<div class="question_options">	
-
-		<a href="<?php echo $this->question->link; ?>#answers"><?php echo count($this->question->answers);?></a>  <?php echo JText::_("COM_QUESTIONS_ANSWERS")?>. 
-	
-		<?php //if ($this->submitanswers && !$this->isOwner):?>
-        <?php if ($this->submitanswers):?>
-		<a href="<?php echo $this->question->link; ?>#newanswer"><?php echo JText::_("COM_QUESTIONS_ANSWER")?></a>  <?php echo JText::_("COM_QUESTIONS_THIS_QUESTION")?>! 
-		<?php endif;?>
-	
-	</div>
-	
-	<?php if ($this->viewanswers):?>
-		<!-- ANSWERS -->
-		<a name="answers">&nbsp;</a>
-		<?php foreach ($this->question->answers as $answer):?>
-		<div class="answer_<?php if ($answer->chosen==1){ echo "chosen"; }?>_system_<?php echo ($answer->published ? 'published' : 'unpublished');?>">
-			<div class="votebox">
-			<?php $user =JFactory::getUser(); 
-			      if($user->id!= $answer->userid_creator) :?>
-				<a class="anspositive" id="anspositive-<?php echo $answer->id; ?>" href="javascript:void(0)" ><img src="components/com_questions/media/thumbs_up.png" /></a><br />
-				<?php endif;?>
-				<span class="score"><?php echo $answer->score2; ?></span><br />
-			<?php	if($user->id!= $answer->userid_creator) :?>
-				<a class="ansnegative" id="ansnegative-<?php echo $answer->id; ?>" href="javascript:void(0)"><img src="components/com_questions/media/thumbs_down.png" /></a>
-				<?php endif;?>
-			</div>
-			
-			
-			
-	<div id="user_profile">
-    <?php
-    if (isset($appParams->display_gravatars) && $appParams->display_gravatars!=0) :{
-   	?>
-	<div style="float:middle";>
-	<?php echo AvatarHelper::getAvatar($answer->email,"questions_gravatar_small",34,0,$answer->userid_creator); ?>
-	</div>
-    <?php } ?>
-    <?php endif;?>
-	<div style="clear:both"></div>
-	<br />
-	<div style="font-size:20px;	font-style:italic;font-family:Courier New,Courier, monospace;font:bold;text-align:center;color:blue;position: relative;text-transform:capitalize;">			
-				<?php echo $this->getRank($answer->userid_creator); ?>
-                </div><br />
-                <div style="float:left"; class="questions_star rank<?php echo $this->getId($answer->userid_creator); ?>">    </div>
-	</div>
-	
-			
-			<h5><?php echo $answer->title; ?></h5>
-			<h5><?php echo JText::_("COM_QUESTIONS_SUBMITTED_BY"); ?> <?php /*echo $answer->name; ?> <?php echo JText::_("COM_QUESTIONS_AT"); ?>  <?php echo JHtml::date($answer->submitted); */?>
-		
-			<?php if($answer->userid_creator>0){ ?>
-			<a href= <?php echo JRoute::_("index.php?option=com_questions&view=profiles&id=".$answer->userid_creator. "%3A" . $answer->name) ?> ><?php echo $answer->name; ?></a>
-            
-            <?php } else { echo JText::_("COM_QUESTIONS_GUEST"); } ?>
-            
-			<?php echo " On "; ?>  <?php echo JHtml::date($answer->submitted); ?></h5>
-					
-			<?php echo JText::_("COM_QUESTIONS_ANSWER")."  :-"; ?> <br />
-			<div class="question_text">
-          	<?php echo $answer->text; ?>
+                    </div>
+                </div>
             </div>
-            <br />
-            <div>
-            <?php if(!empty($answer->refurl1))
-				{
-				echo "Reference: ".'<a href ="'.$this->addhttp($answer->refurl1).'" target="_blank">'.$this->smarttrim($answer->refurl1).'</a>'."<br />";
-				}
-			?>
-             <?php if(!empty($answer->refurl2))
-				{
-				echo "Reference: ".'<a href ="'.$this->addhttp($answer->refurl2).'" target="_blank">'.$this->smarttrim($answer->refurl2).'</a>'."<br />";
-				}
-			?>
-             <?php if(!empty($answer->refurl3))
-				{
-				echo "Reference: ".'<a href ="'.$this->addhttp($answer->refurl3).'" target="_blank">'.$this->smarttrim($answer->refurl3).'</a>'."<br />";
-				}
-			?>
+            <div class="tt-item">
+                <div class="tt-info-box">
+                    <h6 class="tt-title">Thread Status</h6>
+                    <div class="tt-row-icon">
+                        <div class="tt-item">
+                            <a href="#" class="tt-icon-btn tt-position-bottom">
+                                <i class="tt-icon"><?php echo '<img src="components/com_questions/css/images/reply.png" alt="Reply">'; ?></i>
+                                <span class="tt-text"><?php echo count($this->question->answers); ?></span>
+                            </a>
+                        </div>
+                        <div class="tt-item">
+                            <a href="#" class="tt-icon-btn tt-position-bottom">
+                                <i class="tt-icon"><?php echo '<img src="components/com_questions/css/images/views.png" alt="views">'; ?></i>
+                                <span class="tt-text"><?php echo $this->question->impressions; ?></span>
+                            </a>
+                        </div>
+                        <div class="tt-item">
+                            <a href="#" class="tt-icon-btn tt-position-bottom">
+                                <i class="tt-icon"><?php echo '<img src="components/com_questions/css/images/users.png" alt="Users">'; ?></i>
+                                <span class="tt-text">168</span>
+                            </a>
+                        </div>
+                        <div class="tt-item">
+                              <a href="#" class="tt-icon-btn tt-position-bottom">
+                                <!-- <i class="tt-icon"><?php echo '<img src="components/com_questions/css/images/share.png" alt="Share">'; ?></i> -->
+                                <?php SocialIcons::addsocial();	?>
+                                <!-- <span class="tt-text">32</span> -->
+                            </a>
+                        </div>
+                    </div>
+                   
+                   <hr>
+                    
+                    <div class="row-object-inline form-default">
+                        <h6 class="tt-title">Sort replies by:</h6>
+                        <ul class="tt-list-badge tt-size-lg">
+                            <li><a href="#"><span class="tt-badge">Recent</span></a></li>
+                            <li><a href="#"><span class="tt-color02 tt-badge">Most Liked</span></a></li>
+                            <li><a href="#"><span class="tt-badge">Longest</span></a></li>
+                        </ul>
+                        <select class="tt-select form-control">
+                            <option value="Recent">Recent</option>
+                            <option value="Most Liked">Most Liked</option>
+                            <option value="Longest">Longest</option>
+                            <option value="Shortest">Shortest</option>
+                            <option value="Accepted Answer">Accepted Answer</option>
+                        </select>
+                    </div>
+                </div>
             </div>
-            <div style="clear:both"></div>
-            
-            <?php 
-			if ($this->addfavorites):
-		$reguser = JFactory::getUser();	
-		$favarray2 = unserialize($this->getFavourite2('ansfav',$reguser->id));
-		if(is_array($favarray2)){
-		if(!in_array((int)$answer->id,$favarray2))
-		{
-		?>
-		<a href="javascript:void(0)"  class="addfav" onclick="addfav('<?php 
-		echo $answer->id."&userid=".$reguser->id."&vardata=ansfav"."&id=".$this->question->id; ?>',<?php echo $this->question->id; ?>)">
-			<img src="components/com_questions/media/add.png" />
-		</a>
-		<?php } else { ?>
-		<a href="javascript:void(0)" class="delfav" onclick="delfav('<?php 
-		echo $answer->id."&userid=".$reguser->id."&vardata=ansfav"."&id=".$this->question->id; ?>',<?php echo $this->question->id; ?>)">
-			<img src="components/com_questions/media/rem.png" />
-		</a>
-		<?php } 
-		}
-		endif;?>
-            
-            
-			<?php 
-			$check = $this->getBestAnswerid($this->question->id);
-			if (!isset($check)):?>
-			<?php if ($this->isOwner && $answer->chosen != 1): //Display "Choose" link ?>
-			<span class="choose_answer"><a href="<?php echo JRoute::_("index.php?option=com_questions&task=answer.choose&questionid=" . $this->question->id . "&answerid=" . $answer->id)?>"><?php echo JText::_("COM_QUESTIONS_CHOOSE")?></a></span>
-			<?php endif;?>
-			<?php endif;?>
-					
-			<?php if ($this->isOwner && $answer->chosen == 1 && $this->getBestAnswerid($this->question->id)): //Display "Unchoose" link ?>
-			<span class="choose_answer"><a href="<?php echo JRoute::_("index.php?option=com_questions&task=answer.chooseReset&questionid=" . $this->question->id . "&answerid=" . $answer->id)?>"><?php echo JText::_("COM_QUESTIONS_UNCHOOSE")?></a></span>
-			<?php endif;?>
-			<?php if ($answer->chosen == 1): //Display "Unchoose" link ?>
-			<span class="choose_answer"><?php echo "This Answer has been Chosen as Best Answer"; ?></span>
-			<?php endif;?>
+            <hr>
+            <?php if ($this->viewanswers):?>
+            <?php $i = 0; foreach ($this->question->answers as $answer):?>
+				<?php $ansuser = Factory::getUser($answer->userid_creator); ?>
+                 <?php if($answer->chosen ==1 ): ?>
+                    <div class="tt-item tt-wrapper-success">
+                 <?php endif; ?>
+                 <?php if($answer->chosen !=1 && $answer->flagged != 1): ?>
+                    <div class="tt-item">
+                 <?php endif; ?>
+                 <?php if($answer->flagged ==1 ): ?>
+                    <div class="tt-item tt-wrapper-danger">
+                 <?php endif; ?>
+                     <div class="tt-single-topic">
+                        <div class="tt-item-header pt-noborder">
+                            <div class="tt-item-info info-top">
+                                <div class="tt-avatar-icon">
+                                    <i class="tt-icon"><div class="circle c<?php echo sprintf("%02d", $i+1); ?>"><?php 
+                                    $aname = substr($ansuser->name,0,1);
+                                    $userFirstname = strtoupper($aname);
+                                    echo $userFirstname; ?></div></i>
+                                </div>
+                                
+                                <div class="tt-avatar-title">
+                                   <a href="#"><?php echo $ansuser->name; ?></a>
+                               
+                                     <?php  
+								$check = $this->getBestAnswerid($this->question->id);
 
-			<div STYLE="border: none; float:right;">
-            <?php
-				$reguser2 = JFactory::getUser();   
-				if( !$reguser2->authorise("question.answer" , "com_questions")){
-				?>
-				<?php if ($params->get('show_report', 1) && $reguser2->authorise ( "report.edit" , "com_questions" )) { ?>
-				<a href="<?php echo JRoute::_("index.php?option=com_questions&view=reports&layout=edit&qid=".$answer->id); ?>">
-				<div class="imagecss" style="float:left;">
-				  <img alt="<?php echo JText::_("COM_QUESTIONS_REPORTIT")?>" src="<?php echo $this->baseurl ?>/components/com_questions/media/arrow.png" />
-				  <div class="texty">
-					<span><?php echo JText::_("COM_QUESTIONS_REPORTIT")?></span>
-				  </div>
-				</div>
-				</a>
-				<?php } ?>
-				<?php if ($params->get('display_help', 0)) { ?>
-				<a href="<?php echo JRoute::_('index.php?option=com_content&view=article&id='.$articleid); ?>">
-				<div class="imagecss" style="float:left;">
-				  <img alt="<?php echo JText::_("COM_QUESTIONS_ANSWERTHIS")?>" src="<?php echo $this->baseurl ?>/components/com_questions/media/arrow.png" />
-				  <div class="texty">
-					<span><?php echo JText::_("COM_QUESTIONS_ANSWERTHIS")?></span>
-				  </div>
-				</div>
-				</a>
-				<?php } ?>
-				<?php } 
-				else { ?>
-				<?php if ($params->get('show_report', 1) && $reguser2->authorise ( "report.edit" , "com_questions" ) ) { ?>
-				<a href="<?php echo JRoute::_("index.php?option=com_questions&view=reports&layout=edit&qid=".$answer->id); ?>">
-				<div class="imagecss" style="float:left;">
-				  <img alt="<?php echo JText::_("COM_QUESTIONS_REPORTIT")?>" src="<?php echo $this->baseurl ?>/components/com_questions/media/arrow.png" />
-				  <div class="texty">
-					<span><?php echo JText::_("COM_QUESTIONS_REPORTIT")?></span>
-				  </div>
-				</div>
-				</a>
-				<?php } ?>
-				<?php if ($params->get('display_help', 0)) { ?>
-				<a href="<?php echo $this->question->link; ?>">
-				<div class="imagecss" style="float:left;">
-				  <img alt="<?php echo JText::_("COM_QUESTIONS_ANSWERTHIS")?>" src="<?php echo $this->baseurl ?>/components/com_questions/media/arrow.png" />
-				  <div class="texty">
-					<span><?php echo JText::_("COM_QUESTIONS_ANSWERTHIS")?></span>
-				  </div>
-				</div>
-				</a>
-				<?php } ?>
-				<?php	
-				}
-				?>
-               </div>
-		</div>
-		<?php endforeach;?>
-	<?php endif;?>
-	
-    <?php //if ($this->submitanswers && !$this->isOwner && $chosenanswer!=1) :?>
-	<?php if ($this->submitanswers && $chosenanswer!=1) :?>
-		<!-- ANSWER FORM -->
-		<a name="newanswer">&nbsp;</a>
-		<?php echo $this->loadTemplate('form'); 
-		
-		?>
-	<?php endif;?>
-    </div>
-    <div style="text-align:right;">
-    <?php if ($chosenanswer==1): ?>
-	<?php echo '<font color="green">'. JText::_('COM_QUESTIONS_IS_MARKED_AS_RESOLVED').'</font>'; ?>
-	<?php endif;?>
-	<?php //echo $chosenanswer;?>	
-	</div>
-    </div>
+								if (!isset($check)):?>
+								<?php if ($this->isOwner && $answer->chosen != 1): //Display "Choose" link ?>
+								<a href="<?php echo JRoute::_("index.php?option=com_questions&task=answer.choose&questionid=" . $this->question->id . "&answerid=" . $answer->id)?>"><span class="tt-color10 tt-badge"><?php echo JText::_("COM_QUESTIONS_CHOOSE")?></span></a>
+								<?php endif;?>
+								<?php endif;?>
+										
+								<?php if ($this->isOwner && $answer->chosen == 1 && $this->getBestAnswerid($this->question->id)): //Display "Unchoose" link ?>
+								<a href="<?php echo JRoute::_("index.php?option=com_questions&task=answer.chooseReset&questionid=" . $this->question->id . "&answerid=" . $answer->id)?>"><span class="tt-color11 tt-badge"><?php echo JText::_("COM_QUESTIONS_UNCHOOSE")?></a>
+								<?php endif;?>
+								<?php if ($answer->chosen == 1): //Display "Unchoose" link ?>
+								<span class="tt-color13 tt-badge"><?php echo JText::_("Best Answer"); ?></span>
+								<?php endif;?>
 
+                                </div>
+                                <a href="#" class="tt-info-time">
+                                    <i class="tt-icon"><svg><use xlink:href="#icon-time"></use></svg></i> <?php echo dtformat($answer->submitted); ?>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="tt-item-description">
+                            <?php if($answer->flagged !=1 ): ?>
+                            <?php echo $answer->text; ?>
+                            <?php else: 
+                                echo "This post has been flagged by a moderator, received too many downvotes.";
+                            ?>
+                            <?php endif; ?>
+                        </div>
+                        <div class="tt-item-info info-bottom">
+                            <?php if($answer->flagged !=1 ): ?>
+                            <a href="javascript:void(0)" class="tt-icon-btn anspositive" id="anspositive-<?php echo $answer->id; ?>">
+                                <i class="tt-icon" ><?php echo '<img src="components/com_questions/css/images/thumbs-up.png" alt="Thumbs Up">'; ?></i>
+                                <span class="tt-text"><?php echo $answer->votes_positive; ?></span>
+                            </a>
+                            <?php endif; ?>
+                            <a href="javascript:void(0)" class="tt-icon-btn ansnegative" id="ansnegative-<?php echo $answer->id; ?>">
+                                 <i class="tt-icon"><?php echo '<img src="components/com_questions/css/images/thumbs-down.png" alt="Thumbs Down">'; ?></i>
+                                <span class="tt-text"><?php echo $answer->votes_negative; ?></span>
+                            </a>
+                            <?php if($answer->flagged !=1 ): ?>
+                            <a href="#" class="tt-icon-btn">
+                                 <i class="tt-icon"><?php echo '<img src="components/com_questions/css/images/like.png" alt="Likes">'; ?></i>
+                                <span class="tt-text"><?php echo $answer->likes; ?></span>
+                            </a>
+                            <div class="col-separator"></div>
+                            <a href="#" class="tt-icon-btn tt-hover-02 tt-small-indent">
+                                <i class="tt-icon"><?php echo '<img src="components/com_questions/css/images/share.png" alt="Share">'; ?></i>
+                            </a>
+                            <a href="#" class="tt-icon-btn tt-hover-02 tt-small-indent">
+                                <i class="tt-icon"><?php echo '<img src="components/com_questions/css/images/flag.png" alt="Flag">'; ?></i>
+                            </a>
+                            <a href="#" class="tt-icon-btn tt-hover-02 tt-small-indent">
+                                 <i class="tt-icon"><?php echo '<img src="components/com_questions/css/images/reply.png" alt="Reply">'; ?></i>
+                            </a>
+                            <?php endif; ?>
+                            
+                        </div>
+                    </div>
+                </div>
+            	 
+				<?php $i++; endforeach;?>
+				<?php endif;?>
+         
+         <hr>
+        <?php if ($this->submitanswers && $this->question->closed !=1 ) :?>
+			<!-- ANSWER FORM -->
+            <a name="newanswer">&nbsp;</a>
+            <?php echo $this->loadTemplate('form'); 
+            
+            ?>
+        <?php endif;?> 
+</main>
 <?php /**********Kindly dont remove this credit. For getting any support from us this link should be intact************/ 
 	CopyrightHelper::copyright();
 ?>

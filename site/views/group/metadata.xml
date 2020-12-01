@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-	<view
-		title="COM_QUESTIONS_USER_PROFILES">
-		<message>COM_QUESTIONS_USER_PROFILES</message>
-	</view>
+	<layout title="COM_QUESTIONS_USER_PROFILES_GROUP">
+		<message>COM_QUESTIONS_USER_PROFILES_GROUP</message>
+	</layout>
 </metadata>

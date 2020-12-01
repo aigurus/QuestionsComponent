@@ -27,9 +27,9 @@
 	Version 0.0.1
 	Created date: Sept 2012
 	Creator: Sweta Ray
-	Email: admin@phpseo.net
-	support: support@phpseo.net
-	Website: http://www.phpseo.net
+	Email: admin@extensiondeveloper.com
+	support: support@extensiondeveloper.com
+	Website: http://www.extensiondeveloper.com
 */
 
 // No direct access to this file
@@ -76,17 +76,24 @@ class QuestionsModelForm extends JModelAdmin
 			if (! $data instanceof JObject)
 				$data = JArrayHelper::toObject($data);
 			
-			//Fix issue #10 - https://github.com/alexd3499/Questions/issues/10
 			if ( $data->title ){
-				//Existing Item..
-				//Fill in the apropriate information concerning the modifications
 				$alias = $this->aliascheck($data->title); 
-			//$jinput = JFactory::getApplication()->input;
-			//$jinput->set('alias', $alias);
+
 				$data->alias = $alias;
 								
 				$data->userid_modifier = $user->id;
-				$data->modified = date("Y-m-d H:i:s");
+   
+			  	$config = JFactory::getConfig();  
+		
+			   	$jDate=JFactory::getDate();  
+		
+			  	$site_offset = $config->get('offset');    
+										 
+			  	$jdate=JFactory::getDate('now',$site_offset);  
+		
+			  	$data->modified = $jdate->format('Y-m-d H:i:s',true);
+
+				//$data->modified = date("Y-m-d H:i:s");
 				
 				//proccess json tags..
 				/*if (is_array($data->qtags)){
@@ -137,7 +144,18 @@ class QuestionsModelForm extends JModelAdmin
 				} else {
 					$data->userid_creator = 0;
 				}
-				$data->submitted = date("Y-m-d H:i:s");
+				
+				$config = JFactory::getConfig();  
+		
+			   	$jDate=JFactory::getDate();  
+		
+			  	$site_offset = $config->get('offset');    
+										 
+			  	$jdate=JFactory::getDate('now',$site_offset);  
+		
+			  	$data->modified = $jdate->format('Y-m-d H:i:s',true);
+				
+				$data->submitted = $jdate->format('Y-m-d H:i:s',true);
 				
 				$data->parent = 0;
 				$data->question = 1;
@@ -191,7 +209,7 @@ class QuestionsModelForm extends JModelAdmin
 	 * It just invokes the parent method
 	 * 
 	 */
-	public function getItem(){
+	public function getItem($pk= NULL){
 		
 		return parent::getItem();
 	}

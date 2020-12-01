@@ -76,11 +76,11 @@ $document = JFactory::getDocument();
                         <div>
                             <p>
                                 If you require professional support just head on to the forums at 
-                                <a href="http://www.7thx.com/forum/" target="_blank">
-                                	http://www.7thx.com/forum
+                                <a href="https://extensiondeveloper.com/index.php?option=com_questions&view=questions&catid=0&filter=0&Itemid=153" target="_blank">
+                                	Extensiondeveloper Forum
                                 </a>
                                 For developers, you can browse through the documentations at 
-                                <a href="http://www.7thx.com" target="_blank">http://www.7thx.com</a>
+                                <a href="https://extensiondeveloper.com" target="_blank">https://extensiondeveloper.com</a>
                             </p>
                             <p>
                                 If you found any bugs, give us a report in Bug report section

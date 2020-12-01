@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form
+	addrulepath="/administrator/components/com_questions/models/rules"
+>
+	<fieldset>
+		<field name="id" type="hidden" />
+		<field
+			name="description"
+			type="textarea"
+			label="COM_QUESTIONS_USER_PROFILE_DESCRIPTION"
+			description="COM_QUESTIONS_USER_PROFILE_DESCRIPTION"
+			required="true"
+			class="inputbox"
+			rows="5"
+			cols="50" 
+			default="Sample Desc"
+		/>
+		
+		<field
+			name="email"
+			type="readonly"
+			label="COM_QUESTIONS_FRM_Q_EMAIL"
+			size="40"
+			required="true"
+			validate="email"
+			class="inputbox"
+			readonly="true"
+		/>
+		
+		<field
+			name="url1"
+			type="text"
+			label="COM_QUESTIONS_YOUR_WEBSITE_URL1"
+			size="40"
+			class="inputbox"
+			validate="url"
+			filter="url"
+			relative="true"
+		/>
+			
+		<field
+			name="url2"
+			type="text"
+			label="COM_QUESTIONS_YOUR_WEBSITE_URL2"
+			size="40"
+			class="inputbox"
+			validate="url"
+			filter="url"
+			relative="true"
+
+		/>
+			
+		<field
+			name="url3"
+			type="text"
+			label="COM_QUESTIONS_YOUR_WEBSITE_URL3"
+			size="40"
+			class="inputbox"
+			validate="url"
+			filter="url"
+			relative="true"
+		/>
+		
+		<field
+			name="location"
+			type="text"
+			label="COM_QUESTIONS_YOUR_LOCATION"
+			description="COM_QUESTIONS_YOUR_LOCATION_DESC"
+			id="title"
+			class="inputbox"
+			size="30"
+		/>
+		
+		<field
+			name="company"
+			type="text"
+			label="COM_QUESTIONS_YOUR_COMPANY"
+			description="COM_QUESTIONS_YOUR_COMPANY_DESC"
+			id="title"
+			class="inputbox"
+			size="30"
+		/>
+			
+		<field
+			name="position"
+			type="text"
+			label="COM_QUESTIONS_YOUR_POSITION"
+			description="COM_QUESTIONS_YOUR_POSITION_DESC"
+			id="title"
+			class="inputbox"
+			size="30"
+		/>
+		
+		<field
+			name="workno"
+			type="text"
+			label="COM_QUESTIONS_YOUR_WORK_NUMBER"
+			description="COM_QUESTIONS_YOUR_WORK_NUMBER_DESC"
+			id="title"
+			class="inputbox"
+			size="30"
+		/>
+			
+		<field
+			name="mobno"
+			type="text"
+			label="COM_QUESTIONS_YOUR_MOBILE_NUMBER"
+			description="COM_QUESTIONS_YOUR_MOBILE_NUMBER_DESC"
+			id="title"
+			class="inputbox"
+			size="30"
+		/>
+			
+		<field
+			name="workaddress"
+			type="textarea"
+			label="COM_QUESTIONS_WORK_ADDRESS"
+			description="COM_QUESTIONS_WORK_ADDRESS_DESC"
+			required="true"
+			class="inputbox"
+			rows="5"
+			cols="50" 
+			default=""
+		/>
+				
+		<field name="userid" 
+			type="hidden"
+		/>
+		
+		<field
+			name="ip"
+			type="hidden"
+		/>
+		
+		
+	
+	</fieldset>
+</form>

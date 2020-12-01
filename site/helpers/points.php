@@ -28,15 +28,17 @@
 	Version 0.0.1
 	Created date: Sept 2012
 	Creator: Sweta Ray
-	Email: admin@phpseo.net
-	support: support@phpseo.net
-	Website: http://www.phpseo.net
+	Email: admin@extensiondeveloper.com
+	support: support@extensiondeveloper.com
+	Website: http://www.extensiondeveloper.com
 */
 
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
 
-abstract class getPoints{
+class getPoints{
+		
+		public $newuserrank;
 		
 		public function setRank($userid,$option){
 			
@@ -75,7 +77,9 @@ abstract class getPoints{
 						}
 				}
 				}
-			return $newuserrank;
+				if(isset($newuserrank)){
+						return $newuserrank;
+				}
 		}
 		
 		public function setRank2($id,$option){

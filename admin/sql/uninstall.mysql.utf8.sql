@@ -6,3 +6,4 @@ DROP TABLE IF EXISTS `#__questions_favourite`;
 DROP TABLE IF EXISTS `#__questions_userlocation`;
 DROP TABLE IF EXISTS `#__questions_notification`;
 DROP TABLE IF EXISTS `#__questions_groups`;
+DELETE FROM `#__content_types` WHERE `type_alias` = 'com_questions.category';

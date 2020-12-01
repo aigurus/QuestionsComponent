@@ -24,6 +24,7 @@
 		<field
 			name="text"
 			type="editor"
+			editor="tinymce"
 			label="COM_QUESTIONS_FRM_Q_TEXT"
 			width="100%"
 			height="250px"
@@ -141,17 +142,6 @@
 			type="text"
 			label="COM_QUESTIONS_FRM_Q_TAGS"
 			description="COM_QUESTIONS_ENTER_TAGS"
-			size="40"
-			default=""
-			maxlength="50"
-			filter="safehtml"
-			class="inputbox"
-		/>
-		
-		<field
-			name="qtags"
-			type="text"
-			label="COM_QUESTIONS_FRM_Q_TAGS"
 			size="40"
 			default=""
 			maxlength="50"

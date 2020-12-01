@@ -27,9 +27,9 @@
 	Version 0.0.1
 	Created date: Sept 2012
 	Creator: Sweta Ray
-	Email: admin@phpseo.net
-	support: support@phpseo.net
-	Website: http://www.phpseo.net
+	Email: admin@extensiondeveloper.com
+	support: support@extensiondeveloper.com
+	Website: http://www.extensiondeveloper.com
 */
 
 // No direct access to this file
@@ -142,7 +142,7 @@ class QuestionsModelQuestion extends JModelItem {
 		$where = "parent=" . $this->id . " AND (published=1 OR userid_creator=$userid)";
 		
 		$query->where($where);		
-		$query->order("chosen DESC, votes_positive-votes_negative DESC, submitted DESC");
+		$query->order("flagged ASC, chosen DESC, votes_positive-votes_negative DESC, submitted DESC");
 		
 	
 		$db->setQuery($query);

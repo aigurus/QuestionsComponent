@@ -37,7 +37,7 @@ defined('_JEXEC') or die('Restricted access');
 
 // import the Joomla modellist library
 jimport('joomla.application.component.modellist');
-
+use Joomla\CMS\Factory;
 class QuestionsModelQuestions extends JModelList
 {
 	
@@ -65,8 +65,9 @@ class QuestionsModelQuestions extends JModelList
 				}*/
 		
 				parent::__construct($config);
-				global $app, $option;
-
+				//global $app, $option;
+				$app = Factory::getApplication();
+				$option = JRequest::getCmd('option');
 				$limit      = $app->getUserStateFromRequest( $option.'.limit', 'limit', $app->getCfg('list_limit'), 'int');
 				$limitstart = $app->getUserStateFromRequest( $option.JRequest::getCmd( 'view').'.limitstart', 'limitstart', 0, 'int' );
 				
@@ -104,6 +105,7 @@ class QuestionsModelQuestions extends JModelList
 				// Lets load the content if it doesn't already exist
 				if (empty($this->_pagination))
 				{
+					
 					jimport('joomla.html.pagination');
 					$this->_pagination = new JPagination( $this->getTotal(), $this->getState('limitstart'), $this->getState('limit') );
 				}
@@ -130,13 +132,16 @@ class QuestionsModelQuestions extends JModelList
 			
 		function _buildContentOrderBy()
 			{
-				global $app, $option;
+				//global $app, $option;
+				$app = Factory::getApplication();
+				$option = JRequest::getCmd('option');
 		
 				$filter_order		= $app->getUserStateFromRequest( $option.'.events.filter_order', 'filter_order', 'a.submitted', 'cmd' );
 				$filter_order_Dir	= $app->getUserStateFromRequest( $option.'.events.filter_order_Dir', 'filter_order_Dir', '', 'word' );
-		
-				$filter_order		= JFilterInput::clean($filter_order, 'cmd');
-				$filter_order_Dir	= JFilterInput::clean($filter_order_Dir, 'word');
+				
+				$filter = new JFilterInput;
+				$filter_order		= $filter->clean($filter_order, 'cmd');
+				$filter_order_Dir	= $filter->clean($filter_order_Dir, 'word');
 		
 				$orderby 	= ' ORDER BY '.$filter_order.' '.$filter_order_Dir.', a.submitted';
 		
@@ -145,7 +150,9 @@ class QuestionsModelQuestions extends JModelList
 			
 		function _buildContentWhere()
 			{
-				global $app, $option;
+				//global $app, $option;
+				$app = Factory::getApplication();
+				$option = JRequest::getCmd('option');
 		
 				$filter_state 		= $app->getUserStateFromRequest( $option.'.filter_state', 'filter_state', '', 'word' );
 				$filter 			= $app->getUserStateFromRequest( $option.'.filter', 'filter', '', 'int' );
@@ -155,19 +162,16 @@ class QuestionsModelQuestions extends JModelList
 				$where = array();
 				$answers = JRequest::getInt("answers");
 				
-				
-				
-				if ($filter_state) {
-					if ($answers){
-						$where[] = 'a.question = 0';
-					}
-					else
-					{
-						$where[] = 'a.question = 1';
-					}
-				} else {
-					$where[] = 'a.published >= 0';
+				if ($answers){
+					$where[] = 'a.question = 0';
 				}
+				else
+				{
+					$where[] = 'a.question = 1';
+				}
+				if(!isset($filter_state))
+					$where[] = 'a.published >= 0';
+
 				if ($search && $filter == 1) {
 					$where[] = ' LOWER(a.title) LIKE \'%'.$search.'%\' ';
 				}
@@ -176,13 +180,13 @@ class QuestionsModelQuestions extends JModelList
 					$where[] = ' LOWER(c.title) LIKE \'%'.$search.'%\' ';
 				}
 				$where 		= ( count( $where ) ? ' WHERE ' . implode( ' AND ', $where ) : '' );
+				
+				//var_dump($where); exit;
 		
 				return $where;
 			}
-				
-			
-			
-		/*	
+
+		/*Was disabled previously*/
 		protected function populateState( $ordering = "submitted" , $direction = "DESC" ){
 
 			
@@ -213,6 +217,7 @@ class QuestionsModelQuestions extends JModelList
                 $query->order($this->getState("list.ordering") . " " . $this->getState("list.direction"));
                 
                 $answers = JRequest::getInt("answers");
+				//var_dump($answers); exit;
                 if ($answers){
                 	$query->where("question=0");
                 }
@@ -223,7 +228,7 @@ class QuestionsModelQuestions extends JModelList
                 
                 return $query;
         }
-        */
+        /*Was disabled previously till here*/
         function delete(){
 
         	$cids = implode(",",  JFactory::getApplication()->input->get("cid"));
