@@ -1,6 +1,21 @@
-DROP TABLE IF EXISTS `#__questions_core`;
-CREATE TABLE IF NOT EXISTS `#__questions_core` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `#__questions_comments` (
+  `id` int(11) NOT NULL,
+  `parent_id` int(11) NOT NULL,
+  `comment` varchar(255) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `question` tinyint(1) NOT NULL DEFAULT 0,
+  `created` timestamp NOT NULL DEFAULT current_timestamp(),
+  `modified` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `#__questions_core`
+--
+
+CREATE TABLE `#__questions_core` (
+  `id` int(11) NOT NULL,
   `title` text NOT NULL,
   `alias` text NOT NULL,
   `text` text NOT NULL,
@@ -12,61 +27,78 @@ CREATE TABLE IF NOT EXISTS `#__questions_core` (
   `votes_positive` int(11) NOT NULL,
   `votes_negative` int(11) NOT NULL,
   `parent` int(11) NOT NULL,
-  `impressions` int(11) NOT NULL DEFAULT '0',
+  `impressions` int(11) NOT NULL DEFAULT 0,
   `published` tinyint(3) NOT NULL,
+  `likes` int(11) NOT NULL DEFAULT 0,
   `chosen` int(11) NOT NULL,
-  `name` text,
-  `ip` text,
-  `email` text,
+  `pinned` tinyint(2) NOT NULL,
+  `locked` tinyint(2) NOT NULL,
+  `closed` tinyint(1) NOT NULL DEFAULT 0,
+  `flagged` tinyint(1) NOT NULL DEFAULT 0,
+  `name` text DEFAULT NULL,
+  `ip` text DEFAULT NULL,
+  `email` text DEFAULT NULL,
   `refurl1` varchar(255) NOT NULL,
   `refurl2` varchar(255) NOT NULL,
   `refurl3` varchar(255) NOT NULL,
   `groups` text NOT NULL,
-  `catid` int(11) NOT NULL DEFAULT '0',
-  `users_voted` text,
-  `qtags` text,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
-REPLACE INTO `#__questions_core` (
-`id` ,
-`title` ,
-`text` ,
-`submitted` ,
-`modified` ,
-`userid_creator` ,
-`userid_modifier` ,
-`question` ,
-`votes_positive` ,
-`votes_negative` ,
-`parent` ,
-`impressions` ,
-`published` ,
-`chosen` ,
-`name`,
-`ip`,
-`email`,
-`refurl1` ,
-`refurl2` ,
-`refurl3` ,
-`groups` ,
-`catid`,
-`users_voted`,
-`qtags`
-)
-VALUES (
-'1', 'Demo Question', 'Demo Question Text', '2011-03-01 20:56:09', NULL , '0', NULL , '1', '0', '0', '0', '0', '1', '0', 'Unknown', '127.0.0.1', 'example@example.com','','','','', '0', NULL, NULL
-), (
-'2', 'Demo Answer', 'Demo Answer Text', '2011-03-01 20:56:55', NULL , '0', NULL , '0', '0', '0', '1', '0', '1', '0', 'Unknown', '127.0.0.1', 'example@examle.com','http://google.com','http://yahoo.com','http://microsoft.com','','0', NULL, NULL
-);
+  `catid` int(11) NOT NULL DEFAULT 0,
+  `users_voted` text DEFAULT NULL,
+  `qtags` text DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `#__questions_favourite`;
-CREATE TABLE IF NOT EXISTS `#__questions_favourite` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `#__questions_core_logs`
+--
+
+CREATE TABLE `#__questions_core_logs` (
+  `id` int(11) NOT NULL,
+  `qid` int(11) NOT NULL,
+  `title` text NOT NULL,
+  `alias` text NOT NULL,
+  `text` text NOT NULL,
+  `submitted` datetime NOT NULL,
+  `modified` datetime DEFAULT NULL,
+  `userid_creator` int(11) NOT NULL,
+  `userid_modifier` int(11) DEFAULT NULL,
+  `question` int(11) NOT NULL,
+  `votes_positive` int(11) NOT NULL,
+  `votes_negative` int(11) NOT NULL,
+  `parent` int(11) NOT NULL,
+  `impressions` int(11) NOT NULL DEFAULT 0,
+  `published` tinyint(3) NOT NULL,
+  `likes` int(11) NOT NULL DEFAULT 0,
+  `chosen` int(11) NOT NULL,
+  `pinned` tinyint(2) NOT NULL,
+  `locked` tinyint(2) NOT NULL,
+  `closed` tinyint(1) NOT NULL DEFAULT 0,
+  `flagged` tinyint(1) NOT NULL DEFAULT 0,
+  `name` text DEFAULT NULL,
+  `ip` text DEFAULT NULL,
+  `email` text DEFAULT NULL,
+  `refurl1` varchar(255) NOT NULL,
+  `refurl2` varchar(255) NOT NULL,
+  `refurl3` varchar(255) NOT NULL,
+  `groups` text NOT NULL,
+  `catid` int(11) NOT NULL DEFAULT 0,
+  `users_voted` text DEFAULT NULL,
+  `qtags` text DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `#__questions_favourite`
+--
+
+CREATE TABLE `#__questions_favourite` (
+  `id` int(11) NOT NULL,
   `userid` int(11) NOT NULL,
   `ansfav` varchar(250) NOT NULL,
   `quesfav` varchar(250) NOT NULL,
-  `userfav` varchar(250) NOT NULL,
-  PRIMARY KEY (`id`)
+  `userfav` varchar(250) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -74,79 +106,62 @@ CREATE TABLE IF NOT EXISTS `#__questions_favourite` (
 --
 -- Table structure for table `#__questions_groups`
 --
-DROP TABLE IF EXISTS `#__questions_groups`;
-CREATE TABLE IF NOT EXISTS `#__questions_groups` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+
+CREATE TABLE `#__questions_groups` (
+  `id` int(11) NOT NULL,
   `userid` int(11) NOT NULL,
   `group_name` varchar(255) NOT NULL,
-  `image` varchar(255) NOT NULL,
   `moderators` text NOT NULL,
-  `requestsent` text NOT NULL,
-  `requestreceived` text NOT NULL,
-  `friendsid` text NOT NULL,
   `published` int(2) NOT NULL,
-  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `modified` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+  `created` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `modified` timestamp NOT NULL DEFAULT current_timestamp(),
+  `ip` varchar(55) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `#__questions_notification`
 --
-DROP TABLE IF EXISTS `#__questions_notification`;
-CREATE TABLE IF NOT EXISTS `#__questions_notification` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `to_user` int(10) NOT NULL DEFAULT '0',
-  `from_user` int(10) NOT NULL DEFAULT '0',
-  `reference` int(10) NOT NULL DEFAULT '0',
+
+CREATE TABLE `#__questions_notification` (
+  `id` int(10) NOT NULL,
+  `to_user` int(10) NOT NULL DEFAULT 0,
+  `from_user` int(10) NOT NULL DEFAULT 0,
+  `reference` int(10) NOT NULL DEFAULT 0,
   `type` enum('groupadd','repin') NOT NULL,
-  `seen` tinyint(4) NOT NULL DEFAULT '0',
-  `timestamp` varchar(12) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `to_user` (`to_user`),
-  KEY `from_user` (`from_user`),
-  KEY `reference` (`reference`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+  `seen` tinyint(4) NOT NULL DEFAULT 0,
+  `timestamp` varchar(12) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `#__questions_ranks`
 --
-DROP TABLE IF EXISTS `#__questions_ranks`;
-CREATE TABLE IF NOT EXISTS `#__questions_ranks` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `rank` text NOT NULL,
-  `pointsreq` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
-REPLACE INTO `#__questions_ranks` (
-  `id`,
-  `rank`,
-  `pointsreq`
-)
-VALUES ('1', 'starter', '20'), ('2', 'intermidiate', '50'), ('3', 'expert', '100'), ('4', 'boss', '200'), ('5', 'guru', '300'), ('6', 'genius', '400'), ('7', 'champion', '500'), ('8', 'ace', '600'), ('9', 'master', '700'), ('10', 'laser', '800'), ('11', 'crooker', '900'), ('12', 'grandpa', '1000');
+CREATE TABLE `#__questions_ranks` (
+  `id` int(11) NOT NULL,
+  `rank` text NOT NULL,
+  `pointsreq` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `#__questions_reports`
 --
-DROP TABLE IF EXISTS `#__questions_reports`;
-CREATE TABLE IF NOT EXISTS `#__questions_reports` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+
+CREATE TABLE `#__questions_reports` (
+  `id` int(11) NOT NULL,
   `userid` int(11) NOT NULL,
   `bugreport` text NOT NULL,
   `qareport` text NOT NULL,
   `qid` int(11) NOT NULL,
-  `submitted` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `ip` text,
-  `email` text,
-  `title` text NOT NULL,
-  PRIMARY KEY (`id`)
+  `submitted` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `ip` text DEFAULT NULL,
+  `email` text DEFAULT NULL,
+  `title` text NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -154,15 +169,14 @@ CREATE TABLE IF NOT EXISTS `#__questions_reports` (
 --
 -- Table structure for table `#__questions_userlocation`
 --
-DROP TABLE IF EXISTS `#__questions_userlocation`;
-CREATE TABLE IF NOT EXISTS `#__questions_userlocation` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+
+CREATE TABLE `#__questions_userlocation` (
+  `id` int(11) NOT NULL,
   `name` varchar(60) NOT NULL,
   `address` varchar(80) NOT NULL,
   `lat` float(10,6) NOT NULL,
   `lng` float(10,6) NOT NULL,
-  `type` varchar(30) NOT NULL,
-  PRIMARY KEY (`id`)
+  `type` varchar(30) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -170,31 +184,167 @@ CREATE TABLE IF NOT EXISTS `#__questions_userlocation` (
 --
 -- Table structure for table `#__questions_userprofile`
 --
-DROP TABLE IF EXISTS `#__questions_userprofile`;
-CREATE TABLE IF NOT EXISTS `#__questions_userprofile` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+
+CREATE TABLE `#__questions_userprofile` (
+  `id` int(11) NOT NULL,
+  `description` text NOT NULL,
+  `url1` varchar(55) NOT NULL,
+  `url2` varchar(55) NOT NULL,
+  `url3` varchar(55) NOT NULL,
   `userid` int(11) NOT NULL,
-  `username` text NOT NULL,
+  `location` varchar(25) NOT NULL,
+  `company` varchar(25) NOT NULL,
+  `position` varchar(25) NOT NULL,
+  `workno` varchar(25) NOT NULL,
+  `mobno` varchar(25) NOT NULL,
+  `workaddress` varchar(255) NOT NULL,
+  `username` varchar(25) NOT NULL,
   `answered` int(11) NOT NULL,
   `asked` int(11) NOT NULL,
   `points` int(11) NOT NULL,
-  `rank` text NOT NULL,
+  `rank` varchar(25) NOT NULL,
   `chosen` int(11) NOT NULL,
+  `subs` varchar(255) NOT NULL,
   `logdate` date DEFAULT NULL,
-  `email` text,
+  `email` varchar(55) DEFAULT NULL,
   `groups` varchar(255) NOT NULL,
   `blocked` int(11) NOT NULL,
-  `impressions` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+  `impressions` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-----
+--
+-- Indexes for dumped tables
+--
 
---- For the Tags to Work
+--
+-- Indexes for table `#__questions_comments`
+--
+ALTER TABLE `#__questions_comments`
+  ADD PRIMARY KEY (`id`);
 
----
+--
+-- Indexes for table `#__questions_core`
+--
+ALTER TABLE `#__questions_core`
+  ADD PRIMARY KEY (`id`);
 
-INSERT INTO `#__content_types` (`type_title`, `type_alias`, `table`, `rules`, `field_mappings`, `router`, `content_history_options`) VALUES
+--
+-- Indexes for table `#__questions_core_logs`
+--
+ALTER TABLE `#__questions_core_logs`
+  ADD PRIMARY KEY (`id`);
 
-('Questions Category', 'com_questions.category', '{"special":{"dbtable":"#__categories","key":"id","type":"Category","prefix":"JTable","config":"array()"},"common":{"dbtable":"#__ucm_content","key":"ucm_id","type":"Corecontent","prefix":"JTable","config":"array()"}}', '', '{"common":{"core_content_item_id":"id","core_title":"title","core_state":"published","core_alias":"alias","core_created_time":"created_time","core_modified_time":"modified_time","core_body":"description", "core_hits":"hits","core_publish_up":"null","core_publish_down":"null","core_access":"access", "core_params":"params", "core_featured":"null", "core_metadata":"metadata", "core_language":"language", "core_images":"null", "core_urls":"null", "core_version":"version", "core_ordering":"null", "core_metakey":"metakey", "core_metadesc":"metadesc", "core_catid":"parent_id", "core_xreference":"null", "asset_id":"asset_id"}, "special":{"parent_id":"parent_id","lft":"lft","rgt":"rgt","level":"level","path":"path","extension":"extension","note":"note"}}', 'QuestionsHelperRoute::getCategoryRoute', '{"formFile":"administrator\\/components\\/com_categories\\/models\\/forms\\/category.xml", "hideFields":["asset_id","checked_out","checked_out_time","version","lft","rgt","level","path","extension"], "ignoreChanges":["modified_user_id", "modified_time", "checked_out", "checked_out_time", "version", "hits", "path"],"convertToInt":["publish_up", "publish_down"], "displayLookup":[{"sourceColumn":"created_user_id","targetTable":"#__users","targetColumn":"id","displayColumn":"name"},{"sourceColumn":"access","targetTable":"#__viewlevels","targetColumn":"id","displayColumn":"title"},{"sourceColumn":"modified_user_id","targetTable":"#__users","targetColumn":"id","displayColumn":"name"},{"sourceColumn":"parent_id","targetTable":"#__categories","targetColumn":"id","displayColumn":"title"}]}')
+--
+-- Indexes for table `#__questions_favourite`
+--
+ALTER TABLE `#__questions_favourite`
+  ADD PRIMARY KEY (`id`);
 
+--
+-- Indexes for table `#__questions_groups`
+--
+ALTER TABLE `#__questions_groups`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `#__questions_notification`
+--
+ALTER TABLE `#__questions_notification`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `to_user` (`to_user`),
+  ADD KEY `from_user` (`from_user`),
+  ADD KEY `reference` (`reference`);
+
+--
+-- Indexes for table `#__questions_ranks`
+--
+ALTER TABLE `#__questions_ranks`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `#__questions_reports`
+--
+ALTER TABLE `#__questions_reports`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `#__questions_userlocation`
+--
+ALTER TABLE `#__questions_userlocation`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `#__questions_userprofile`
+--
+ALTER TABLE `#__questions_userprofile`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `userid` (`userid`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `#__questions_comments`
+--
+ALTER TABLE `#__questions_comments`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `#__questions_core`
+--
+ALTER TABLE `#__questions_core`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `#__questions_core_logs`
+--
+ALTER TABLE `#__questions_core_logs`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `#__questions_favourite`
+--
+ALTER TABLE `#__questions_favourite`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `#__questions_groups`
+--
+ALTER TABLE `#__questions_groups`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `#__questions_notification`
+--
+ALTER TABLE `#__questions_notification`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `#__questions_ranks`
+--
+ALTER TABLE `#__questions_ranks`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `#__questions_reports`
+--
+ALTER TABLE `#__questions_reports`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `#__questions_userlocation`
+--
+ALTER TABLE `#__questions_userlocation`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `#__questions_userprofile`
+--
+ALTER TABLE `#__questions_userprofile`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
