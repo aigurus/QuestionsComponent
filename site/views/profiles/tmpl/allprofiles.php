@@ -90,34 +90,23 @@ use Joomla\CMS\Router\Route;
 					<tbody class="table-zebra">
 						<tr>
 							<td>Topics</td>
-							<td>51.8k</td>
-							<td>263</td>
-							<td>1.2k</td>
+							<td><?php echo $this->totaltopics; ?></td>
+							<td><?php echo $this->last7topics; ?></td>
+							<td><?php echo $this->last30topics; ?></td>
 						</tr>
 						<tr>
 							<td>Posts</td>
-							<td>624k</td>
-							<td>3.9k</td>
-							<td>15.4k</td>
+							<td><?php echo $this->totalposts; ?></td>
+							<td><?php echo $this->last7posts; ?></td>
+							<td><?php echo $this->last30posts; ?></td>
 						</tr>
 						<tr>
 							<td>Users</td>
-							<td>123k</td>
-							<td>698</td>
-							<td>3.3k</td>
+							<td><?php echo $this->totalusers; ?></td>
+							<td><?php echo $this->last7users; ?></td>
+							<td><?php echo $this->last30users; ?></td>
 						</tr>
-						<tr>
-							<td>Active Users</td>
-							<td>--</td>
-							<td>2.8k</td>
-							<td>7.2k</td>
-						</tr>
-						<tr>
-							<td>Likes</td>
-							<td>224k</td>
-							<td>2.5k</td>
-							<td>9.2k</td>
-						</tr>
+						
 					</tbody>
 				</table>
 			</div>
@@ -125,7 +114,7 @@ use Joomla\CMS\Router\Route;
 	</div>
 </main>
     
-    
+</br>  
     
     
     

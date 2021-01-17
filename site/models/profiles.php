@@ -39,7 +39,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 jimport( 'joomla.application.component.modellist' );
 jimport( 'joomla.html.parameter' );
 require_once 'components/com_questions/helpers/avatar.php';
-
+use Joomla\CMS\Date\Date;
 class QuestionsModelProfiles extends JModelList
 {
 		protected $i;
@@ -194,4 +194,124 @@ class QuestionsModelProfiles extends JModelList
       $groupdetails = $db->loadObjectList();
 	  return $groupdetails;
   }
+  
+  /*Topics*/
+  function getTotalTopics(){
+		$db = JFactory::getDbo();
+		$query = $db
+		->getQuery(true)
+		->select('COUNT(*)')
+		->from($db->quoteName('#__questions_core'))
+		->where($db->quoteName('published') . " = 1"." AND ".$db->quoteName('question') . " =1 ");
+		$db->setQuery( $query );
+		$totalquestions = $db->loadResult();
+	 	return $totalquestions;
+  }
+  
+  function getLast7Topics(){
+		$db = JFactory::getDbo();
+		$Prevdays = new Date('now -7 days'); // Current date and time, -7 days.
+		$query = $db
+		->getQuery(true)
+		->select('COUNT(*)')
+		->from($db->quoteName('#__questions_core'))
+		->where($db->quoteName('published') . " = 1"." AND ".$db->quoteName('question') . " =1 AND ".$db->quoteName('submitted') . " > " . $db->quote($Prevdays));
+		$db->setQuery( $query );
+		$totalquestions = $db->loadResult();
+	 	return $totalquestions;
+  }
+  function getLast30Topics(){
+		$db = JFactory::getDbo();
+		$Prevdays = new Date('now -30 days'); // Current date and time, -7 days.
+		$query = $db
+		->getQuery(true)
+		->select('COUNT(*)')
+		->from($db->quoteName('#__questions_core'))
+		->where($db->quoteName('published') . " = 1"." AND ".$db->quoteName('question') . " =1 AND ".$db->quoteName('submitted') . " > " . $db->quote($Prevdays));
+		$db->setQuery( $query );
+		$totalquestions = $db->loadResult();
+	 	return $totalquestions;
+  }
+  
+  /*Topics End*/
+  /* Post */
+  function getTotalPosts(){
+		$db = JFactory::getDbo();
+		$query = $db
+		->getQuery(true)
+		->select('COUNT(*)')
+		->from($db->quoteName('#__questions_core'))
+		->where($db->quoteName('published') . " = 1");
+		$db->setQuery( $query );
+		$totalquestions = $db->loadResult();
+	 	return $totalquestions;
+  }
+  
+  function getLast7Posts(){
+		$db = JFactory::getDbo();
+		$Prevdays = new Date('now -7 days'); // Current date and time, -7 days.
+		$query = $db
+		->getQuery(true)
+		->select('COUNT(*)')
+		->from($db->quoteName('#__questions_core'))
+		->where($db->quoteName('published') . " = 1"." AND ".$db->quoteName('submitted') . " > " . $db->quote($Prevdays));
+		$db->setQuery( $query );
+		$totalquestions = $db->loadResult();
+	 	return $totalquestions;
+  }
+  function getLast30Posts(){
+		$db = JFactory::getDbo();
+		$Prevdays = new Date('now -30 days'); // Current date and time, -7 days.
+		$query = $db
+		->getQuery(true)
+		->select('COUNT(*)')
+		->from($db->quoteName('#__questions_core'))
+		->where($db->quoteName('published') . " = 1"." AND ".$db->quoteName('submitted') . " > " . $db->quote($Prevdays));
+		$db->setQuery( $query );
+		$totalquestions = $db->loadResult();
+	 	return $totalquestions;
+  }
+  
+   /* Post End*/
+   
+   
+   /* Users */
+  function getTotalUsers(){
+		$db = JFactory::getDbo();
+		$query = $db
+		->getQuery(true)
+		->select('COUNT(*)')
+		->from($db->quoteName('#__questions_userprofile'))
+		->where($db->quoteName('blocked') . " = 0");
+		$db->setQuery( $query );
+		$totalquestions = $db->loadResult();
+	 	return $totalquestions;
+  }
+  
+  function getLast7Users(){
+		$db = JFactory::getDbo();
+		$Prevdays = new Date('now -7 days'); // Current date and time, -7 days.
+		$query = $db
+		->getQuery(true)
+		->select('COUNT(*)')
+		->from($db->quoteName('#__questions_userprofile'))
+		->where($db->quoteName('blocked') . " = 0"." AND ".$db->quoteName('logdate') . " > " . $db->quote($Prevdays));
+		$db->setQuery( $query );
+		$totalquestions = $db->loadResult();
+	 	return $totalquestions;
+  }
+  function getLast30Users(){
+		$db = JFactory::getDbo();
+		$Prevdays = new Date('now -30 days'); // Current date and time, -7 days.
+		$query = $db
+		->getQuery(true)
+		->select('COUNT(*)')
+		->from($db->quoteName('#__questions_userprofile'))
+		->where($db->quoteName('blocked') . " = 0"." AND ".$db->quoteName('logdate') . " > " . $db->quote($Prevdays));
+		$db->setQuery( $query );
+		$totalquestions = $db->loadResult();
+	 	return $totalquestions;
+  }
+  
+   /* Users End*/
 }

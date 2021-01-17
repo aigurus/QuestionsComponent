@@ -54,8 +54,32 @@ class QuestionsViewProfiles extends QueView
 			  $this->userquestions = $userquestions;
 		
 			  $useranswers = $this->get('UserAnswers');
-			
 			  $this->useranswers = $useranswers;
+			  
+			  $totaltopics = $this->get('TotalTopics');
+			  $this->totaltopics = $totaltopics;
+			  $last7topics = $this->get('Last7Topics');
+			  $this->last7topics = $last7topics;
+			  $last30topics = $this->get('Last30Topics');
+			  $this->last30topics = $last30topics;
+			  
+			  $totalposts = $this->get('TotalPosts');
+			  $this->totalposts = $totalposts;
+			  $last7posts = $this->get('Last7Posts');
+			  $this->last7posts = $last7posts;
+			  $last30posts = $this->get('Last30Posts');
+			  $this->last30posts = $last30posts;
+			  
+			  $totalusers = $this->get('TotalUsers');
+			  $this->totalusers = $totalusers;
+			  $last7users = $this->get('Last7Users');
+			  $this->last7users = $last7users;
+			  $last30users = $this->get('Last30Users');
+			  $this->last30users = $last30users;
+			 
+			  //var_dump($totalquestions); exit;
+			
+			  
 		
 			  //$this->assignRef('groupdetails',$groupdetails );
 			  /*JLoader::import('profiles', JPATH_ROOT.'/components/com_questions/models');
