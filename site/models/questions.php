@@ -260,7 +260,7 @@ class QuestionsModelQuestions extends JModelList {
         	"&tag=" . JRequest::getString("tag") . 
         	"&catid=" . JRequest::getInt("catid");
         $home = 
-        	"<li><a " . (JRequest::getString("filter" , 0)=="home"?'class="active box-shadow"':'') . " href='" . JRoute::_("index.php?option=com_questions&view=questions" . $currentOptions)  . "'>" . JText::_("COM_QUESTIONS_HOME") . "</a></li>";
+        	"<li><a " . (JRequest::getString("filter" , 0)=="home"?'class="active box-shadow"':'') . " href='" . JRoute::_("index.php?option=com_questions&view=questions")  . "'>" . JText::_("COM_QUESTIONS_HOME") . "</a></li>";
         $answered = 
         	"<li><a " . (JRequest::getString("filter" , 0)=="answered"?'class="active box-shadow"':'') . " href='" . JRoute::_("index.php?option=com_questions&view=questions&filter=answered" . $currentOptions)  . "'>" . JText::_("COM_QUESTIONS_FILTER_ANSWERED") . "</a></li>";
         
@@ -272,15 +272,46 @@ class QuestionsModelQuestions extends JModelList {
         
         $unresolved = 
         	"<li><a " . (JRequest::getString("filter", 0)=="unresolved"?'class="active box-shadow"':'') . " href='" . JRoute::_("index.php?option=com_questions&view=questions&filter=unresolved" . $currentOptions)  . "'>" . JText::_("COM_QUESTIONS_FILTER_UNRESOLVED") . "</a></li>";
+			
+		$ask = 
+        	"<li><a href='" . JRoute::_("index.php?option=com_questions&view=form&layout=edit")  . "'>" . JText::_("COM_QUESTIONS_ASK_A_QUESTION") . "</a></li>";
         
         $myquestions = NULL;
         if ( JFactory::getUser()->id )
         $myquestions = 
         	"<li><a " . (JRequest::getString("filter", 0)=="myquestions"?'class="active box-shadow"':'') . " href='" . JRoute::_("index.php?option=com_questions&view=questions&filter=myquestions" . $currentOptions)  . "'>" . JText::_("COM_QUESTIONS_FILTER_MYQUESTIONS") . "</a></li>";
                 
-        $options = "<div class='questions_filters'><ul>" . $home . $answered . $notanswered . $resolved . $unresolved . $myquestions . "</ul></div><div style='clear:both'></div>";
+        $options = "<div class='questions_filters'><ul>" . $home . $answered . $notanswered . $resolved . $unresolved . $myquestions . $ask ."</ul></div><div style='clear:both'></div>";
         
         return $options;
+ 	}
+	
+	function getSortingOptions(){
+		
+			$currentOptions = 
+        	"&tag=" . JRequest::getString("tag"). 
+        	"&catid=" . JRequest::getInt("catid").
+			"&filter=" . JRequest::getString("filter");
+	
+		?>
+		<div style="float:right">
+		<select name="menu" onChange="window.document.location.href=this.options[this.selectedIndex].value;" value="Choose">
+        
+        <option selected="selected"><?php echo JText::_("COM_QUESTIONS_SORT_SORTING_OPTIONS"); ?></option>
+        
+        <option value="<?php echo JRoute::_("index.php?option=com_questions&view=questions&sort=submitted&dir=desc" . $currentOptions); ?> "><?php echo JText::_("COM_QUESTIONS_SORT_SUBMITTED_DESC"); ?></option>
+        <option value="<?php echo JRoute::_("index.php?option=com_questions&view=questions&sort=impressions&dir=desc" . $currentOptions); ?> "><?php echo JText::_("COM_QUESTIONS_SORT_VIEWS_DESC"); ?></option>
+        <option value="<?php echo JRoute::_("index.php?option=com_questions&view=questions&sort=votes_positive&dir=desc" . $currentOptions); ?> "><?php echo JText::_("COM_QUESTIONS_SORT_VOTES_DESC"); ?></option>
+
+        <option value="<?php echo JRoute::_("index.php?option=com_questions&view=questions&sort=submitted&dir=asc" . $currentOptions); ?> "><?php echo JText::_("COM_QUESTIONS_SORT_SUBMITTED_ASC"); ?></option>
+        <option value="<?php echo JRoute::_("index.php?option=com_questions&view=questions&sort=impressions&dir=asc" . $currentOptions); ?> "><?php echo JText::_("COM_QUESTIONS_SORT_VIEWS_ASC"); ?></option>
+        <option value="<?php echo JRoute::_("index.php?option=com_questions&view=questions&sort=votes_positive&dir=asc" . $currentOptions); ?> "><?php echo JText::_("COM_QUESTIONS_SORT_VOTES_ASC"); ?></option>
+        
+        </select>
+        </div>
+        <?php
+   
+		return;
  	}
 
 }

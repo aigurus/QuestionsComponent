@@ -33,6 +33,7 @@
 
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
+
 JHTML::_('behavior.modal');
 $app = JFactory::getApplication();
 $params = $app->getParams();
@@ -50,6 +51,40 @@ use Joomla\CMS\Factory;
 ?>
 
 <main id="tt-pageContent" class="tt-offset-small">
+<div style="float:left;">
+<form action="<?php echo JRoute::_('index.php');?>" method="post">
+<?php
+$lang = JFactory::getLanguage();
+$upper_limit = $lang->getUpperLimitSearchWord();
+$mitemid = @$set_Itemid > 0 ? $set_Itemid : JRequest::getInt('Itemid');
+$width			= 37;
+$maxlength		= $upper_limit;
+$text			= htmlspecialchars($params->get('text', JText::_('COM_QUESTIONS_SEARCH')));
+
+			$output = '<div id="SearchBar"><input name="searchword" maxlength="'.$maxlength.'"  type="text" size="'.$width.'" value="'.$text.'"  onblur="if (this.value==\'\') this.value=\''.$text.'\';" onfocus="if (this.value==\''.$text.'\') this.value=\'\';" /></div>';
+			echo $output;
+		?>
+	<input type="hidden" name="task" value="search" />
+	<input type="hidden" name="option" value="com_search" />
+	<input type="hidden" name="areas" value="questions" />
+	<input type="hidden" name="Itemid" value="<?php echo $mitemid; ?>" />
+</form>
+</div>
+<?php
+
+if (isset($this->viewFilteringOptions)){
+	echo $this->filteringOptions;
+}
+?>
+
+<div>
+<?php
+
+if($this->params->get('sorting_backend')==0 && $this->params->get('display_sorting')==1){
+	echo $this->sortingOptions;
+}
+
+?>
     <div class="qcontainer">
         <div class="tt-topic-list">
             <div class="tt-list-header">
@@ -60,12 +95,16 @@ use Joomla\CMS\Factory;
                 <div class="tt-col-value hide-mobile">Views</div>
                 <div class="tt-col-value">Activity</div>
             </div>
+            <?php /*
             <div class="tt-topic-alert tt-alert-default" role="alert">
               <a href="#" target="_blank">4 new posts</a> are added recently, click here to load them.
             </div>
+			*/ ?>
             <?php $i=0; ?>
             <?php foreach($this->questions as $question){ ?>
             <?php
+			
+
             $user = Factory::getUser($question->userid_creator);
             $name = substr($user->name,0,1);
             $userFirstname = strtoupper($name);
@@ -115,7 +154,10 @@ use Joomla\CMS\Factory;
                             </div>
                         </div>
                     </div>
-                    <div class="tt-col-category"><span class="tt-color<?php echo sprintf("%02d", $i+1); ?> tt-badge"><?php echo $question->CategoryName; ?></span></div>
+                    <div class="tt-col-category">
+                    <a href="<?php echo JRoute::_("index.php?option=com_questions&view=questions&catid=" . $question->catid); ?>">
+                    <span class="tt-color<?php echo sprintf("%02d", $i+1); ?> tt-badge"><?php echo $question->CategoryName; ?></span></div>
+                    </a>
                     <div class="tt-col-value hide-mobile"><?php echo $question->likes; ?></div>
                     <div class="tt-col-value tt-color-select hide-mobile"><?php echo $question->answerscount; ?></div>
                     <div class="tt-col-value hide-mobile"><?php echo $question->impressions; ?></div>

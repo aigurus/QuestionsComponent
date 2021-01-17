@@ -5532,7 +5532,7 @@ hr {
 	Single-Topic
 */
 .tt-single-topic-list > .tt-item:not(:first-child) {
-  margin-top: 30px; }
+  margin-top: 5px; }
 
 .tt-single-topic-list > .tt-item:not([class^="tt-wrapper-success"]) {
   background-color: #ffffff; }
@@ -5609,7 +5609,7 @@ hr {
     margin-top: 12px; }
   .tt-single-topic .tt-item-header:not(.pt-noborder) {
     border-bottom: 1px solid #e2e7ea;
-    padding: 0 0 30px 0; }
+    padding: 0 0 5px 0; }
   .tt-single-topic .tt-item-header.pt-noborder + .tt-item-description {
     padding-top: 5px; }
   .tt-single-topic .tt-item-description {

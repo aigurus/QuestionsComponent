@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+
+	<layout title="COM_QUESTIONS_MY_PROFILE">
+		<message>COM_QUESTIONS_MY_PROFILE</message>
+	</layout>
+    <view title="MyProfiles">
+		<message>MyProfiles</message>
+	</view>
+</metadata>

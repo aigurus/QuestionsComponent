@@ -42,7 +42,7 @@ JHtml::_('behavior.calendar');
 JHtml::_('behavior.formvalidation');
 */
 $doc = JFactory::getDocument();
-$doc->addStyleSheet("components/com_questions/media/simple-question.css");
+$doc->addStyleSheet("components/com_questions/media/simple.css");
 $config = JFactory::getConfig();
 if ($config->get('captcha') != '0') {
 JPluginHelper::importPlugin('captcha');
@@ -51,11 +51,10 @@ $dispatcher->trigger('onInit','dynamic_recaptcha_1');
 }
 
 ?>
-<div class="questionbox">
 <div class="questions_filters">
 <ul><li><a href="<?php echo JRoute::_("index.php?option=com_questions&view=questions"); ?>">Home</a></li><li><a href="<?php echo JRoute::_("index.php?option=com_questions&view=form&layout=edit"); ?>"><?php echo JText::_("COM_QUESTIONS_ASK_A_QUESTION"); ?></a></li>
 </ul></div>
-</div>
+
 <h1>EDIT</h1>
 
 <form action="<?php echo JRoute::_('index.php?option=com_questions&view=question&id='. QuestionsHelper::getAlias((int)$this->item->id)); ?>" method="post" name="adminForm" id="adminForm" class="form-validate" enctype="multipart/form-data">

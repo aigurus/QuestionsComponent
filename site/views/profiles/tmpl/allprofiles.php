@@ -43,7 +43,7 @@ use Joomla\CMS\Router\Route;
 ?>
 <main id="tt-pageContent" class="tt-offset-small">
     <div class="qcontainer">
-		  Forum 19 is a community of creatives who come together to share ideas and help each other succeed.
+		  This is a community of creatives who come together to share ideas and help each other succeed.
 				<h3 class="tt-title">
 					Admins
 				</h3>

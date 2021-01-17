@@ -75,6 +75,7 @@ function dtformat($dt){
 	return $subdate;
 }
 ?>
+<?php /*
 <script type="text/javascript">
 
 jQuery(document).ready(function($){
@@ -151,7 +152,7 @@ $('.anspositive').click(function() {
 		cache: false,
         success: function(){
 			location.reload(); 
-            //$('#addfav').html(data);
+            //$('#msg').html(data);
         }
     });
 })
@@ -160,22 +161,24 @@ $('.ansnegative').click(function() {
 	var idvalue = ansid.split('-');
 	var id = idvalue[idvalue.length - 1];
 	var newurl = "index.php?option=com_questions&task=question.votenegative&id="+id;
-	console.log(newurl);
+	
     req = $.ajax({
         type: "POST",
 		cache: false,
         url: newurl,
         success: function(){
 			location.reload(); 
+			//$('#msg').html(data);
         }
     });
 })
 })
 
 </script>
-
+*/ ?>
 
 <main id="tt-pageContent">
+	<div id="msg"></div>
     <div class="qcontainer">
         <div class="tt-single-topic-list">
             <div class="tt-item">
@@ -227,36 +230,40 @@ $('.ansnegative').click(function() {
                         <?php echo $this->question->text; ?>
                     </div>
                     <div class="tt-item-info info-bottom">
-                        <a href="javascript:void(0)" class="tt-icon-btn">
+                       <?php // <a href="javascript:void(0)" class="tt-icon-btn"> ?>
+                        <a href="index.php?option=com_questions&task=question.votepositive&id=<?php echo $this->question->id ?>" class="tt-icon-btn">
                             <div class="tt-icon" id="positive"><?php echo '<img src="components/com_questions/css/images/thumbs-up.png" alt="Thumbs Up">'; ?></div>
                             <span class="tt-text"><?php echo $this->question->votes_positive; ?></span>
                         </a>
-                        <a href="javascript:void(0)" class="tt-icon-btn">
+                        <?php //<a href="javascript:void(0)" class="tt-icon-btn"> ?>
+                        <a href="index.php?option=com_questions&task=question.votenegative&id=<?php echo $this->question->id ?>" class="tt-icon-btn">
                              <div class="tt-icon" id="negative"><?php echo '<img src="components/com_questions/css/images/thumbs-down.png" alt="Thumbs Down">'; ?></div>
                             <span class="tt-text"><?php echo $this->question->votes_negative; ?></span>
                         </a>
                         <?php
+						$userid = JFactory::getUser()->id; 
                         if ($this->addfavorites):
 						$reguser = JFactory::getUser();
 						$favarray2 = unserialize($this->getFavourite2('quesfav',$reguser->id));
 						if(is_array($favarray2)){
 						if(!in_array($this->question->id,$favarray2))
 						{
+							
 						?>
-                        <a href="javascript:void(0)"  class="tt-icon-btn">
-                             <i class="tt-icon" id="addfav"><?php echo '<img src="components/com_questions/css/images/unlike.png" alt="Unlike">'; ?></i>
+                        <a href="index.php?option=com_questions&task=question.addFavourite&vardata=quesfav&userid=<?php echo $userid; ?>&addfav=<?php echo $this->question->id ?>"  class="tt-icon-btn">
+                             <div class="tt-icon" id="addfav"><?php echo '<img src="components/com_questions/css/images/unlike.png" alt="Unlike">'; ?></div>
                             <span class="tt-text"><?php echo $this->question->likes; ?></span>
                         </a>
                 
 						<?php } else { ?>
                         
-                        <a href="javascript:void(0)"  class="tt-icon-btn">
-                             <i class="tt-icon" id="delfav"><?php echo '<img src="components/com_questions/css/images/like.png" alt="Like">'; ?></i>
+                        <a href="index.php?option=com_questions&task=question.delFavourite&vardata=quesfav&userid=<?php echo $userid; ?>&delfav=<?php echo $this->question->id ?>"  class="tt-icon-btn">
+                             <div class="tt-icon" id="delfav"><?php echo '<img src="components/com_questions/css/images/like.png" alt="Like">'; ?></div>
                             <span class="tt-text"><?php echo $this->question->likes; ?></span>
                         </a>
             			<?php }}else{ ?>
-						<a href="javascript:void(0)"  id="addfav" class="tt-icon-btn">
-                             <i class="tt-icon" id="addfav"><?php echo '<img src="components/com_questions/css/images/unlike.png" alt="Unlike">'; ?></i>
+						<a href="index.php?option=com_questions&task=question.addFavourite&vardata=quesfav&userid=<?php echo $userid; ?>&addfav=<?php echo $this->question->id ?>"  class="tt-icon-btn">
+                             <div class="tt-icon" id="addfav"><?php echo '<img src="components/com_questions/css/images/unlike.png" alt="Unlike">'; ?></div>
                             <span class="tt-text"><?php echo $this->question->likes; ?></span>
                         </a>
 						<?php } ?>

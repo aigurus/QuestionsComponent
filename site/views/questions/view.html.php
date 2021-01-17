@@ -56,7 +56,7 @@ class QuestionsViewQuestions extends QueView
         	$this->pagination = $this->get("Pagination");
         	
         	$this->filteringOptions = $this->get("filteringOptions");
-        	//$this->sortingOptions = $this->get("sortingOptions");
+        	$this->sortingOptions = $this->get("sortingOptions");
         	$this->activeFilter = JRequest::getString("filter");
         	
         	//Category View
@@ -171,33 +171,7 @@ class QuestionsViewQuestions extends QueView
 			  //var_dump()
 			  return $groupdetails;
 		  }
-		function getSortingOptions(){
 		
-			$currentOptions = 
-        	"&tag=" . JRequest::getString("tag"). 
-        	"&catid=" . JRequest::getInt("catid").
-			"&filter=" . JRequest::getString("filter");
-	
-		?>
-		<div style="float:right">
-		<select name="menu" onChange="window.document.location.href=this.options[this.selectedIndex].value;" value="Choose">
-        
-        <option selected="selected"><?php echo JText::_("COM_QUESTIONS_SORT_SORTING_OPTIONS"); ?></option>
-        
-        <option value="<?php echo JRoute::_("index.php?option=com_questions&view=questions&sort=submitted&dir=desc" . $currentOptions); ?> "><?php echo JText::_("COM_QUESTIONS_SORT_SUBMITTED_DESC"); ?></option>
-        <option value="<?php echo JRoute::_("index.php?option=com_questions&view=questions&sort=impressions&dir=desc" . $currentOptions); ?> "><?php echo JText::_("COM_QUESTIONS_SORT_VIEWS_DESC"); ?></option>
-        <option value="<?php echo JRoute::_("index.php?option=com_questions&view=questions&sort=votes_positive&dir=desc" . $currentOptions); ?> "><?php echo JText::_("COM_QUESTIONS_SORT_VOTES_DESC"); ?></option>
-
-        <option value="<?php echo JRoute::_("index.php?option=com_questions&view=questions&sort=submitted&dir=asc" . $currentOptions); ?> "><?php echo JText::_("COM_QUESTIONS_SORT_SUBMITTED_ASC"); ?></option>
-        <option value="<?php echo JRoute::_("index.php?option=com_questions&view=questions&sort=impressions&dir=asc" . $currentOptions); ?> "><?php echo JText::_("COM_QUESTIONS_SORT_VIEWS_ASC"); ?></option>
-        <option value="<?php echo JRoute::_("index.php?option=com_questions&view=questions&sort=votes_positive&dir=asc" . $currentOptions); ?> "><?php echo JText::_("COM_QUESTIONS_SORT_VOTES_ASC"); ?></option>
-        
-        </select>
-        </div>
-        <?php
-   
-		return;
- 	}
 	function getAlias ( $id ) {
 			 if ($id == 0)
 				return; 

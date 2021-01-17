@@ -62,6 +62,7 @@ class QuestionsViewForm extends QueView
      	//authorization
 		if (!$user->authorise('core.create', 'com_questions')) { 
 		     $app = JFactory::getApplication();
+			 $app->enqueueMessage(JText::_('COM_QUESTIONS_ERROR_UNAUTHORIZED'), 'error');
 			 $app->redirect('index.php?option=com_users&view=login');
 	    }
 		

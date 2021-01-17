@@ -21,7 +21,10 @@ padding: 1% 2%;
 position:relative;
 width: 95%; 
 }
-
+#SearchBar input {
+     height: 27px;
+     width: 100%;
+}
 div.answer__system_published{
 background: none repeat scroll 0 0 	#DCDCDC;
 border: 1px solid #CCCCCC;
@@ -327,9 +330,60 @@ div.questions_filters ul li{
       pointer-events: none; // Future-proof disabling of clicks on `<a>` elements
     }
 }*/
+
+/*https://stackoverflow.com/questions/31638845/change-to-a-different-colour-for-each-bootstrap-active-tab-css*/
+div.questions_filters ul > li {
+  list-style-type: none;
+  width: 110px;
+  height: 40px;
+  display: inline-block;
+  font-family: Verdana, Geneva, sans-serif;
+}
+div.questions_filters ul > li > a {
+  background-color: #00746b;
+  display: block;
+  padding: 5%;
+  height: 100%;
+  text-align: center;
+  line-height: 40px;
+  /*border: 1px solid #141414;*/
+  box-sizing: border-box;
+  color: white;
+  vertical-align: middle;
+  border: 0.1em solid #dcdce9;
+  border-radius: 5px;
+}
+div.questions_filters ul > li:nth-child(2) > a {
+	background-color: #2e3192;
+}
+div.questions_filters ul > li:nth-child(3) > a {
+	background-color: #4436f8;
+}
+div.questions_filters ul > li:nth-child(4) > a {
+	background-color: #3ebafa;
+}
+div.questions_filters ul > li:nth-child(5) > a {
+	background-color: #777da7;
+}
+div.questions_filters ul > li:nth-child(6) > a {
+	background-color: #f4555b;
+}
+div.questions_filters ul > li.active > a {
+  background-color: #7f7fff;
+  color: #ffffff;
+}
+div.questions_filters ul > li > a:hover,
+div.questions_filters ul > li > a:focus,
+div.questions_filters ul > li.active > a:hover,
+div.questions_filters ul > li.active > a:focus {
+  background-color: #cc0033;
+  color: #fff;
+}
+
+/*
 div.questions_filters ul li a {
 	/*background: url(background.gif) #fff bottom left repeat-x;*/
-	background-color: #4CAF50;
+	/*background-color: #4CAF50;
 	height: 2em;
 	margin-right:4px;
 	line-height: 2em;
@@ -342,7 +396,7 @@ div.questions_filters ul li a {
 	border: 0.1em solid #dcdce9;
 	border-radius: 5px;
 	/*color: #0d2474;*/
-	color:white;
+	/*color:white;
 	text-decoration: none;
 	text-align: center;
 }
@@ -350,7 +404,7 @@ div.questions_filters ul li a {
 div.questions_filters ul li a.active {
 	background-image: none;
 	font-weight: bold;
-}
+}*/
 
 img.questions_gravatar_small {
 	float:left;

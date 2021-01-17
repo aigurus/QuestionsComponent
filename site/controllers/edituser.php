@@ -121,10 +121,11 @@ class QuestionsControllerEdituser extends JControllerForm {
 	public function cancel($key = null)
     {
         parent::cancel($key);
-        
+        $jinput = JFactory::getApplication()->input;
+		$uid = $jinput->getInt('userid');
         // set up the redirect back to the same form
         $this->setRedirect(
-            (string)JUri::getInstance(), 
+            JRoute::_('index.php?option=com_questions&view=profiles&id='.$uid, false), 
             JText::_('COM_QUESTIONS_FORM_SUBMIT_CANCELLED')
 		);
     }

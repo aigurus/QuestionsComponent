@@ -34,37 +34,50 @@
 
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
-$doc = JFactory::getDocument();
-$doc->addStyleSheet("components/com_questions/media/simple.css");
-
-$app =JFactory::getApplication();
-$params = $app->getParams();
-$articleid = $this->escape($params->get('helparticleid', 1));
 ?>
+  <div style="padding:10px;"> <strong>Your Notifications</strong> </div>
+    <hr />
+    <div style="width:95%;">
+    <table class="csstable">
+    <tr>
+    <th><strong>Auction ID:</strong></th>
+    <th><strong>User Name:</strong></th>
+    <th><strong>Escrow partner:</strong></th>
+    <th><strong>Amount:<br>Inc Fee</strong></th>
+    </tr>
+    <tr>
+    <td>{escrow.AUCTIONPURPOSE}</td>
+    <td>{escrow.BUYERNAME}</td>
+    <td>{escrow.SELLERNAME}</td>
+    <td>{escrow.PAYMENTAMOUNT}</td>
+    </tr>
+    </table>
+    
+    </div>
+	<div style="clear:both"></div>
 
-<div class="questions_filters">
-<?php if ($this->escape($params->get('display_help', 0))) { ?>
-<span style="float:right"><h2><a class="modal" href="<?php echo JRoute::_('index.php?option=com_content&view=article&id='.$articleid.'&tmpl=component') ?>"rel="{handler: 'iframe', size: {x: 640, y: 480}}"><img src="components/com_questions/media/help.png" alt="Help"></a></h2></span>
-<?php } ?>
-<ul>
-<li>
-<a href="<?php echo JRoute::_("index.php?option=com_questions&view=questions"); ?>">Home</a></li><li><a href="<?php echo JRoute::_("index.php?option=com_questions&view=form&layout=edit"); ?>"><?php echo JText::_("COM_QUESTIONS_ASK_A_QUESTION"); ?></a>
-</li>
-</ul>
-</div>
-
-<h1>There are No results to display.</h1>
-<?php /*
-<div class="boxbck1">
-    <a href="<?php echo JRoute::_('index.php?option=com_questions&view=questions') ?>"><p>RETURN TO MAIN SITE</p></a>
-	
-</div>
-<div class="boxbck2">
-    <a href="<?php echo JRoute::_('index.php?option=com_questions&view=form&layout=edit') ?>"><p>ASK A QUESTION</p></a>
-	
-</div> */ ?>
-
-<div style="clear:both"></div>
-<?php /**********Kindly dont remove this credit. For getting any support from us this link should be intact************/ 
-	$this->escape(CopyrightHelper::copyright());
-?>
+<style type="text/css">
+table.csstable {
+	font-family: verdana,arial,sans-serif;
+	font-size:11px;
+	color:#333333;
+	border-width: 1px;
+	border-color: #999999;
+	border-collapse: collapse;
+}
+table.csstable th {
+	background:rgb(0, 136, 204);
+	border-width: 1px;
+	padding: 8px;
+	color:#fff;
+	border-style: solid;
+	border-color: #999999;
+}
+table.csstable td {
+	background:rgb(245, 245, 245);
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #999999;
+}
+</style>

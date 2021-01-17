@@ -77,10 +77,19 @@ class QuestionsControllerQuestion extends QueController {
 		if (!$question) {
 			JError::raiseError(404, JText::_("COM_QUESTIONS_ERROR_404"));
 		}
-		
+
 		if( ! $user->authorise("question.vote" , "com_questions")){
 			$msg = JText::_("COM_QUESTIONS_ERROR_UNAUTHORIZED");
-			$this->setRedirect(JRoute::_("index.php?option=com_questions&view=question&id=" . $questionid,false) , $msg );
+			//$this->setRedirect(JRoute::_("index.php?option=com_questions&view=question&id=" . $questionid,false) , $msg );
+			//$link = JRoute::_("index.php?option=com_questions&view=question&id=" . $questionid,false);
+			/*$link = JRoute::_("index.php?option=com_questions");
+			$app = JFactory::getApplication();
+			$app->enqueueMessage($msg);
+			$app->redirect($link);*/
+			
+			$this->setMessage($msg);
+			$this->setRedirect(JRoute::_("index.php?option=com_questions&view=question&id=" . $questionid,false));
+			//exit;
 		}
 		
 		
@@ -158,7 +167,13 @@ class QuestionsControllerQuestion extends QueController {
 				$msg = JText::_("COM_QUESTIONS_VOTE_SAVED");
 			}
 			//Redirect the user accordingly	
-			$this->setRedirect(JRoute::_("index.php?option=com_questions&view=question&id=" . $questionid) , $msg );
+			//$this->setRedirect(JRoute::_("index.php?option=com_questions&view=question&id=" . $questionid) , $msg );
+
+			$link = JRoute::_("index.php?option=com_questions&view=question&id=" . $questionid);
+			$app = JFactory::getApplication();
+			$app->enqueueMessage($msg);
+			$app->redirect($link);
+
 		}
 	}
 	
@@ -256,36 +271,36 @@ class QuestionsControllerQuestion extends QueController {
 				    $app->redirect($link, $msg);
 		   
 		   }
-   public function addFavourite()
-   {
-		$reguser = JFactory::getUser();   
-		if( !$reguser->authorise("access.favourite" , "com_questions")){
-			$msg = JText::_("COM_QUESTIONS_ERROR_UNAUTHORIZED");
-			$this->setRedirect(JRoute::_("index.php?option=com_users&view=login"),$msg );
-		}
-		else{
-			$addfav  =  JFactory::getApplication()->input->get("addfav");
-			$vardata =  JFactory::getApplication()->input->get("vardata");
-			$userid  =  JFactory::getApplication()->input->get("userid");
-
-			$favarray = unserialize($this->getFavourite($vardata,$userid));
-			//var_dump($favarray);
-			if ((empty($favarray)) && $this->getusercount($userid)==0){	
-				$arrayData =array($addfav);
-				//var_dump($arrayData);
-				$this->favtable($arrayData,$userid,$vardata,'in',$addfav,$method="add");
+	   public function addFavourite()
+	   {
+			$reguser = JFactory::getUser();   
+			if( !$reguser->authorise("access.favourite" , "com_questions")){
+				$msg = JText::_("COM_QUESTIONS_ERROR_UNAUTHORIZED");
+				$this->setRedirect(JRoute::_("index.php?option=com_users&view=login"),$msg );
 			}
-			elseif (in_array($addfav, $favarray, true))	{
-				return false;
+			else{
+				$addfav  =  JFactory::getApplication()->input->get("addfav");
+				$vardata =  JFactory::getApplication()->input->get("vardata");
+				$userid  =  JFactory::getApplication()->input->get("userid");
+	
+				$favarray = unserialize($this->getFavourite($vardata,$userid));
+				//var_dump($favarray);
+				if ((empty($favarray)) && $this->getusercount($userid)==0){	
+					$arrayData =array($addfav);
+					//var_dump($arrayData);
+					$this->favtable($arrayData,$userid,$vardata,'in',$addfav,$method="add");
+				}
+				elseif (in_array($addfav, $favarray, true))	{
+					return false;
+				}
+				else
+				{
+					$arrayData = $favarray;
+					$arrayData[]=$addfav;
+					$this->favtable($arrayData,$userid,$vardata,'up',$addfav,$method="add");
+				}
 			}
-			else
-			{
-				$arrayData = $favarray;
-				$arrayData[]=$addfav;
-				$this->favtable($arrayData,$userid,$vardata,'up',$addfav,$method="add");
-			}
-		}
-
+	
 			return true;
 			exit;
 	
